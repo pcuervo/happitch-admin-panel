@@ -1,0 +1,110 @@
+<p>This service creates a new user request that can be approved or dismissed by an admin user.</p>
+<h4>POST /new_user_requests</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>Email (string): Valid email address</li>
+    <li>Agency (string): Name of the agency</li>
+    <li>User type (integer): 3 - agency or 4 - brand</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
+  <span style="color: #007700">&quot;new_user_requests&quot;</span> :
+  { 
+    <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>, 
+    <span style="color: #007700">&quot;agency&quot;</span> : <span style="background-color: #fff0f0">&quot;Pequeño cuervo&quot;</span>,
+    <span style="color: #007700">&quot;user_type&quot;</span> : <span style="background-color: #fff0f0">&quot;agencia&quot;</span> 
+  } 
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p>Returns the newly created user request</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
+  <span style="color: #007700">&quot;user_type&quot;</span>: <span style="background-color: #fff0f0">&quot;agencia&quot;</span>,
+  <span style="color: #007700">&quot;agency&quot;</span>: <span style="background-color: #fff0f0">&quot;Pequeño cuervo&quot;</span>,
+  <span style="color: #007700">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>,
+  <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-09T22:59:10.143Z&quot;</span>
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Response</div>
+        <div class="[ collapsible-body ]">
+            <p>When a user request already exists and it is pending for approval.</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;email&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;Ya existe una solicitud con ese email&quot;</span>
+    ]
+  }
+}
+</pre></div>
+            <p>When a user already exists.</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;email&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;Ya existe una cuenta con ese email&quot;</span>
+    ]
+  }
+}
+</pre></div>
+            <p>When email and/or agency is empty.</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;email&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El email no puede estar vacío&quot;</span>
+    ],
+    <span style="color: #007700">&quot;agency&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El nombre de la agencia no puede estar vacío&quot;</span>
+    ]
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+
+<h5>Error response:</h5>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="newUserRequest( 'create' )" data-parsley-validate>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="email" ng-model="cnur.email" required>
+            <label for="email">Email</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="agency" ng-model="cnur.agency" required>
+            <label for="agency">Agency Name</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ][ mt-20 ]"> 
+        <select name="user-type" ng-model="cnur.userType" required>
+            <option value="" disabled selected>User type</option>
+            <option value="3">Agency (3)</option>
+            <option value="4">Brand (4)</option>
+        </select>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+<div class="[ col s12 ]" ng-show="showUserRequestResponse">
+    <h5>Response:</h5>
+    <p>{{ response | json }}</p>
+</div>

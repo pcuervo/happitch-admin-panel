@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>  <html class="lt-ie7" data-ng-app="ConApp" ng-class="{'rtl': settings.rtl}"> <![endif]-->
+<!--[if IE 7]>     <html class="lt-ie8" data-ng-app="ConApp" ng-class="{'rtl': settings.rtl}"> <![endif]-->
+<!--[if IE 8]>     <html class="lt-ie9" data-ng-app="ConApp" ng-class="{'rtl': settings.rtl}"> <![endif]-->
+<!--[if gt IE 8]><!--> <html data-ng-app="conAngular" ng-class="{'rtl': settings.rtl}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Happitch - {{$state.current.data.pageTitle}}</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'-->
+
+    <link rel="icon" type="image/png" href="assets/_con/images/icon.png">
+
+    <!-- nanoScroller -->
+    <link rel="stylesheet" type="text/css" href="assets/nanoScroller/nanoscroller.css" />
+
+
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+    <!-- Google Prettify -->
+    <link rel="stylesheet" type="text/css" href="assets/google-code-prettify/prettify.css" />
+
+    <!-- Insert Dynamic Plugins -->
+    <link id="ngInsertBefore"/>
+
+    <!-- Main -->
+    <link rel="stylesheet" type="text/css" href="assets/_con/css/_con.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.1/css/dataTables.responsive.css" />
+
+    <!-- Gmaps API -->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBdZ8jnjkx9BWKkYIn729m1hoUUHjPWZSQ&language=es"></script>
+</head>
+
+<body ng-controller="AppController">
+
+    <nav data-ng-include="'navigation/top-navbar.html'" data-ng-controller="NavbarController" class="[ navbar-top ][ navbar-dark ]" ng-show="loggedIn">
+    </nav>
+
+    <aside data-ng-include="'navigation/sidebar.html'" data-ng-controller="SidebarController" class="[ yaybar yay-hide-to-small yay-gestures yay-shrink ]" ng-show="loggedIn"></aside>
+
+    <!-- Load Spinner -->
+    <div ng-load-spinner class="load-spinner" id="loader">
+        <div>
+            <img src="assets/_con/images/loader.gif">
+            <p></p>
+        </div>
+    </div>
+    <!-- /Load Spinner -->
+
+    <!-- Main Content -->
+    <section class="[  ]" ng-class="{ 'content-wrap-no-menu': loggedIn==false, 'content-wrap': loggedIn==true }" ui-view>
+    </section>
+    <!-- /Main Content -->
+
+    <!-- Footer -->
+    <footer class="[ print-hidden ]">
+        <div class="[ right-align ]">
+            &copy; <script>document.write( new Date().getFullYear() );</script><strong> AMAP</strong>
+        </div>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="assets/jquery/jquery.min.js"></script>
+    <!-- jQuery RAF (improved animation performance) -->
+    <script type="text/javascript" src="assets/jqueryRAF/jquery.requestAnimationFrame.min.js"></script>
+    <!-- nanoScroller -->
+    <script type="text/javascript" src="assets/nanoScroller/jquery.nanoscroller.min.js"></script>
+    <!-- AngularJS Scripts -->
+    <script type="text/javascript" src="assets/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="assets/angularjs/angular-sanitize.js"></script>
+    <script type="text/javascript" src="assets/angularjs/angular-touch.js"></script>
+    <script type="text/javascript" src="assets/angularjs/angular-cookies.js"></script>
+    <script type="text/javascript" src="assets/angularjs/plugins/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="assets/angularjs/plugins/ocLazyLoad.min.js"></script>
+    <script type="text/javascript" src="assets/dataTables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="assets/angularjs-dataTables/angular-datatables.min.js"></script>
+    <!-- Angular related scripts -->
+    <script src="app.js" type="text/javascript"></script>
+    <script src="directives.js" type="text/javascript"></script>
+    <!-- Controllers -->
+    <script src="navigation/NavbarController.js" type="text/javascript"></script>
+    <script src="navigation/SidebarController.js" type="text/javascript"></script>
+    <script src="dashboard/DashboardController.js" type="text/javascript"></script>
+    <script src="authentication/LoginController.js" type="text/javascript"></script>
+    <script src="authentication/LogoutController.js" type="text/javascript"></script>
+    <script src="user/UserController.js" type="text/javascript"></script>
+    <script src="api-client/ApiController.js" type="text/javascript"></script>
+    <!-- Services -->
+    <script src="authentication/AuthenticationService.js" type="text/javascript"></script>
+    <script src="user/UserService.js" type="text/javascript"></script>
+    <script src="agency/AgencyService.js" type="text/javascript"></script>
+    <!-- Materialize -->
+    <script type="text/javascript" src="assets/angularjs-materialize/angular-materialize.js"></script>
+    <script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+    <!-- Main -->
+    <script type="text/javascript" src="assets/_con/js/_con.min.js"></script>
+    <!-- Google Prettify -->
+    <script type="text/javascript" src="assets/google-code-prettify/prettify.js"></script>
+</body>
+</html>

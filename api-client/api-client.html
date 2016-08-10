@@ -1,0 +1,46 @@
+<div class="page-title" data-ng-include="'navigation/breadcrumbs.html'"></div>
+<style>
+    header, main, footer {
+      padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+</style>
+<div class="[ card-panel ]">
+    <div class="row">
+        <h3>API Tester</h3>
+        <h4>URL: {{ testApiUrl }}</h4>
+        <h4>Api Key: {{ testApiKey }}</h4>
+        <hr>
+        <div class="[ col s12 m3 l2 ]">
+            <div class="collection">
+                <a href="#" ng-click="setActive('newUserRequests')" class="[ collection-item ][ active ]">New User Requests</a>
+                <a href="#" ng-click="setActive('users')" class="[ collection-item ] ">Users</a>
+                <a href="#" ng-click="setActive('sessions')" class="[ collection-item ]">Sessions</a>
+            </div>
+        </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isNewUserRequests">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#create_new_user_request">Create</a></li>
+                <li class="tab col s3"><a href="#confirm_request">Confirm request</a></li>
+                <li class="tab col s3"><a href="#reject_request">Reject request</a></li>
+            </ul>
+            <div id="create_new_user_request" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/create-new-user-request.html'"></div>
+            </div>
+            <div id="confirm_request" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/confirm-request.html'"></div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<hr>
+
+<script>
+  $('[data-parsley-validate]').parsley();
+</script>

@@ -1,0 +1,30 @@
+<p>This service creates a new user request that can be approved or dismissed by an admin user.</p>
+<h4>POST /new_user_requests</h4>
+<h4>Parameters:</h4>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
+  <span style="color: #007700">&quot;user_session&quot;</span> :
+  { 
+    <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>, 
+    <span style="color: #007700">&quot;password&quot;</span> : <span style="background-color: #fff0f0">&quot;secret&quot;</span> 
+  } 
+}
+</pre></div>
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="registerUser()" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="firstName" ng-model="firstName" required>
+            <label for="firstName">Nombre</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="lastName" ng-model="lastName" required>
+            <label for="lastName">Apellido(s)</label>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>

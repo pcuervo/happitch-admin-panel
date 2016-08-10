@@ -1,0 +1,99 @@
+<p>This service approves a user request.</p>
+<h4>POST /new_user_requests/confirm_request</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>email* (string): Valid email address</li>
+    <li>agency_id* (integer): Valid agency_id</li>
+    <li>is_member_amap (boolean): Defaults to false</li>
+    <li>role (integer): 2 - agency admin, 3 - agency or 4 - brand</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
+  <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>,
+  <span style="color: #007700">&quot;is_member_amap&quot;</span> : <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;agency_id&quot;</span> : <span style="color: #0000DD; font-weight: bold">177</span>,
+  <span style="color: #007700">&quot;role&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p>Returns the newly created user</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">114</span>,
+  <span style="color: #007700">&quot;first_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;last_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>,
+  <span style="color: #007700">&quot;role&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+  <span style="color: #007700">&quot;is_member_amap&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;agency&quot;</span>: {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">177</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Riccardi Ingegneri2016-08-04 17:30:02 -0500&quot;</span>
+  },
+  <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;6ubZ6v7dqt_PSDzc9d3t&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Response</div>
+        <div class="[ collapsible-body ]">
+            <p>When there is no pending request with given email.</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;email&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;No existe ninguna solicitud pendiente con ese email&quot;</span>
+    ]
+  }
+}
+</pre></div>
+        </div>
+    </li>
+</ul>
+
+<h5>Error response:</h5>
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="newUserRequest( 'confirm' )" data-parsley-validate>
+    <div class="[ col s12 m3 ]"> 
+        <div class="input-field">
+            <input type="text" id="confirm-req-email" ng-model="confirmReq.email" required>
+            <label for="confirm-req-email">Email</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ][ mt-20 ]"> 
+        <select name="agency" ng-model="confirmReq.agencyId" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
+            <option value="" disabled selected>Choose agency</option>
+            <option ng:repeat="agency in agencies" value="{{agency.id}}">{{agency.name}}</option>
+        </select>
+    </div>
+    <div class="[ col s12 m3 ][ mt-20 ]"> 
+        <select name="member-amap" ng-model="confirmReq.isMemberAMAP">
+            <option value="" disabled selected>Is member AMAP?</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+    </div> 
+    <div class="[ col s12 m3 ][ mt-20 ]"> 
+        <select name="user-type" ng-model="confirmReq.role" required>
+            <option value="" disabled selected>Role</option>
+            <option value="2">Agency Admin (2)</option>
+            <option value="3">Agency (3)</option>
+            <option value="4">Brand (4)</option>
+        </select>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showUserRequestResponse">
+    <h5>Response:</h5>
+    <p>{{ response | json }}</p>
+</div>
