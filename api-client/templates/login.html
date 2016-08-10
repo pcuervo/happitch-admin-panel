@@ -1,25 +1,71 @@
-<p>This service creates a new user request that can be approved or dismissed by an admin user.</p>
-<h4>POST /new_user_requests</h4>
+<p>This service is used to create a new user session.</p>
+<h4>POST /sessions</h4>
 <h4>Parameters:</h4>
+<ul>
+    <li>email* (string)</li>
+    <li>password* (string)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
-  <span style="color: #007700">&quot;user_session&quot;</span> :
-  { 
-    <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>, 
-    <span style="color: #007700">&quot;password&quot;</span> : <span style="background-color: #fff0f0">&quot;secret&quot;</span> 
-  } 
+    <span style="color: #007700">&quot;user_session&quot;</span> : {
+        <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>,
+        <span style="color: #007700">&quot;password&quot;</span> : <span style="background-color: #fff0f0">&quot;holama123&quot;</span>
+    }
 }
 </pre></div>
-<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="registerUser()" data-parsley-validate>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p>Returns the logged in user</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;user&quot;</span>: {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">112</span>,
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;x-tNZgbRsCt5DFzJzp86&quot;</span>,
+    <span style="color: #007700">&quot;role&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+    <span style="color: #007700">&quot;first_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span style="color: #007700">&quot;last_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span style="color: #007700">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>,
+    <span style="color: #007700">&quot;is_member_amap&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+    <span style="color: #007700">&quot;agency_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">177</span>
+  }
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Response</div>
+        <div class="[ collapsible-body ]">
+            <p>When the email or password is incorrect</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;email&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;Email o password incorrecto&quot;</span>
+    ]
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="sessions( 'login' )" data-parsley-validate>
     <div class="[ col s12 m4 offset-m2 ]"> 
         <div class="input-field">
-            <input type="text" id="firstName" ng-model="firstName" required>
-            <label for="firstName">Nombre</label>
+            <input type="email" id="sessions-email" ng-model="sessions.email" required>
+            <label for="sessions-email">Email</label>
         </div>
     </div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="text" id="lastName" ng-model="lastName" required>
-            <label for="lastName">Apellido(s)</label>
+            <input type="password" id="sessions-last-name" ng-model="sessions.password" required>
+            <label for="sessions-last-name">Password</label>
         </div>
     </div>
     <div class="[ col s12 ]"> 
@@ -28,3 +74,8 @@
         </div>
     </div>
 </form>
+
+<div class="[ col s12 ]" ng-show="showSessionResponse">
+    <h5>Response:</h5>
+    <p>{{ sessionResponse | json }}</p>
+</div>

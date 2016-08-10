@@ -1,0 +1,56 @@
+<p>This service is used to destroy a user session.</p>
+<h4>POST /sessions/destroy</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>id* (string): Authorization token of valid session</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
+    <span style="color: #007700">&quot;id&quot;</span> : <span style="background-color: #fff0f0">&quot;jD6ebbyWSQBMzrbtJeSj&quot;</span>
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 204 No Content. </span></p>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> There is no active session with given authorization token.</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;auth_token&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;No existe ninguna sesión activa con ese token&quot;</span>
+    ]
+  }
+}
+</pre></div>
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="sessions( 'logout' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="sessions-token " ng-model="sessions.authorizationToken" required>
+            <label for="sessions-token ">Token</label>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showSessionResponse">
+    <h5>Response:</h5>
+    <p>{{ sessionResponse | json }}</p>
+</div>

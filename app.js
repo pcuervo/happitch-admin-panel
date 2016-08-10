@@ -275,17 +275,21 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
 
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $cookies, $http, AuthenticationService) {
-    // Set API key Authorization header
-    $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
+    // Set Environment
+    $rootScope.env = 'test';
+    if( 'test' == $rootScope.env )
+            $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
+        else
+            $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4'; 
 
-    $rootScope.globals = { env: 'test' };
+
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'http://amap-dev.herokuapp.com/api/'
-    var prod = 'amap-prod.herokuapp.com/api/users'
-    if( 'test' == $rootScope.globals.env ){
+    var prod = 'amap-prod.herokuapp.com/api/'
+    if( 'test' == $rootScope.env ){
         $rootScope.apiUrl = test;
-    } else if ( 'stage' == $rootScope.globals.env ){
+    } else if ( 'stage' == $rootScope.env ){
         $rootScope.apiUrl = stage;
     } else {
         $rootScope.apiUrl = prod;
@@ -297,9 +301,8 @@ conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationServ
     $rootScope.$state = $state;
     // keep user logged in after page refresh
     $rootScope.globals = $cookies.getObject('globals') || {};
-    console.log( $rootScope.globals );
-    console.log( $state.get() );
-    if ( $rootScope.globals.currentUser ) $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
+
+    //if ( $rootScope.globals.currentUser ) $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
