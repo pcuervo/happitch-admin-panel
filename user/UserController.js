@@ -58,20 +58,19 @@ conAngular
         }// updateUser
 
         $scope.changePassword = function(){
-            UserService.changePassword( $scope.password, $scope.passwordConfirmation, function ( response ){
-
-                    if(response.errors) {
-                        console.log(response.errors);
-                        ErrorHelper.display( response.errors );
-                        return;
-                    }
-                    Materialize.toast('¡Se ha cambiado tu contraseña!', 4000, 'green');
-                    $state.go('/my-account', {}, { reload: true });
+            console.log( $scope.token );
+            console.log( $scope.password );
+            UserService.changePassword( $scope.token, $scope.password, function ( response ){
+                if(response.errors) {
+                    console.log(response.errors);
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                Materialize.toast('¡Se ha cambiado tu contraseña!', 4000, 'green');
+                // $state.go('/my-account', {}, { reload: true });
             });
         }// changePassword
 
-
-        
 
         /******************
         * PRIVATE FUNCTIONS
@@ -83,6 +82,12 @@ conAngular
                 fetchAgencies();
                 return;
             }
+
+            if( currentPath.indexOf( '/reset-password' ) > -1 ){
+                $scope.token = $stateParams.passwordToken;
+                return;
+            }
+
         }
 
         function getAllUsers(){

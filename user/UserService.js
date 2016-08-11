@@ -3,10 +3,11 @@ conAngular
 
         var service = {};
 
-        service.getNewUserRequests = getNewUserRequests;
+        service.getNewUserRequests      = getNewUserRequests;
         service.getNewUserRequest = getNewUserRequest;
         service.confirmUserRequest = confirmUserRequest;
         service.createNewUserRequest = createNewUserRequest;
+        service.changePassword = changePassword;
         return service;
 
 
@@ -71,6 +72,22 @@ conAngular
                });
 
         }// createNewUserRequest
+
+        function changePassword( token, password, callback ){
+            var serviceUrl = $rootScope.apiUrl + 'users/reset_password';
+            $http.post(serviceUrl, 
+            {
+                token: token,
+                password: password,
+            })
+           .success(function ( response ) {
+                console.log( response )
+                callback( response );
+           })
+           .error(function ( response ) {
+                callback( response );
+           });
+        }// changePassword
 
     }]);
 

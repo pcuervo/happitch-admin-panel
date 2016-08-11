@@ -254,11 +254,29 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
     // })
 
     .state('/api-client', {
-        url: "/api-client",
+        url: "/api-client/",
         templateUrl: "api-client/api-client.html",
         controller: "ApiController",
         data: {
             pageTitle: 'API Tester'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+
+    .state('/reset-password', {
+        url: "/reset-password/:passwordToken",
+        templateUrl: "user/reset-password.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Cambiar contraseña'
         },
         resolve: {
             deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -276,46 +294,38 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $cookies, $http, AuthenticationService) {
     // Set Environment
-    $rootScope.env = 'test';
-    if( 'test' == $rootScope.env )
-            $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
-        else
-            $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4'; 
-
-
+    $rootScope.env = 'stage';
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'http://amap-dev.herokuapp.com/api/'
     var prod = 'amap-prod.herokuapp.com/api/'
     if( 'test' == $rootScope.env ){
         $rootScope.apiUrl = test;
+        $rootScope.apiKey = 'Token d2d6279345763f64ce21183142e974b8';
+        $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
     } else if ( 'stage' == $rootScope.env ){
         $rootScope.apiUrl = stage;
+        $rootScope.apiKey = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
+        $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
     } else {
         $rootScope.apiUrl = prod;
+        $rootScope.apiKey = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
+        $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
     }
     
-
     $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
     // state to be accessed from view
     $rootScope.$state = $state;
     // keep user logged in after page refresh
     $rootScope.globals = $cookies.getObject('globals') || {};
 
-    //if ( $rootScope.globals.currentUser ) $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
-
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($state.get(), ['/login', '/api-client']) === -1;
+        var restrictedPage = $.inArray($state.get(), ['/login', '/api-client', 'reset-password']) === -1;
 
         $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
         var loggedIn = $rootScope.loggedIn;
-
-//         if (restrictedPage && !loggedIn ) {
-//             event.preventDefault();
-//             $state.go('/login');
-//         }
 
     });
 

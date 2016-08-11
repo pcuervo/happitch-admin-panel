@@ -9,12 +9,6 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
     return service;
 
     function login(email, password, callback) {
-        console.log( password ); 
-        // if( 'test' == $rootScope.env )
-        //     $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
-        // else
-        //     $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4'; 
- 
         var serviceUrl = $rootScope.apiUrl  + 'sessions/';
         $http.post(serviceUrl, { 
             user_session: {
@@ -49,11 +43,11 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
         function clearCredentials() {
 
             $rootScope.globals = {};
-        $rootScope.loggedIn = false;
+            $rootScope.loggedIn = false;
         
             $cookies.remove('globals');
-        $cookies.put('loggedIn', false);
-            $http.defaults.headers.common.Authorization = 'Basic ';
+            $cookies.put('loggedIn', false);
+            //$http.defaults.headers.common.Authorization = 'Basic ';
 
         }
 

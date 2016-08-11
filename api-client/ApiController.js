@@ -1,8 +1,10 @@
 conAngular
-    .controller('ApiController', ['$scope', '$location', '$state', 'UserService', 'AgencyService', 'AuthenticationService', function( $scope, $location, $state, UserService, AgencyService, AuthenticationService ){
+    .controller('ApiController', ['$scope', '$rootScope', '$location', '$state', 'UserService', 'AgencyService', 'AuthenticationService', function( $scope, $rootScope, $location, $state, UserService, AgencyService, AuthenticationService ){
 
         (function initController() {
             initApi();
+            $scope.apiUrl = $rootScope.apiUrl;
+            $scope.apiKey = $rootScope.apiKey;
         })();
 
         $scope.newUserRequest = function( action ){
@@ -60,14 +62,13 @@ conAngular
         *********************/
         function createNewUserRequest( email, agencyName, userType ){
             UserService.createNewUserRequest( email, agencyName, userType, function ( response ){
-                    $scope.showUserRequestResponse = true;
-                    $scope.response = response;
-                    if(response.errors) {
-                        console.log(response.errors);
-                        Materialize.toast('New user request could not be created!', 4000, 'red');
-                        return;
-                    }
-                    Materialize.toast('New user request created!', 4000, 'green');
+                $scope.showUserRequestResponse = true;
+                $scope.response = response;
+                if(response.errors) {
+                    Materialize.toast('New user request could not be created!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('New user request created!', 4000, 'green');
             });
         }
 
@@ -76,7 +77,6 @@ conAngular
                     $scope.showUserRequestResponse = true;
                     $scope.response = response;
                     if(response.errors) {
-                        console.log(response.errors);
                         Materialize.toast('Request could not be confirmed!', 4000, 'red');
                         return;
                     }
