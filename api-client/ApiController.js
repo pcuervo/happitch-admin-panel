@@ -8,6 +8,7 @@ conAngular
         })();
 
         $scope.newUserRequest = function( action ){
+            console.log( action );
             switch( action ){
                 case 'create':
                     createNewUserRequest( this.cnur.email, this.cnur.agency, this.cnur.userType );
@@ -15,8 +16,26 @@ conAngular
                 case 'confirm':
                     confirmRequest( this.confirmReq.email, this.confirmReq.agencyId, this.confirmReq.role, this.confirmReq.isMemberAMAP );
                     break;
+                case 'reject':
+                    rejectRequest( this.rejectReq.email );
+                    break;
             }
-        }// updateUser
+        }// newUserRequest
+
+        $scope.agencyService = function( action ){
+            switch( action ){
+                case 'create':
+                    var goldenPitch = $('#checkbox-golden-pitch:checked').length;
+                    var silverPitch = $('#checkbox-silver-pitch:checked').length;
+                    var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
+                    var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
+                    createAgency( this.createAgency.authToken, this.createAgency.name, this.createAgency.phone, this.createAgency.contactName, this.createAgency.contactEmail, this.createAgency.address, this.createAgency.latitude, this.createAgency.longitude, this.createAgency.websiteUrl, this.createAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch );
+                    break;
+                case 'update':
+                    confirmRequest( this.confirmReq.email, this.confirmReq.agencyId, this.confirmReq.role, this.confirmReq.isMemberAMAP );
+                    break;
+            }
+        }// agencies
 
         $scope.sessions = function( action ){
             switch( action ){
@@ -42,6 +61,9 @@ conAngular
                 case 'newUserRequests':
                     $scope.isNewUserRequests = true;
                     break;
+                case 'agencies':
+                    $scope.isAgencies = true;
+                    break;
                 default:
                     $scope.isNewUserRequests = true;
             }
@@ -60,6 +82,7 @@ conAngular
         /*********************
          API FUNCTIONS
         *********************/
+        
         function createNewUserRequest( email, agencyName, userType ){
             UserService.createNewUserRequest( email, agencyName, userType, function ( response ){
                 $scope.showUserRequestResponse = true;
@@ -81,6 +104,18 @@ conAngular
                         return;
                     }
                     Materialize.toast('User request confirmed! A new user has been created.', 4000, 'green');
+            });
+        }
+
+        function rejectRequest( email ){
+            UserService.rejectUserRequest( email, function ( response ){
+                    $scope.showUserRequestResponse = true;
+                    $scope.response = response;
+                    if(response.errors) {
+                        Materialize.toast('Request could not be confirmed!', 4000, 'red');
+                        return;
+                    }
+                    Materialize.toast('User request rejected! An email has been sent to user with the details abouth the rejection', 6000, 'green');
             });
         }
 
@@ -111,6 +146,18 @@ conAngular
                 Materialize.toast('User logged out! The sessions has been destroyed.', 4000, 'green');
             });
         }
+
+        function createAgency( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch ){
+            AgencyService.create( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.agencyResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Agency could not be created!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Agency created!', 4000, 'green');
+            });
+        }// createAgency
 
         /*********************
          HELPER FUNCTIONS

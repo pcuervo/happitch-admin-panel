@@ -9,10 +9,10 @@
     <li>
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
         <div class="[ collapsible-body ]">
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
-    <span style="color: #007700">&quot;user_session&quot;</span> : {
-        <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>,
-        <span style="color: #007700">&quot;password&quot;</span> : <span style="background-color: #fff0f0">&quot;holama123&quot;</span>
+<div class="[ json-container ]"><pre>{ 
+    <span class="[ json-key ]">&quot;user_session&quot;</span> : {
+        <span class="[ json-key ]">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>,
+        <span class="[ json-key ]">&quot;password&quot;</span> : <span style="background-color: #fff0f0">&quot;holama123&quot;</span>
     }
 }
 </pre></div>
@@ -23,16 +23,16 @@
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
         <div class="[ collapsible-body ]">
             <p>Returns the logged in user</p>
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;user&quot;</span>: {
-    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">112</span>,
-    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;x-tNZgbRsCt5DFzJzp86&quot;</span>,
-    <span style="color: #007700">&quot;role&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
-    <span style="color: #007700">&quot;first_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
-    <span style="color: #007700">&quot;last_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
-    <span style="color: #007700">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>,
-    <span style="color: #007700">&quot;is_member_amap&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
-    <span style="color: #007700">&quot;agency_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">177</span>
+<div class="[ json-container ]"><pre>{
+  <span class="[ json-key ]">&quot;user&quot;</span>: {
+    <span class="[ json-key ]">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">112</span>,
+    <span class="[ json-key ]">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;x-tNZgbRsCt5DFzJzp86&quot;</span>,
+    <span class="[ json-key ]">&quot;role&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+    <span class="[ json-key ]">&quot;first_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span class="[ json-key ]">&quot;last_name&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span class="[ json-key ]">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>,
+    <span class="[ json-key ]">&quot;is_member_amap&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+    <span class="[ json-key ]">&quot;agency_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">177</span>
   }
 }
 </pre></div>
@@ -42,9 +42,9 @@
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Response</div>
         <div class="[ collapsible-body ]">
             <p>When the email or password is incorrect</p>
-<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;errors&quot;</span>: {
-    <span style="color: #007700">&quot;email&quot;</span>: [
+<!-- HTML generated using hilite.me --><div class="[ json-container ]"><pre>{
+  <span class="[ json-key ]">&quot;errors&quot;</span>: {
+    <span class="[ json-key ]">&quot;email&quot;</span>: [
       <span style="background-color: #fff0f0">&quot;Email o password incorrecto&quot;</span>
     ]
   }

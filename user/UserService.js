@@ -4,10 +4,11 @@ conAngular
         var service = {};
 
         service.getNewUserRequests      = getNewUserRequests;
-        service.getNewUserRequest = getNewUserRequest;
-        service.confirmUserRequest = confirmUserRequest;
-        service.createNewUserRequest = createNewUserRequest;
-        service.changePassword = changePassword;
+        service.getNewUserRequest       = getNewUserRequest;
+        service.confirmUserRequest      = confirmUserRequest;
+        service.rejectUserRequest       = rejectUserRequest;
+        service.createNewUserRequest    = createNewUserRequest;
+        service.changePassword          = changePassword;
         return service;
 
 
@@ -53,6 +54,23 @@ conAngular
                });
 
         }// confirmUserRequest
+
+        function rejectUserRequest( email, callback ){
+            var serviceUrl = $rootScope.apiUrl + 'new_user_requests/reject_request';
+            $http.post(serviceUrl, 
+                {
+                    email: email
+                })
+               .success(function ( response ) {
+                    console.log( response );
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    console.log( response );
+                    callback( response );
+               });
+
+        }// rejectUserRequest
 
         function createNewUserRequest( email, agencyName, userType, callback ){
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/';

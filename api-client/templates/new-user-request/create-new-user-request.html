@@ -4,18 +4,18 @@
 <ul>
     <li>Email (string): Valid email address</li>
     <li>Agency (string): Name of the agency</li>
-    <li>User type (integer): 3 - agency or 4 - brand</li>
+    <li>User type (integer): 2 - agency or 4 - brand</li>
 </ul>
 <ul class="[ collapsible ]" data-collapsible="accordion">
     <li>
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
         <div class="[ collapsible-body ]">
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{ 
-  <span style="color: #007700">&quot;new_user_requests&quot;</span> :
+<div class="[ json-container ]"><pre>{ 
+  <span class="[ json-key ]">&quot;new_user_requests&quot;</span> :
   { 
-    <span style="color: #007700">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>, 
-    <span style="color: #007700">&quot;agency&quot;</span> : <span style="background-color: #fff0f0">&quot;Pequeño cuervo&quot;</span>,
-    <span style="color: #007700">&quot;user_type&quot;</span> : <span style="background-color: #fff0f0">&quot;agencia&quot;</span> 
+    <span class="[ json-key ]">&quot;email&quot;</span> : <span style="background-color: #fff0f0">&quot;miguel@pcuervo.com&quot;</span>, 
+    <span class="[ json-key ]">&quot;agency&quot;</span> : <span style="background-color: #fff0f0">&quot;Pequeño cuervo&quot;</span>,
+    <span class="[ json-key ]">&quot;user_type&quot;</span> : <span style="background-color: #fff0f0">&quot;2&quot;</span> 
   } 
 }
 </pre></div>
@@ -25,12 +25,12 @@
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response (HTTP 201)</div>
         <div class="[ collapsible-body ]">
             <p>Returns the newly created user request</p>
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
-  <span style="color: #007700">&quot;user_type&quot;</span>: <span style="background-color: #fff0f0">&quot;agencia&quot;</span>,
-  <span style="color: #007700">&quot;agency&quot;</span>: <span style="background-color: #fff0f0">&quot;Pequeño cuervo&quot;</span>,
-  <span style="color: #007700">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>,
-  <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-09T22:59:10.143Z&quot;</span>
+<div class="[ json-container ]"><pre>{
+  <span class="[ json-key ]">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
+  <span class="[ json-key ]">&quot;user_type&quot;</span>: <span style="background-color: #fff0f0">&quot;agencia&quot;</span>,
+  <span class="[ json-key ]">&quot;agency&quot;</span>: <span style="background-color: #fff0f0">&quot;Pequeño cuervo&quot;</span>,
+  <span class="[ json-key ]">&quot;email&quot;</span>: <span style="background-color: #fff0f0">&quot;test@pcuervo.com&quot;</span>,
+  <span class="[ json-key ]">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-09T22:59:10.143Z&quot;</span>
 }
 </pre></div>
         </div>
@@ -39,30 +39,30 @@
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Response (HTTP 422)</div>
         <div class="[ collapsible-body ]">
             <p>When a user request already exists and it is pending for approval.</p>
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;errors&quot;</span>: {
-    <span style="color: #007700">&quot;email&quot;</span>: [
+<div class="[ json-container ]"><pre>{
+  <span class="[ json-key ]">&quot;errors&quot;</span>: {
+    <span class="[ json-key ]">&quot;email&quot;</span>: [
       <span style="background-color: #fff0f0">&quot;Ya existe una solicitud con ese email&quot;</span>
     ]
   }
 }
 </pre></div>
             <p>When a user already exists.</p>
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;errors&quot;</span>: {
-    <span style="color: #007700">&quot;email&quot;</span>: [
+<div class="[ json-container ]"><pre>{
+  <span class="[ json-key ]">&quot;errors&quot;</span>: {
+    <span class="[ json-key ]">&quot;email&quot;</span>: [
       <span style="background-color: #fff0f0">&quot;Ya existe una cuenta con ese email&quot;</span>
     ]
   }
 }
 </pre></div>
             <p>When email and/or agency is empty.</p>
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;errors&quot;</span>: {
-    <span style="color: #007700">&quot;email&quot;</span>: [
+<div class="[ json-container ]"><pre>{
+  <span class="[ json-key ]">&quot;errors&quot;</span>: {
+    <span class="[ json-key ]">&quot;email&quot;</span>: [
       <span style="background-color: #fff0f0">&quot;El email no puede estar vacío&quot;</span>
     ],
-    <span style="color: #007700">&quot;agency&quot;</span>: [
+    <span class="[ json-key ]">&quot;agency&quot;</span>: [
       <span style="background-color: #fff0f0">&quot;El nombre de la agencia no puede estar vacío&quot;</span>
     ]
   }
@@ -92,7 +92,7 @@
     <div class="[ col s12 m4 ][ mt-20 ]"> 
         <select name="user-type" ng-model="cnur.userType" required>
             <option value="" disabled selected>User type</option>
-            <option value="3">Agency (3)</option>
+            <option value="2">Agency (2)</option>
             <option value="4">Brand (4)</option>
         </select>
     </div>
@@ -102,7 +102,6 @@
         </div>
     </div>
 </form>
-
 
 <div class="[ col s12 ]" ng-show="showUserRequestResponse">
     <h5>Response:</h5>

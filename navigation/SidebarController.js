@@ -10,7 +10,6 @@ conAngular.controller('SidebarController', ['$scope', '$rootScope', 'UserService
         $rootScope.$watch('loggedIn', function() {
             if( $rootScope.loggedIn ) {
                 $scope.role = $rootScope.globals.currentUser.role;
-                $scope.roleName = UserService.getRole( $scope.role );
             }
         });
     });

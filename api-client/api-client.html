@@ -9,6 +9,7 @@
             <div class="collection">
                 <a href="#" id="newUserRequests" class="[ collection-item ][ waves-effect ][ active ]" ng-click="setActive('newUserRequests')">New User Requests</a>
                 <a href="#" id="sessions" class="[ collection-item ][ waves-effect ]" ng-click="setActive('sessions')">Sessions</a>
+                <a href="#" id="agencies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('agencies')">Agencies</a>
                 <a href="#" id="users" class="[ collection-item ][ waves-effect ] " ng-click="setActive('users')">Users (pending)</a>
             </div>
         </div>
@@ -19,10 +20,25 @@
                 <li class="tab col s3"><a href="#reject_request">Reject request</a></li>
             </ul>
             <div id="create_new_user_request" class="[ mt-20 ]">
-                <div class="[ card-panel ]" ng-include src="'api-client/templates/create-new-user-request.html'"></div>
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/new-user-request/create-new-user-request.html'"></div>
             </div>
             <div id="confirm_request" class="[ mt-20 ]">
-                <div class="[ card-panel ]" ng-include src="'api-client/templates/confirm-request.html'"></div>
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/new-user-request/confirm-request.html'"></div>
+            </div>
+            <div id="reject_request" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/new-user-request/reject-request.html'"></div>
+            </div>
+        </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isAgencies">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#create_agency">Create</a></li>
+                <li class="tab col s3"><a class="active" href="#update_agency">Update</a></li>
+            </ul>
+            <div id="create_agency" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-agency.html'"></div>
+            </div>
+            <div id="update_agency" class="[ mt-20 ]">
+                <!-- <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/confirm-request.html'"></div> -->
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isUsers">
@@ -31,15 +47,6 @@
                 <li class="tab col s3"><a href="#update_user">Update</a></li>
                 <li class="tab col s3"><a href="#send_password_reset">Send Password Reset</a></li>
             </ul>
-<!--             <div id="create_user" class="[ mt-20 ]">
-                <div class="[ card-panel ]" ng-include src="'api-client/templates/create-new-user-request.html'"></div>
-            </div>
-            <div id="update_user" class="[ mt-20 ]">
-                <div class="[ card-panel ]" ng-include src="'api-client/templates/confirm-request.html'"></div>
-            </div>
-            <div id="send_password_reset" class="[ mt-20 ]">
-                <div class="[ card-panel ]" ng-include src="'api-client/templates/confirm-request.html'"></div>
-            </div> -->
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isSessions">
             <ul class="tabs">

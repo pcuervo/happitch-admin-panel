@@ -254,7 +254,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
     // })
 
     .state('/api-client', {
-        url: "/api-client/",
+        url: "/api-client",
         templateUrl: "api-client/api-client.html",
         controller: "ApiController",
         data: {
@@ -294,7 +294,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $cookies, $http, AuthenticationService) {
     // Set Environment
-    $rootScope.env = 'stage';
+    $rootScope.env = 'test';
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'http://amap-dev.herokuapp.com/api/'
@@ -318,16 +318,6 @@ conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationServ
     $rootScope.$state = $state;
     // keep user logged in after page refresh
     $rootScope.globals = $cookies.getObject('globals') || {};
-
-    $rootScope.$on('$locationChangeStart', function (event, next, current) {
-
-        // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($state.get(), ['/login', '/api-client', 'reset-password']) === -1;
-
-        $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
-        var loggedIn = $rootScope.loggedIn;
-
-    });
 
 }]);
 

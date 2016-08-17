@@ -1,0 +1,190 @@
+<p>This service creates a new agency</p>
+<h4>POST /agencies</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token (string): Authorization token generated after for each user after login.</li>
+    <li>name* (string)</li>
+    <li>phone (string)</li>
+    <li>contact_name (string)</li>
+    <li>contact_email (string): Valid email address</li>
+    <li>address (string)</li>
+    <li>latitude (decimal)</li>
+    <li>longitude (decimal)</li>
+    <li>website_url (string)</li>
+    <li>num_employees (integer)</li>
+    <li>golden_pitch (boolean)</li>
+    <li>silver_pitch (boolean)</li>
+    <li>high_risk_pitch (boolean)</li>
+    <li>medium_risk_pitch (boolean)</li>
+    <li>logo ( base64 image ) - TODO</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>,
+    <span style="color: #007700">&quot;agency&quot;</span>: {
+        <span style="color: #007700">&quot;name&quot;</span> : <span style="background-color: #fff0f0">&quot;CrowAgency&quot;</span>,
+        <span style="color: #007700">&quot;phone&quot;</span>: <span style="background-color: #fff0f0">&quot;5566778899&quot;</span>,
+        <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Alejandro Aristi&quot;</span>,
+        <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;myemail@agency.com&quot;</span>,
+        <span style="color: #007700">&quot;address&quot;</span>: <span style="background-color: #fff0f0">&quot;Agrarismo 52, Escandón, Miguel Hidalgo, 11800&quot;</span>,
+        <span style="color: #007700">&quot;latitude&quot;</span>: <span style="color: #6600EE; font-weight: bold">19.401710</span>,
+        <span style="color: #007700">&quot;longitude&quot;</span>: <span style="color: #6600EE; font-weight: bold">-99.170933</span>,
+        <span style="color: #007700">&quot;website_url&quot;</span>: <span style="background-color: #fff0f0">&quot;http://pcuervo.com&quot;</span>,
+        <span style="color: #007700">&quot;num_employees&quot;</span>: <span style="color: #0000DD; font-weight: bold">10</span>,
+        <span style="color: #007700">&quot;golden_pitch&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+        <span style="color: #007700">&quot;silver_pitch&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+        <span style="color: #007700">&quot;high_risk_pitch&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+        <span style="color: #007700">&quot;medium_risk_pitch&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>
+    }
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created agency object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">181</span>,
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;CrowAgency2000&quot;</span>,
+  <span style="color: #007700">&quot;phone&quot;</span>: <span style="background-color: #fff0f0">&quot;5566778899&quot;</span>,
+  <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Alejandro Aristi&quot;</span>,
+  <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;myemail@agency.com&quot;</span>,
+  <span style="color: #007700">&quot;address&quot;</span>: <span style="background-color: #fff0f0">&quot;Agrarismo 52, Escandón, Miguel Hidalgo, 11800&quot;</span>,
+  <span style="color: #007700">&quot;latitude&quot;</span>: <span style="background-color: #fff0f0">&quot;19.40171&quot;</span>,
+  <span style="color: #007700">&quot;longitude&quot;</span>: <span style="background-color: #fff0f0">&quot;-99.170933&quot;</span>,
+  <span style="color: #007700">&quot;website_url&quot;</span>: <span style="background-color: #fff0f0">&quot;http://pcuervo.com&quot;</span>,
+  <span style="color: #007700">&quot;num_employees&quot;</span>: <span style="color: #0000DD; font-weight: bold">10</span>,
+  <span style="color: #007700">&quot;golden_pitch&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;silver_pitch&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;high_risk_pitch&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;medium_risk_pitch&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>
+}
+</pre></div>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no agency name sent</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El nombre de la agencia no puede estar vacío&quot;</span>
+    ]
+  }
+}
+</pre></div>
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When agency name already exists</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;Ya existe una agencia con ese nombre&quot;</span>
+    ]
+  }
+}
+</pre></div>
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="agencyService( 'create' )" data-parsley-validate>
+  <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-auth-token" ng-model="createAgency.authToken" required>
+            <label for="create-agency-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="[ clear ]"></div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-name" ng-model="createAgency.name" required>
+            <label for="create-agency-name">Agency Name</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-phone" ng-model="createAgency.phone">
+            <label for="create-agency-phone">Phone</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="number" id="create-agency-num-employees" ng-model="createAgency.numEmployees">
+            <label for="create-agency-num-employees">Number of employees</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-website-url" ng-model="createAgency.websiteUrl">
+            <label for="create-agency-website-url">Website URL</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-contact-name" ng-model="createAgency.contactName">
+            <label for="create-agency-contact-name">Contact Name</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-contact-email" ng-model="createAgency.contactEmail">
+            <label for="create-agency-contact-email">Contact Email</label>
+        </div>
+    </div>
+    <div class="[ col s12 m6 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-address" ng-model="createAgency.address">
+            <label for="create-agency-address">Address</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-latitude" ng-model="createAgency.latitude">
+            <label for="create-agency-latitude">Latitude</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-agency-longitude" ng-model="createAgency.longitude">
+            <label for="create-agency-longitude">Longitude</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-golden-pitch" value="1" name="goldenPitch" />
+            <label for="checkbox-golden-pitch">Golden Pitch</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-silver-pitch" value="1" name="silverPitch" />
+            <label for="checkbox-silver-pitch">Silver Pitch</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-medium-risk-pitch" value="1" name="medium-riskPitch" />
+            <label for="checkbox-medium-risk-pitch">Medium Risk Pitch</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-high-risk-pitch" value="1" name="high-riskPitch" />
+            <label for="checkbox-high-risk-pitch">High Risk Pitch</label>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ agencyResponse | json }}</p>
+</div>
