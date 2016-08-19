@@ -2,7 +2,10 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
 
     var service = {};
         service.getAll = getAll;
-        service.create = create
+        service.create = create;
+        service.update = update;
+        service.createCase = createCase;
+        service.updateCase = updateCase;
     return service;
 
     function getAll( callback ){
@@ -16,11 +19,13 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         });
     }// getAll
 
-    function create( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, callback ){
+    function create( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, logo, filename, callback ){
         var serviceUrl = $rootScope.apiUrl + 'agencies/';
         $http.post(serviceUrl, 
             {
                 auth_token: authToken,
+                logo:       logo,
+                filename:   filename,
                 agency: {
                     name:               name, 
                     phone:              phone, 
@@ -34,7 +39,7 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
                     golden_pitch:       goldenPitch, 
                     silver_pitch:       silverPitch, 
                     medium_risk_pitch:  mediumPitch, 
-                    high_risk_pitch:    highPitch 
+                    high_risk_pitch:    highPitch
                 }
             })
         .success(function ( response ) {
@@ -46,5 +51,84 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         });
     }// create
 
+    function update( id, authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, logo, filename, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/update';
+        $http.post(serviceUrl, 
+            {
+                id: id,
+                auth_token: authToken,
+                logo:       logo,
+                filename:   filename,
+                agency: {
+                    name:               name, 
+                    phone:              phone, 
+                    contact_name:       contactName, 
+                    contact_email:      contactEmail, 
+                    address:            address, 
+                    latitud:            latitude, 
+                    longitude:          longitude, 
+                    website_url:        websiteUrl, 
+                    num_employees:      numEmployees, 
+                    golden_pitch:       goldenPitch, 
+                    silver_pitch:       silverPitch, 
+                    medium_risk_pitch:  mediumPitch, 
+                    high_risk_pitch:    highPitch,
+                }
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// update
+
+    function createCase( authToken, agencyId, name, description, url, image, filename, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'success_cases/';
+        $http.post(serviceUrl, 
+            {
+                auth_token: authToken,
+                case_image: image,
+                filename:   filename,
+                success_case: {
+                    name:           name, 
+                    agency_id:      agencyId,
+                    description:    description, 
+                    url:            url
+                }
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// createCase
+
+    function updateCase( id, authToken, agencyId, name, description, url, image, filename, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'success_cases/update';
+        $http.post(serviceUrl, 
+            {
+                id:         id,
+                auth_token: authToken,
+                case_image: image,
+                filename:   filename,
+                success_case: {
+                    name:           name, 
+                    agency_id:      agencyId,
+                    description:    description, 
+                    url:            url
+                }
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// createCase
 }]);
 

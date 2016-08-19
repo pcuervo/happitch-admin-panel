@@ -29,10 +29,24 @@ conAngular
                     var silverPitch = $('#checkbox-silver-pitch:checked').length;
                     var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
                     var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
-                    createAgency( this.createAgency.authToken, this.createAgency.name, this.createAgency.phone, this.createAgency.contactName, this.createAgency.contactEmail, this.createAgency.address, this.createAgency.latitude, this.createAgency.longitude, this.createAgency.websiteUrl, this.createAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch );
+
+                    var logoFilename = '';
+                    if( 'undefined' !== typeof $scope.imageExt ){
+                        logoFilename = FormatHelper.slug( this.createAgency.name ) + '.' + $scope.imageExt;
+                    }
+                    console.log(logoFilename);
+                    createAgency( this.createAgency.authToken, this.createAgency.name, this.createAgency.phone, this.createAgency.contactName, this.createAgency.contactEmail, this.createAgency.address, this.createAgency.latitude, this.createAgency.longitude, this.createAgency.websiteUrl, this.createAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename );
                     break;
                 case 'update':
-                    confirmRequest( this.confirmReq.email, this.confirmReq.agencyId, this.confirmReq.role, this.confirmReq.isMemberAMAP );
+                    var goldenPitch = $('#checkbox-golden-pitch:checked').length;
+                    var silverPitch = $('#checkbox-silver-pitch:checked').length;
+                    var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
+                    var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
+                    var logoFilename = '';
+                    if( 'undefined' !== typeof $scope.imageExt ){
+                        logoFilename = FormatHelper.slug( this.updateAgency.name ) + '.' + $scope.imageExt;
+                    }
+                    updateAgency( this.updateAgency.id, this.updateAgency.authToken, this.updateAgency.name, this.updateAgency.phone, this.updateAgency.contactName, this.updateAgency.contactEmail, this.updateAgency.address, this.updateAgency.latitude, this.updateAgency.longitude, this.updateAgency.websiteUrl, this.updateAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename );
                     break;
             }
         }// agencies
@@ -48,6 +62,25 @@ conAngular
             }
         }
 
+        $scope.successCaseService = function( action ){
+            switch( action ){
+                case 'create':
+                    var filename = '';
+                    if( 'undefined' !== typeof $scope.imageExt ){
+                        filename = FormatHelper.slug( this.createCase.name ) + '.' + $scope.imageExt;
+                    }
+                    createCase( this.createCase.authToken, this.createCase.agencyId, this.createCase.name, this.createCase.description, this.createCase.url, $scope.image, filename );
+                    break;
+                case 'update':
+                    var filename = '';
+                    if( 'undefined' !== typeof $scope.imageExt ){
+                        filename = FormatHelper.slug( this.updateCase.name ) + '.' + $scope.imageExt;
+                    }
+                    updateCase( this.updateCase.id, this.updateCase.authToken, this.updateCase.agencyId, this.updateCase.name, this.updateCase.description, this.updateCase.url, $scope.image, filename );
+                    break;
+            }
+        }// successCaseService
+
         $scope.setActive = function( tab ){
             setCollectionInactive();
             $('#'+tab).addClass('active');
@@ -62,6 +95,16 @@ conAngular
                     $scope.isNewUserRequests = true;
                     break;
                 case 'agencies':
+                    $("#create-agency-logo").change(function(){
+                        getImgData( 'create-agency-logo' );
+                    });
+                    $("#update-agency-logo").change(function(){
+                        getImgData( 'update-agency-logo' );
+                    });
+                    $("#create-success-case-image").change(function(){
+                        console.log('getting');
+                        getImgData( 'create-success-case-image' );
+                    });
                     $scope.isAgencies = true;
                     break;
                 default:
@@ -147,8 +190,8 @@ conAngular
             });
         }
 
-        function createAgency( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch ){
-            AgencyService.create( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, function ( response ){
+        function createAgency( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, logo, logoFilename ){
+            AgencyService.create( authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, logo, logoFilename, function ( response ){
                 $scope.showAgenciesResponse = true;
                 $scope.agencyResponse = response;
                 if(response.errors) {
@@ -158,6 +201,45 @@ conAngular
                 Materialize.toast('Agency created!', 4000, 'green');
             });
         }// createAgency
+
+        function updateAgency( id, authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, logo, logoFilename ){
+            AgencyService.update( id, authToken, name, phone, contactName, contactEmail, address, latitude, longitude, websiteUrl, numEmployees, goldenPitch, silverPitch, mediumPitch, highPitch, logo, logoFilename, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.agencyResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Agency could not be created!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Agency created!', 4000, 'green');
+            });
+        }// updateAgency
+
+        function createCase( authToken, agencyId, name, description, url, image, filename  ){
+            AgencyService.createCase( authToken, agencyId, name, description, url, image, filename, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.successCaseResponse = response;
+                if(response.errors) {
+                    console.log( response.errors );
+                    Materialize.toast('Success case could not be created!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Success case created!', 4000, 'green');
+            });
+        }// createCase
+
+        function updateCase( id, authToken, agencyId, name, description, url, image, filename  ){
+            AgencyService.updateCase( id, authToken, agencyId, name, description, url, image, filename, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.successCaseResponse = response;
+                if(response.errors) {
+                    console.log( response.errors );
+                    Materialize.toast('Success case could not be updated!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Success case updated!', 4000, 'green');
+            });
+        }// updateCase
+
 
         /*********************
          HELPER FUNCTIONS
@@ -173,6 +255,20 @@ conAngular
             $scope.isNewUserRequests = false;
             $scope.isUsers = false;
             $scope.isSessions = false;
+            $scope.isAgencies = false;
         }
+
+        function getImgData( id ){
+            var imgId = id;
+            var fileInput = document.getElementById( imgId );
+            file = fileInput.files[0];
+            fr = new FileReader();
+            fr.readAsDataURL(file);
+            fr.onload = function(){
+                $scope.image = fr.result;
+                $scope.imageExt = file.name.split('.').pop().toLowerCase();
+                console.log($scope.imageExt);
+            }
+        }// getItemImg
 
     }]);

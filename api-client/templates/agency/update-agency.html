@@ -1,7 +1,8 @@
-<p>This service creates a new agency</p>
-<h4>POST /agencies</h4>
+<p>This service updates an existing agency</p>
+<h4>POST /agencies/update</h4>
 <h4>Parameters:</h4>
 <ul>
+    <li>id* (integer): ID of existing agency</li>
     <li>auth_token* (string): Authorization token generated after for each user after login.</li>
     <li>name* (string)</li>
     <li>phone (string)</li>
@@ -23,9 +24,10 @@
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
         <div class="[ collapsible-body ]">
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">181</span>,
     <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>,
     <span style="color: #007700">&quot;agency&quot;</span>: {
-        <span style="color: #007700">&quot;name&quot;</span> : <span style="background-color: #fff0f0">&quot;CrowAgency&quot;</span>,
+        <span style="color: #007700">&quot;name&quot;</span> : <span style="background-color: #fff0f0">&quot;CrowAgency2016&quot;</span>,
         <span style="color: #007700">&quot;phone&quot;</span>: <span style="background-color: #fff0f0">&quot;5566778899&quot;</span>,
         <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Alejandro Aristi&quot;</span>,
         <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;myemail@agency.com&quot;</span>,
@@ -46,7 +48,7 @@
     <li>
         <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
         <div class="[ collapsible-body ]">
-            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created agency object</p>
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns the updated agency object</p>
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
   <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">181</span>,
   <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;CrowAgency2000&quot;</span>,
@@ -91,66 +93,72 @@
     </li>
 </ul>
 
-<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" enctype="multipart/form-data"  ng-submit="agencyService( 'create' )" data-parsley-validate>
-  <div class="[ col s12 m4 offset-m4 ]"> 
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="agencyService( 'update' )" data-parsley-validate>
+    <div class="[ col s12 m2 offset-m3 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-auth-token" ng-model="createAgency.authToken" required>
-            <label for="create-agency-auth-token">Authorization Token</label>
+            <input type="text" id="update-agency-id" ng-model="updateAgency.id" required>
+            <label for="update-agency-id">Agency ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="update-agency-auth-token" ng-model="updateAgency.authToken" required>
+            <label for="update-agency-auth-token">Authorization Token</label>
         </div>
     </div>
     <div class="[ clear ]"></div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-name" ng-model="createAgency.name" required>
-            <label for="create-agency-name">Agency Name</label>
+            <input type="text" id="update-agency-name" ng-model="updateAgency.name" required>
+            <label for="update-agency-name">Agency Name</label>
         </div>
     </div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-phone" ng-model="createAgency.phone">
-            <label for="create-agency-phone">Phone</label>
+            <input type="text" id="update-agency-phone" ng-model="updateAgency.phone">
+            <label for="update-agency-phone">Phone</label>
         </div>
     </div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="number" id="create-agency-num-employees" ng-model="createAgency.numEmployees">
-            <label for="create-agency-num-employees">Number of employees</label>
+            <input type="number" id="update-agency-num-employees" ng-model="updateAgency.numEmployees">
+            <label for="update-agency-num-employees">Number of employees</label>
         </div>
     </div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-website-url" ng-model="createAgency.websiteUrl">
-            <label for="create-agency-website-url">Website URL</label>
+            <input type="text" id="update-agency-website-url" ng-model="updateAgency.websiteUrl">
+            <label for="update-agency-website-url">Website URL</label>
         </div>
     </div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-contact-name" ng-model="createAgency.contactName">
-            <label for="create-agency-contact-name">Contact Name</label>
+            <input type="text" id="update-agency-contact-name" ng-model="updateAgency.contactName">
+            <label for="update-agency-contact-name">Contact Name</label>
         </div>
     </div>
     <div class="[ col s12 m4 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-contact-email" ng-model="createAgency.contactEmail">
-            <label for="create-agency-contact-email">Contact Email</label>
+            <input type="text" id="update-agency-contact-email" ng-model="updateAgency.contactEmail">
+            <label for="update-agency-contact-email">Contact Email</label>
         </div>
     </div>
     <div class="[ col s12 m6 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-address" ng-model="createAgency.address">
-            <label for="create-agency-address">Address</label>
+            <input type="text" id="update-agency-address" ng-model="updateAgency.address">
+            <label for="update-agency-address">Address</label>
         </div>
     </div>
     <div class="[ col s12 m3 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-latitude" ng-model="createAgency.latitude">
-            <label for="create-agency-latitude">Latitude</label>
+            <input type="text" id="update-agency-latitude" ng-model="updateAgency.latitude">
+            <label for="update-agency-latitude">Latitude</label>
         </div>
     </div>
     <div class="[ col s12 m3 ]"> 
         <div class="input-field">
-            <input type="text" id="create-agency-longitude" ng-model="createAgency.longitude">
-            <label for="create-agency-longitude">Longitude</label>
+            <input type="text" id="update-agency-longitude" ng-model="updateAgency.longitude">
+            <label for="update-agency-longitude">Longitude</label>
         </div>
     </div>
     <div class="[ col s12 m3 ]">
@@ -182,11 +190,10 @@
             <input class="file-path validate" type="text" placeholder="click here to upload image">
             <div class="">
                 <span>Upload Image</span>
-                <input type="file" id="create-agency-logo" ng-model="createAgency.logo" />
+                <input type="file" id="update-agency-logo" ng-model="updateAgency.logo" />
             </div>
         </div>
     </div>
-    <div class="clear"></div>
     <div class="[ col s12 ]"> 
         <div class="[ center-align ]">
             <button class="[ waves-effect ][ btn ]">Submit</button>

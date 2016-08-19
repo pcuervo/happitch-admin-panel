@@ -1,0 +1,126 @@
+<p>This service creates a new Success Case</p>
+<h4>POST /success_cases</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>name* (string)</li>
+    <li>description* (string)</li>
+    <li>url (string)</li>
+    <li>case_image ( base64 image )</li>
+    <li>filename (string) - Required only when sending image</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>,
+    <span style="color: #007700">&quot;filename&quot;</span>: <span style="background-color: #fff0f0">&quot;constitucion-img.png&quot;</span>,
+    <span style="color: #007700">&quot;success_case&quot;</span>: {
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Constitución CDMX&quot;</span>,
+        <span style="color: #007700">&quot;description&quot;</span>: <span style="background-color: #fff0f0">&quot;Sitio web de la nueva Constitución de la CDMX&quot;</span>,
+        <span style="color: #007700">&quot;url&quot;</span>: <span style="background-color: #fff0f0">&quot;https://constitucion.cdmx.gob.mx&quot;</span>,
+        <span style="color: #007700">&quot;agency_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>
+    }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created SuccessCase object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Constitución CDMX&quot;</span>,
+  <span style="color: #007700">&quot;description&quot;</span>: <span style="background-color: #fff0f0">&quot;Sitio web de la nueva Constitución de la CDMX&quot;</span>,
+  <span style="color: #007700">&quot;case_image&quot;</span>: <span style="background-color: #fff0f0">&quot;/images/original/constitucion-img.png&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no agency sent or it does not exist</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;agency&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;La agencia es obligatoria&quot;</span>
+    ]
+  }
+}
+</pre></div>
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When name and/or description is missing</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El nombre del caso no puede estar vacío&quot;</span>
+    ],
+    <span style="color: #007700">&quot;description&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;La descripción no puede estar vacía&quot;</span>
+    ]
+  }
+}
+</pre></div>
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" enctype="multipart/form-data"  ng-submit="successCaseService( 'create' )" data-parsley-validate>
+  <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-success-case-auth-token" ng-model="createCase.authToken" required>
+            <label for="create-success-case-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="[ clear ]"></div>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-success-case-name" ng-model="createCase.name" required>
+            <label for="create-success-case-name">Name</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-success-case-url" ng-model="createCase.url">
+            <label for="create-success-case-url">URL - format: http://pcuervo.com</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m8 offset-m2 ]"> 
+        <div class="input-field">
+            <textarea id="create-success-case-description" class="materialize-textarea"  ng-model="createCase.description" required></textarea>
+            <label for="create-success-case-num-employees">Description</label>
+        </div>
+    </div>
+   <div class="clear"></div>
+    <div class="[ col s12 m4 offset-m2 ][ mt-20 ]">
+       <select name="agency" ng-model="createCase.agencyId" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
+            <option value="" disabled selected>Choose agency</option>
+            <option ng:repeat="agency in agencies" value="{{agency.id}}">{{agency.name}}</option>
+        </select>
+    </div>
+    <div class="[ col s12 m4 ]">
+        <div class="file-field input-field">
+            <input class="file-path validate" type="text" placeholder="click here to upload image">
+            <div class="">
+                <span>Upload Image</span>
+                <input type="file" id="create-success-case-image" ng-model="createCase.image" />
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ successCaseResponse | json }}</p>
+</div>

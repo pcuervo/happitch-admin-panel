@@ -33,12 +33,20 @@
             <ul class="tabs">
                 <li class="tab col s3"><a class="active" href="#create_agency">Create</a></li>
                 <li class="tab col s3"><a class="active" href="#update_agency">Update</a></li>
+                <li class="tab col s3"><a class="active" href="#create_success_case">Create Success Case</a></li>
+                <li class="tab col s3"><a class="active" href="#update_success_case">Update Success Case</a></li>
             </ul>
             <div id="create_agency" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-agency.html'"></div>
             </div>
             <div id="update_agency" class="[ mt-20 ]">
-                <!-- <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/confirm-request.html'"></div> -->
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/update-agency.html'"></div>
+            </div>
+            <div id="create_success_case" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-success-case.html'"></div>
+            </div>
+            <div id="update_success_case" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/update-success-case.html'"></div>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isUsers">
