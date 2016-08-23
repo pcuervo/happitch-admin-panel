@@ -48,6 +48,9 @@ conAngular
                     }
                     updateAgency( this.updateAgency.id, this.updateAgency.authToken, this.updateAgency.name, this.updateAgency.phone, this.updateAgency.contactName, this.updateAgency.contactEmail, this.updateAgency.address, this.updateAgency.latitude, this.updateAgency.longitude, this.updateAgency.websiteUrl, this.updateAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename );
                     break;
+                case 'show':
+                    showAgency( this.showAgency.id );
+                    break;
             }
         }// agencies
 
@@ -78,6 +81,12 @@ conAngular
                     }
                     updateCase( this.updateCase.id, this.updateCase.authToken, this.updateCase.agencyId, this.updateCase.name, this.updateCase.description, this.updateCase.url, $scope.image, filename );
                     break;
+                case 'show':
+                    showCase( this.showCase.id );
+                    break;
+                case 'destroy':
+                    destroyCase( this.destroyCase.id, this.destroyCase.authToken );
+                    break;
             }
         }// successCaseService
 
@@ -106,6 +115,9 @@ conAngular
                         getImgData( 'create-success-case-image' );
                     });
                     $scope.isAgencies = true;
+                    break;
+                case 'successCases':
+                    $scope.isCases = true;
                     break;
                 default:
                     $scope.isNewUserRequests = true;
@@ -214,6 +226,18 @@ conAngular
             });
         }// updateAgency
 
+        function showAgency( id ){
+            AgencyService.show( id, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.agencyResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Agency could not be fetched!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Agency fetched!', 4000, 'green');
+            });
+        }// showAgency
+
         function createCase( authToken, agencyId, name, description, url, image, filename  ){
             AgencyService.createCase( authToken, agencyId, name, description, url, image, filename, function ( response ){
                 $scope.showAgenciesResponse = true;
@@ -240,6 +264,30 @@ conAngular
             });
         }// updateCase
 
+        function showCase( id ){
+            AgencyService.showCase( id, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.successCaseResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Case could not be fetched!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Cas fetched successfully!', 4000, 'green');
+            });
+        }// showCase
+
+        function destroyCase( id, authToken ){
+            AgencyService.destroyCase( id, authToken, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.successCaseResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Case could not be destroyed!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Case destroyed successfully!', 4000, 'green');
+            });
+        }// destroyCase
+
 
         /*********************
          HELPER FUNCTIONS
@@ -256,6 +304,7 @@ conAngular
             $scope.isUsers = false;
             $scope.isSessions = false;
             $scope.isAgencies = false;
+            $scope.isCases = false;
         }
 
         function getImgData( id ){

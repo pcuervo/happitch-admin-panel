@@ -4,8 +4,11 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         service.getAll = getAll;
         service.create = create;
         service.update = update;
+        service.show = show;
         service.createCase = createCase;
         service.updateCase = updateCase;
+        service.showCase = showCase;
+        service.destroyCase = destroyCase;
     return service;
 
     function getAll( callback ){
@@ -130,5 +133,43 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
             callback( response );
         });
     }// createCase
+
+    function show( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/' + id;
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// show
+
+    function showCase( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'success_cases/' + id;
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// show
+
+    function destroyCase( id, authToken, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'success_cases/destroy';
+        $http.post(serviceUrl, 
+            {
+                id:         id,
+                auth_token: authToken
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// destroyCase
 }]);
 

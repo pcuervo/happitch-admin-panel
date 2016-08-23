@@ -1,0 +1,63 @@
+<p>This service deletes an existing success case</p>
+<h4>POST /success_casers/destroy</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>id* (integer): ID of existing agency</li>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 204 No Content. </span> No JSON response</p>
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no success case found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró ningún case de éxito con id: 4&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="successCaseService( 'destroy' )" data-parsley-validate>
+    <div class="[ col s12 m2 offset-m3 ]"> 
+        <div class="input-field">
+            <input type="text" id="destroy-case-id" ng-model="destroyCase.id" required>
+            <label for="destroy-case-id">Success Case ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="update-case-auth-token" ng-model="destroyCase.authToken" required>
+            <label for="update-case-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="[ clear ]"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ successCaseResponse | json }}</p>
+</div>

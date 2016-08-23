@@ -10,6 +10,7 @@
                 <a href="#" id="newUserRequests" class="[ collection-item ][ waves-effect ][ active ]" ng-click="setActive('newUserRequests')">New User Requests</a>
                 <a href="#" id="sessions" class="[ collection-item ][ waves-effect ]" ng-click="setActive('sessions')">Sessions</a>
                 <a href="#" id="agencies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('agencies')">Agencies</a>
+                <a href="#" id="agencies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('successCases')">Success Cases (agencies)</a>
                 <a href="#" id="users" class="[ collection-item ][ waves-effect ] " ng-click="setActive('users')">Users (pending)</a>
             </div>
         </div>
@@ -31,22 +32,38 @@
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isAgencies">
             <ul class="tabs">
-                <li class="tab col s3"><a class="active" href="#create_agency">Create</a></li>
-                <li class="tab col s3"><a class="active" href="#update_agency">Update</a></li>
-                <li class="tab col s3"><a class="active" href="#create_success_case">Create Success Case</a></li>
-                <li class="tab col s3"><a class="active" href="#update_success_case">Update Success Case</a></li>
+                <li class="tab col s2"><a class="active" href="#show_agency">Show</a></li>
+                <li class="tab col s2"><a href="#create_agency">Create</a></li>
+                <li class="tab col s2"><a href="#update_agency">Update</a></li>
             </ul>
+            <div id="show_agency" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/show-agency.html'"></div>
+            </div>
             <div id="create_agency" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-agency.html'"></div>
             </div>
             <div id="update_agency" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/update-agency.html'"></div>
             </div>
+        </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isCases">
+            <ul class="tabs">
+                <li class="tab col s2"><a class="active" href="#show_success_case">Show</a></li>
+                <li class="tab col s2"><a href="#create_success_case">Create</a></li>
+                <li class="tab col s2"><a href="#update_success_case">Update</a></li>
+                <li class="tab col s2"><a href="#destroy_success_case">Destroy</a></li>
+            </ul>
+            <div id="show_success_case" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/show-success-case.html'"></div>
+            </div>
             <div id="create_success_case" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-success-case.html'"></div>
             </div>
             <div id="update_success_case" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/update-success-case.html'"></div>
+            </div>
+            <div id="destroy_success_case" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/destroy-success-case.html'"></div>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isUsers">
