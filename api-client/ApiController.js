@@ -51,6 +51,9 @@ conAngular
                 case 'show':
                     showAgency( this.showAgency.id );
                     break;
+                case 'addSkills':
+                    addSkillsToAgency( this.addSkills.authToken, this.addSkills.id, $scope.skillsAdded );
+                    break;
             }
         }// agencies
 
@@ -90,6 +93,34 @@ conAngular
             }
         }// successCaseService
 
+        $scope.skillCatService = function( action ){
+            switch( action ){
+                case 'create':
+                    createSkillCat( this.createSkillCat.authToken, this.createSkillCat.name );
+                    break;
+                case 'index':
+                    getSkillCategories()
+                    break;
+                case 'show':
+                    showSkillCat( this.showSkillCat.id );
+                    break;
+            }
+        }// skillCatService
+
+        $scope.skillService = function( action ){
+            switch( action ){
+                case 'create':
+                    createSkill( this.createSkill.authToken, this.createSkill.name, this.createSkill.skillCat );
+                    break;
+                case 'index':
+                    getSkillCategories();
+                    break;
+                case 'show':
+                    showSkill( this.showSkill.id );
+                    break;
+            }
+        }// skillService
+
         $scope.setActive = function( tab ){
             setCollectionInactive();
             $('#'+tab).addClass('active');
@@ -110,19 +141,37 @@ conAngular
                     $("#update-agency-logo").change(function(){
                         getImgData( 'update-agency-logo' );
                     });
+                    $scope.skillsAdded = []
+                    $scope.isAgencies = true;
+                    break;
+                case 'successCases':
                     $("#create-success-case-image").change(function(){
                         console.log('getting');
                         getImgData( 'create-success-case-image' );
                     });
-                    $scope.isAgencies = true;
-                    break;
-                case 'successCases':
                     $scope.isCases = true;
+                    break;
+                case 'skills':
+                    $scope.isSkills = true;
                     break;
                 default:
                     $scope.isNewUserRequests = true;
             }
         }// updateUser
+
+        $scope.addSkill = function(){
+            skillToAdd = {};
+            skillToAdd['level'] = $('#level').val();
+            skillToAdd['id'] = $('#skill').val()
+            skillToAdd['name'] = $('#skill option:selected').text()
+            $scope.skillsAdded.push(skillToAdd);
+            $('#skill').val('');
+            $('#level').val('');
+        }
+
+        $scope.removeSkill = function( index ){
+            $scope.skillsAdded.splice( index, 1 );
+        }// removePart
 
         function initApi(){
             $('ul.tabs').tabs();
@@ -132,6 +181,8 @@ conAngular
             $scope.prodApiUrl   = 'https://amap-prod.herokuapp.com/api/'
             $scope.testApiKey   = 'd2d6279345763f64ce21183142e974b8';
             fetchAgencies();
+            fetchSkillCategories();
+            fetchSkills();
         }
 
         /*********************
@@ -238,6 +289,18 @@ conAngular
             });
         }// showAgency
 
+        function addSkillsToAgency( authToken, id, skills ){
+            AgencyService.addSkills( authToken, id, skills, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.agencyResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Skills could not be added!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Skills added!', 4000, 'green');
+            });
+        }// addSkillsToAgency
+
         function createCase( authToken, agencyId, name, description, url, image, filename  ){
             AgencyService.createCase( authToken, agencyId, name, description, url, image, filename, function ( response ){
                 $scope.showAgenciesResponse = true;
@@ -272,7 +335,7 @@ conAngular
                     Materialize.toast('Case could not be fetched!', 4000, 'red');
                     return;
                 }
-                Materialize.toast('Cas fetched successfully!', 4000, 'green');
+                Materialize.toast('Case fetched successfully!', 4000, 'green');
             });
         }// showCase
 
@@ -288,15 +351,90 @@ conAngular
             });
         }// destroyCase
 
+        function createSkillCat( authToken,  name ){
+            AgencyService.createSkillCat( authToken, name, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    console.log( response.errors );
+                    Materialize.toast('SkillCategory could not be created!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('SkillCategory created!', 4000, 'green');
+            });
+        }// createSkillCat
+
+        function showSkillCat( id ){
+            AgencyService.showSkillCat( id, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    Materialize.toast('SkillCategory could not be fetched!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('SkillCategory fetched successfully!', 4000, 'green');
+            });
+        }// showSkillCat
+
+        function getSkillCategories(){
+            AgencyService.getSkillCategories( function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    Materialize.toast('SkillCategory could not be fetched!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('SkillCategory fetched successfully!', 4000, 'green');
+            });
+        }// getSkillCategories
+
+        function createSkill( authToken,  name, cat ){
+            AgencyService.createSkill( authToken, name, cat, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    console.log( response.errors );
+                    Materialize.toast('Skill could not be created!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Skill created!', 4000, 'green');
+            });
+        }// createSkill
+
+        function showSkill( id ){
+            AgencyService.showSkill( id, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Skill could not be fetched!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Skill fetched successfully!', 4000, 'green');
+            });
+        }// showSkill
+
 
         /*********************
          HELPER FUNCTIONS
         *********************/
+        
         function fetchAgencies(){
             AgencyService.getAll( function( agencies ){
                 $scope.agencies = agencies;
             }); 
         }// fetchAgencies
+
+        function fetchSkillCategories(){
+            AgencyService.getSkillCategories( function( response ){
+                $scope.skillCategories = response.skill_categories;
+            }); 
+        }// fetchSkillCategories
+
+        function fetchSkills(){
+            AgencyService.getSkills( function( skills ){
+                $scope.skills = skills;
+            }); 
+        }// fetchSkills
 
         function setCollectionInactive(tab){
             $('.collection-item').removeClass('active');
@@ -305,6 +443,7 @@ conAngular
             $scope.isSessions = false;
             $scope.isAgencies = false;
             $scope.isCases = false;
+            $scope.isSkills = false;
         }
 
         function getImgData( id ){

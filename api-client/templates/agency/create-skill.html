@@ -1,0 +1,103 @@
+<p>This service creates a new Skill</p>
+<h4>POST /skills</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>name* (string)</li>
+    <li>skill_category_id* (id)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>,
+    <span style="color: #007700">&quot;skill&quot;</span> : {
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Aplicaciones móvil&quot;</span>,
+        <span style="color: #007700">&quot;skill_category_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>
+    }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created Skill object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Aplicaciones móvil&quot;</span>,
+  <span style="color: #007700">&quot;skill_category&quot;</span>: {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Desarrollo&quot;</span>,
+    <span style="color: #007700">&quot;created_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When Skill name alreadys exists</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;Ya existe un skill con ese nombre&quot;</span>
+    ]
+  }
+}
+</pre></div>
+
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When name and/or SkillCategory is empty or missing</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;skill_category&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;La categoría es obligatoria&quot;</span>
+    ],
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El nombre del skill no puede estar vacío&quot;</span>
+    ]
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" enctype="multipart/form-data"  ng-submit="skillService( 'create' )" data-parsley-validate>
+  <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-skill-auth-token" ng-model="createSkill.authToken" required>
+            <label for="create-skill-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-skill-name" ng-model="createSkill.name" required>
+            <label for="create-skill-name">Name</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ][ mt-20 ]">
+       <select ng-model="createSkill.skillCat" required data-parsley-error-message="Es obligatorio escoger categoría para un nuevo skill.">
+            <option value="" disabled selected>Choose Category</option>
+            <option ng:repeat="cat in skillCategories" value="{{cat.id}}">{{cat.name}}</option>
+        </select>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ skillCatResponse | json }}</p>
+</div>

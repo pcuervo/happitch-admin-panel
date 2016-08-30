@@ -1,0 +1,56 @@
+<p>This service fetches all existing SkillCategories</p>
+<h4>GET /skill_categories/</h4>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns all SkillCategories</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;skill_categories&quot;</span>: [
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Publicidad&quot;</span>,
+      <span style="color: #007700">&quot;skills&quot;</span>: []
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Marketing&quot;</span>,
+      <span style="color: #007700">&quot;skills&quot;</span>: [
+        {
+          <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Digital&quot;</span>
+        }
+      ]
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Desarrollo&quot;</span>,
+      <span style="color: #007700">&quot;skills&quot;</span>: [
+        {
+          <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Aplicaciones móvil&quot;</span>
+        },
+        {
+          <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Web&quot;</span>
+        }
+      ]
+    }
+  ]
+}
+</pre></div>
+
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="skillCatService( 'index' )" data-parsley-validate>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ skillCatResponse | json }}</p>
+</div>

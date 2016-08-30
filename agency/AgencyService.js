@@ -9,6 +9,13 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         service.updateCase = updateCase;
         service.showCase = showCase;
         service.destroyCase = destroyCase;
+        service.createSkillCat = createSkillCat;
+        service.showSkillCat = showSkillCat;
+        service.getSkillCategories = getSkillCategories;
+        service.createSkill = createSkill;
+        service.showSkill = showSkill;
+        service.getSkills = getSkills;
+        service.addSkills = addSkills;
     return service;
 
     function getAll( callback ){
@@ -171,5 +178,103 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
             callback( response );
         });
     }// destroyCase
+
+    function createSkillCat( authToken, name, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'skill_categories/';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            skill_category: {
+                name: name
+            }
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// createSkillCat
+
+    function showSkillCat( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'skill_categories/' + id;
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// showSkillCat
+
+    function getSkillCategories( callback ){
+        var serviceUrl = $rootScope.apiUrl + 'skill_categories/';
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getSkillCategories
+
+    function createSkill( authToken, name, catId, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'skills/';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            skill: {
+                name:               name,
+                skill_category_id:  catId
+            }
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// createSkill
+
+    function showSkill( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'skills/' + id;
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// showSkill
+
+    function getSkills( callback ){
+        var serviceUrl = $rootScope.apiUrl + 'skills/';
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response.skills );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getSkills
+
+    function addSkills( authToken, id, skills, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/add_skills';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id:         id,
+            skills:     skills
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// addSkills
 }]);
 

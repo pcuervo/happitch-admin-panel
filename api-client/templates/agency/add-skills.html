@@ -1,0 +1,141 @@
+<p>This service adds skills to an agency</p>
+<h4>POST /agencies/add_skills</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer) - Agency ID</li>
+    <li>skills* (array) - An array of skills with id and level.</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>,
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;skills&quot;</span> : [
+        {
+            <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+            <span style="color: #007700">&quot;level&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>
+        },
+        {
+            <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+            <span style="color: #007700">&quot;level&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>
+        }
+    ]
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the skills array that were added to the agency</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">[
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Aplicaciones móvil&quot;</span>,
+    <span style="color: #007700">&quot;skill_category&quot;</span>: {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Desarrollo&quot;</span>,
+      <span style="color: #007700">&quot;created_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+      <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>
+    }
+  },
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Web&quot;</span>,
+    <span style="color: #007700">&quot;skill_category&quot;</span>: {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Desarrollo&quot;</span>,
+      <span style="color: #007700">&quot;created_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+      <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>
+    }
+  },
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Digital&quot;</span>,
+    <span style="color: #007700">&quot;skill_category&quot;</span>: {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Marketing&quot;</span>,
+      <span style="color: #007700">&quot;created_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+      <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>
+    }
+  }
+]
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When agency is not found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró la agencia con id: -1&quot;</span>
+}
+</pre></div>
+
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When there are no skills to add</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró ningún skill para agregar&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" enctype="multipart/form-data"  ng-submit="agencyService( 'addSkills' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="add-skills-id" ng-model="addSkills.id" required>
+            <label for="add-skills-id">Agency ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="add-skills-auth-token" ng-model="addSkills.authToken" required>
+            <label for="add-skills-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="skill">
+        <div class="[ col s12 m4 offset-m2 ]"> 
+            <div class="input-field">
+                <input type="text" id="level">
+                <label for="level">Level</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ][ mt-20 ]">
+            <select id="skill" data-parsley-error-message="Es obligatorio escoger categoría para un nuevo skill.">
+                <option value="" disabled selected>Choose Skill</option>
+                <option ng:repeat="skill in skills" value="{{skill.id}}">{{skill.name}}</option>
+            </select>
+        </div>
+        <a class="[ btn green ][ js-add-skill ][ mt-20 ]" href="#" ng-click="addSkill()"><i class="[ material-icons ]">add</i></a>
+    </div>  
+    <div class="clear"></div>
+    <div class="skills-added" ng-show="skillsAdded.length">
+        <div ng-repeat="skill in skillsAdded track by $index">
+            <div class="[ col s4 offset-m2 ][ input-field ]">
+                <input id="level-{{$index}}" type="text" value="{{skill.level}}" ng-readonly="true">
+            </div>
+            <div class="[ col s4 ][ input-field ]">
+                <input id="skill-{{$index}}" type="text" value="{{skill.name}}" ng-readonly="true" data-id="{{skill.id}}">
+            </div>
+            <a class="[ btn red ][ js-remove-skill ][ mt-20 ]" href="#" ng-click="removeSkill(index)"><i class="[ material-icons ]">remove</i></a>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ agencyResponse | json }}</p>
+</div>

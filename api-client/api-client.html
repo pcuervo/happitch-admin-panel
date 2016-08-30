@@ -8,10 +8,11 @@
         <div class="[ col s12 m3 l2 ]">
             <div class="collection">
                 <a href="#" id="newUserRequests" class="[ collection-item ][ waves-effect ][ active ]" ng-click="setActive('newUserRequests')">New User Requests</a>
+                <a href="#" id="users" class="[ collection-item ][ waves-effect ] " ng-click="setActive('users')">Users (pending)</a>
                 <a href="#" id="sessions" class="[ collection-item ][ waves-effect ]" ng-click="setActive('sessions')">Sessions</a>
                 <a href="#" id="agencies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('agencies')">Agencies</a>
-                <a href="#" id="agencies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('successCases')">Success Cases (agencies)</a>
-                <a href="#" id="users" class="[ collection-item ][ waves-effect ] " ng-click="setActive('users')">Users (pending)</a>
+                <a href="#" id="successCases" class="[ collection-item ][ waves-effect ] " ng-click="setActive('successCases')">Success Cases (agencies)</a>
+                <a href="#" id="skills" class="[ collection-item ][ waves-effect ] " ng-click="setActive('skills')">Skills (agencies)</a>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isNewUserRequests">
@@ -35,6 +36,7 @@
                 <li class="tab col s2"><a class="active" href="#show_agency">Show</a></li>
                 <li class="tab col s2"><a href="#create_agency">Create</a></li>
                 <li class="tab col s2"><a href="#update_agency">Update</a></li>
+                <li class="tab col s2"><a href="#add_skills">Add skills</a></li>
             </ul>
             <div id="show_agency" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/show-agency.html'"></div>
@@ -44,6 +46,9 @@
             </div>
             <div id="update_agency" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/update-agency.html'"></div>
+            </div>
+            <div id="add_skills" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/add-skills.html'"></div>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isCases">
@@ -64,6 +69,30 @@
             </div>
             <div id="destroy_success_case" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/destroy-success-case.html'"></div>
+            </div>
+        </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isSkills">
+            <ul class="tabs">
+                <li class="tab col s2"><a class="active" href="#get_skill_categories">All Skill Categories</a></li>
+                <li class="tab col s2"><a class="active" href="#show_skill_category">Show Skill Category</a></li>
+                <li class="tab col s2"><a class="active" href="#create_skill_category">Create Skill Category</a></li>
+                <li class="tab col s2"><a class="active" href="#show_skill">Show Skill</a></li>
+                <li class="tab col s2"><a class="active" href="#create_skill">Create Skill</a></li>
+            </ul>
+            <div id="get_skill_categories" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/get-skill-categories.html'"></div>
+            </div>
+            <div id="show_skill_category" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/show-skill-category.html'"></div>
+            </div>
+            <div id="create_skill_category" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-skill-category.html'"></div>
+            </div>
+            <div id="show_skill" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/show-skill.html'"></div>
+            </div>
+            <div id="create_skill" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/agency/create-skill.html'"></div>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isUsers">
