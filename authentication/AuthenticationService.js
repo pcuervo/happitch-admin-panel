@@ -30,8 +30,8 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
                 currentUser: {
                 id:             id,
                 name:           name,
-                    email:          email,
-                    authdata:       authToken,
+                    email:      email,
+                    authdata:   authToken,
                 role:           role,
                 }
             };
@@ -51,14 +51,14 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
 
         }
 
-    function logout( authToken, callback ){
+    function logout( authToken ){
         var serviceUrl = $rootScope.apiUrl  + 'sessions/destroy/';
         $http.post(serviceUrl,  { id: authToken })
            .success(function (response) {
-                callback( response );
+                console.log( response );
            })
            .error(function (response) {
-                callback( response )
+                console.log( response )
            });
     }
 

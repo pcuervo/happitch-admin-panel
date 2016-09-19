@@ -1,5 +1,5 @@
-<p>This service fetches an existing success case</p>
-<h4>GET /success_cases/:id</h4>
+<p>This service fetches an existing Company</p>
+<h4>GET /companies/:id</h4>
 <h4>Parameters:</h4>
 <ul>
     <li>id (integer)</li>
@@ -8,12 +8,11 @@
     <li>
         <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
         <div class="[ collapsible-body ]">
-            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns a success case object</p>
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns a Company object</p>
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
   <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
-  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;NewName&quot;</span>,
-  <span style="color: #007700">&quot;description&quot;</span>: <span style="background-color: #fff0f0">&quot;Sitio web de la nueva Constitución de la CDMX&quot;</span>,
-  <span style="color: #007700">&quot;case_image&quot;</span>: <span style="background-color: #fff0f0">&quot;/Users/micho/Documents/cuervo/sitios/amap-api-dev/storage/development/attachments/1/original/flockproj.jpg&quot;</span>
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Anderson, Streich and Keebler&quot;</span>,
+  <span style="color: #007700">&quot;brands&quot;</span>: []
 }
 </pre></div>
 
@@ -22,9 +21,9 @@
     <li>
         <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
         <div class="[ collapsible-body ]">
-            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no success case found</p>
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no Company found</p>
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No success case found with id: 43&quot;</span>
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró la compañía con id: 11&quot;</span>
 }
 </pre></div>
 
@@ -32,11 +31,11 @@
     </li>
 </ul>
 
-<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="successCaseService( 'show' )" data-parsley-validate>
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="companyService( 'show' )" data-parsley-validate>
   <div class="[ col s12 m4 offset-m4 ]"> 
         <div class="input-field">
-            <input type="text" id="show-case-id" ng-model="showCase.id" required>
-            <label for="show-case-id">ID</label>
+            <input type="text" id="show-company-id" ng-model="showCompany.id" required>
+            <label for="show-company-id">ID</label>
         </div>
     </div>
     <div class="clear"></div>
@@ -47,7 +46,7 @@
     </div>
 </form>
 
-<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+<div class="[ col s12 ]" ng-show="showCompaniesResponse">
     <h5>Response:</h5>
-    <p>{{ successCaseResponse | json }}</p>
+    <p>{{ companyResponse | json }}</p>
 </div>

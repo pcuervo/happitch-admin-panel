@@ -24,30 +24,21 @@
                 </div>
             </div>
             <div class="[ col s12 m3 ]"> 
-                <div class="input-field">
-                    <input type="text" id="agency" ng-model="user.agency">
-                    <label for="agency">Agencia</label>
-                </div>
                 <select name="agency" ng-model="agency" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
-                    <option value="" disabled selected>Selecciona el proveedor</option>
-                    <option ng:repeat="supplier in suppliers" value="{{supplier.id}}">{{supplier.name}}</option>
+                    <option value="" disabled selected>Selecciona el tipo de usuario</option>
+                    <option value="1">Administrador AMAP</option>
+                    <option value="2">Agencia (admin)</option>
+                    <option value="3">Agencia (regular)</option>
+                    <option value="4">Marca</option>
                 </select>
             </div>
-
             <div class="[ clear ]"></div>
-            <div class="[ col s12 m3 offset-m3 ]"> 
-                <div class="input-field">
-                    <input type="text" id="user-type" ng-model="user.user_type" required>
-                    <label for="user-type">Tipo de usuario</label>
-                </div>
-            </div>
             <div class="[ col s12 m3 ]">
                 <div class="[ input-field ]">
                     <input class="[ filled-in ]" type="checkbox" id="checkbox-high-value" value="1" name="highValue" />
                     <label for="checkbox-high-value">¿Es miembro de la AMAP?</label>
                 </div>
             </div>
-            <div class="[ clear ]"></div>
             <div class="[ col s12 ]"> 
                 <input type="hidden" name="entry_type" value="unit">
 

@@ -1,0 +1,57 @@
+<p>This service fetches an existing Brand</p>
+<h4>GET /brands/:id</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>id (integer)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns a Brand object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Sprite&quot;</span>,
+  <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Spike Spek&quot;</span>,
+  <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;spike@coca.com&quot;</span>,
+  <span style="color: #007700">&quot;contact_position&quot;</span>: <span style="background-color: #fff0f0">&quot;Brand Manager&quot;</span>,
+  <span style="color: #007700">&quot;company&quot;</span>: {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;The Coca Cola Company&quot;</span>
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no brand found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró la marca con id: 11&quot;</span>
+}
+</pre></div>
+
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="companyService( 'showBrand' )" data-parsley-validate>
+  <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="show-brand-id" ng-model="showBrand.id" required>
+            <label for="show-brand-id">ID</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showCompaniesResponse">
+    <h5>Response:</h5>
+    <p>{{ companyResponse | json }}</p>
+</div>

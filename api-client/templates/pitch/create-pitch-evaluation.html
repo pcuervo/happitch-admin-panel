@@ -1,0 +1,198 @@
+<p>This service creates a new PitchEvaluation</p>
+<h4>POST /pitch_evaluations</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>pitch_id* (integer)</li>
+    <li>are_objectives_clear* (boolean)</li>
+    <li>has_selection_criteria* (boolean)</li>
+    <li>time_to_present* (string): Can be '1s', '2s', '3s' or '4s'</li>
+    <li>is_budget_known* (boolean)</li>
+    <li>number_of_agencies* (string): Can be '2 - 4', '>4' or 'NA'</li>
+    <li>are_deliverables_clear* (boolean)</li>
+    <li>is_marketing_involved* (boolean)</li>
+    <li>time_to_know_decision* (string): Can be '2s', '3s', '4s', '5s', '>6' or 'NA'</li>
+    <li>deliver_copyright_for_pitching* (boolean)</li>
+    <li>number_of_rounds* (string): Can be '1r', '2r', '3r' or '4r'</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;ZEatomyf8K9qXsVLxyE4&quot;</span>,
+    <span style="color: #007700">&quot;pitch_evaluation&quot;</span>: 
+    {
+        <span style="color: #007700">&quot;pitch_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+        <span style="color: #007700">&quot;has_selection_criteria&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
+        <span style="color: #007700">&quot;are_objectives_clear&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
+        <span style="color: #007700">&quot;time_to_present&quot;</span>: <span style="background-color: #fff0f0">&quot;1s&quot;</span>,
+        <span style="color: #007700">&quot;is_budget_known&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
+        <span style="color: #007700">&quot;number_of_agencies&quot;</span>: <span style="background-color: #fff0f0">&quot;2 - 4&quot;</span>,
+        <span style="color: #007700">&quot;are_deliverables_clear&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
+        <span style="color: #007700">&quot;is_marketing_involved&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
+        <span style="color: #007700">&quot;time_to_know_decision&quot;</span>: <span style="background-color: #fff0f0">&quot;3s&quot;</span>,
+        <span style="color: #007700">&quot;deliver_copyright_for_pitching&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
+        <span style="color: #007700">&quot;number_of_rounds&quot;</span>: <span style="background-color: #fff0f0">&quot;1r&quot;</span>
+    }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created PitchEvaluation object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">5</span>,
+  <span style="color: #007700">&quot;pitch_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+  <span style="color: #007700">&quot;user_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">112</span>,
+  <span style="color: #007700">&quot;evaluation_status&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;pitch_status&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+  <span style="color: #007700">&quot;are_objectives_clear&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+  <span style="color: #007700">&quot;time_to_present&quot;</span>: <span style="background-color: #fff0f0">&quot;1s&quot;</span>,
+  <span style="color: #007700">&quot;is_budget_known&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+  <span style="color: #007700">&quot;number_of_agencies&quot;</span>: <span style="background-color: #fff0f0">&quot;2 - 4&quot;</span>,
+  <span style="color: #007700">&quot;are_deliverables_clear&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+  <span style="color: #007700">&quot;is_marketing_involved&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+  <span style="color: #007700">&quot;time_to_know_decision&quot;</span>: <span style="background-color: #fff0f0">&quot;3s&quot;</span>,
+  <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">78</span>,
+  <span style="color: #007700">&quot;activity_status&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;was_won&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T15:56:52.576-05:00&quot;</span>,
+  <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T15:56:52.579-05:00&quot;</span>,
+  <span style="color: #007700">&quot;number_of_rounds&quot;</span>: <span style="background-color: #fff0f0">&quot;1r&quot;</span>,
+  <span style="color: #007700">&quot;deliver_copyright_for_pitching&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+  <span style="color: #007700">&quot;has_selection_criteria&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When Pitch is empty or missing</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;pitch&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El pitch es obligatorio&quot;</span>
+    ]
+  }
+}
+</pre></div>
+
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When SkillCategories are empty or not found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;skill_categories&quot;</span>: <span style="background-color: #fff0f0">&quot;El pitch debe tener al menos una categoría de skills&quot;</span>
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'createPitchEval' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-pitch-eval-auth-token" ng-model="createPitchEval.authToken" required>
+            <label for="create-pitch-eval-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m3 ][ mt-20 ]">
+       <select ng-model="createPitchEval.pitch" required>
+            <option value="" disabled selected>Choose Pitch</option>
+            <option ng:repeat="pitch in pitches" value="{{pitch.id}}">{{pitch.name}}</option>
+        </select>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-clear-objectives" value="1" name="objectives_clear" />
+            <label for="checkbox-clear-objectives">Are objectives clear?</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-selection-criteria" value="1" name="selection_criteria" />
+            <label for="checkbox-selection-criteria">Has selection criteria?</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ][ mt-20 ]">
+       <select ng-model="createPitchEval.timeToPresent" required>
+            <option value="" disabled selected>Time to present</option>
+            <option value="1s">1s</option>
+            <option value="2s">2s</option>
+            <option value="3s">3s</option>
+            <option value="4s">4s</option>
+        </select>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-budget-known" value="1" name="budget_known" />
+            <label for="checkbox-budget-known">Is budget known?</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ][ mt-20 ]">
+       <select ng-model="createPitchEval.numberAgencies" required>
+            <option value="" disabled selected>Participant agencies</option>
+            <option value="2 - 4">2 - 4</option>
+            <option value="> 4">> 4</option>
+            <option value="NA">NA</option>
+        </select>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-deliverables-clear" value="1" name="deliverables_clear" />
+            <label for="checkbox-deliverables-clear">Are deliverables clear?</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-mkt-involved" value="1" name="mkt_involved" />
+            <label for="checkbox-mkt-involved">Is a marketing senior involved?</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m3 ][ mt-20 ]">
+       <select ng-model="createPitchEval.timeKnowDecision" required>
+            <option value="" disabled selected>Time to know decision</option>
+            <option value="2s">2s</option>
+            <option value="3s">3s</option>
+            <option value="4s">4s</option>
+            <option value="5s">5s</option>
+            <option value=">6">>6</option>
+            <option value="NA">NA</option>
+        </select>
+    </div>
+    <div class="[ col s12 m3 ]">
+        <div class="[ input-field ]">
+            <input class="[ filled-in ]" type="checkbox" id="checkbox-copyright" value="1" name="copyright" />
+            <label for="checkbox-copyright">Deliver copyright for pitching?</label>
+        </div>
+    </div>
+    <div class="[ col s12 m3 ][ mt-20 ]">
+       <select ng-model="createPitchEval.numberRounds" required>
+            <option value="" disabled selected>Number of rounds</option>
+            <option value="1r">1r</option>
+            <option value="2r">2r</option>
+            <option value="3r">3r</option>
+            <option value="4r">4r</option>
+        </select>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div>

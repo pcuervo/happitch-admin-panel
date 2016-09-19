@@ -2,7 +2,6 @@ conAngular
 	.controller('LoginController', ['$scope', '$location', '$state', 'AuthenticationService', function($scope, $location, $state, AuthenticationService){
 	 
 		(function initController() {
-	    	// reset login status
 	        AuthenticationService.clearCredentials();
 		})();
 
@@ -20,15 +19,16 @@ conAngular
 
                 if( response.errors ){
                     $scope.dataLoading = false;
-                    Materialize.toast(response.errors, 4000, 'red');
+                    ErrorHelper.display( response.errors );
                     LoaderHelper.hideLoader();
                     return;
                 }
 
-                console.log( response );
-				var userObj = response.user;
-				//var userName = userObj.first_name + ' ' + userObj.last_name;
-			    AuthenticationService.setCredentials( userObj.id, '', $scope.email, userObj.role, userObj.auth_token, $scope.password );
+				var userObj = response;
+                var userName = '';
+                if( userObj.first_name ) userName = userObj.first_name + ' ' + userObj.last_name;
+				
+			    AuthenticationService.setCredentials( userObj.id, userName, $scope.email, userObj.role, userObj.auth_token, $scope.password );
 				$scope.logged_in = true;
 
                 Materialize.toast('¡Hola bienvenido al SIL!', 4000);

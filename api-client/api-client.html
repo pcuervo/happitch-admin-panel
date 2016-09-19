@@ -13,6 +13,9 @@
                 <a href="#" id="agencies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('agencies')">Agencies</a>
                 <a href="#" id="successCases" class="[ collection-item ][ waves-effect ] " ng-click="setActive('successCases')">Success Cases (agencies)</a>
                 <a href="#" id="skills" class="[ collection-item ][ waves-effect ] " ng-click="setActive('skills')">Skills (agencies)</a>
+                <a href="#" id="companies" class="[ collection-item ][ waves-effect ] " ng-click="setActive('companies')">Companies</a>
+                <a href="#" id="brands" class="[ collection-item ][ waves-effect ] " ng-click="setActive('brands')">Brands (companies)</a>
+                <a href="#" id="pitches" class="[ collection-item ][ waves-effect ] " ng-click="setActive('pitches')">Pitches</a>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isNewUserRequests">
@@ -114,11 +117,68 @@
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/logout.html'"></div>
             </div>
         </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isCompanies">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#get_companies">All Companies</a></li>
+                <li class="tab col s3"><a href="#show_company">Show Company</a></li>
+                <li class="tab col s3"><a href="#create_company">Create Company</a></li>
+            </ul>
+            <div id="get_companies" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/get-companies.html'"></div>
+            </div>
+            <div id="show_company" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/show-company.html'"></div>
+            </div>
+            <div id="create_company" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/create-company.html'"></div>
+            </div>
+        </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isBrands">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#get_brands">All Brands</a></li>
+                <li class="tab col s3"><a href="#show_brand">Show Brand</a></li>
+                <li class="tab col s3"><a href="#create_brand">Create Brand</a></li>
+                <li class="tab col s3"><a href="#show_brand_by_company">Brand by Company</a></li>
+            </ul>
+            <div id="get_brands" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/get-brands.html'"></div>
+            </div>
+            <div id="show_brand" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/show-brand.html'"></div>
+            </div>
+            <div id="create_brand" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/create-brand.html'"></div>
+            </div>
+            <div id="show_brand_by_company" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/show-brand-by-company.html'"></div>
+            </div>
+        </div>
+        <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isPitches">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#get_pitches">All Pitches</a></li>
+                <li class="tab col s3"><a href="#show_pitch">Show Pitch</a></li>
+                <li class="tab col s3"><a href="#create_pitch">Create Pitch</a></li>
+                <li class="tab col s3"><a href="#by_brand">By Brand</a></li>
+                <li class="tab col s3"><a href="#create_pitch_evaluation">Create Pitch Evaluation</a></li>
+            </ul>
+            <div id="get_pitches" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/get-pitches.html'"></div>
+            </div>
+            <div id="show_pitch" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/show-pitch.html'"></div>
+            </div>
+            <div id="create_pitch" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/create-pitch.html'"></div>
+            </div>
+            <div id="by_brand" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/pitches-by-brand.html'"></div>
+            </div>
+            <div id="create_pitch_evaluation" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/create-pitch-evaluation.html'"></div>
+            </div>
+        </div>
     </div>
 </div> 
 
 <hr>
 
-<script>
-  $('[data-parsley-validate]').parsley();
-</script>

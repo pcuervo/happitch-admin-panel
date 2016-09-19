@@ -11,7 +11,7 @@
 </ul>
 <ul class="[ collapsible ]" data-collapsible="accordion">
     <li>
-        <div class="[ collapsible-header ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
         <div class="[ collapsible-body ]">
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
     <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;5uKB2vzUY1vApmkQ9Vg_&quot;</span>,
@@ -29,7 +29,7 @@
         </div>
     </li>
     <li>
-        <div class="[ collapsible-header ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
         <div class="[ collapsible-body ]">
             <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created SuccessCase object</p>
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
@@ -43,7 +43,7 @@
         </div>
     </li>
     <li>
-        <div class="[ collapsible-header ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
         <div class="[ collapsible-body ]">
             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no agency sent or it does not exist</p>
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
@@ -97,7 +97,7 @@
             <label for="create-success-case-num-employees">Description</label>
         </div>
     </div>
-   <div class="clear"></div>
+    <div class="clear"></div>
     <div class="[ col s12 m4 offset-m2 ][ mt-20 ]">
        <select name="agency" ng-model="createCase.agencyId" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
             <option value="" disabled selected>Choose agency</option>

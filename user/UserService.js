@@ -9,6 +9,8 @@ conAngular
         service.rejectUserRequest       = rejectUserRequest;
         service.createNewUserRequest    = createNewUserRequest;
         service.changePassword          = changePassword;
+        service.getAgencyUserRequests   = getAgencyUserRequests;
+        service.getBrandUserRequests    = getBrandUserRequests;
         return service;
 
 
@@ -35,12 +37,13 @@ conAngular
                });
         }// getNewUserRequest
 
-        function confirmUserRequest( email, agencyId, role, isMemberAMAP, callback ){
+        function confirmUserRequest( email, agencyId, brandId, role, isMemberAMAP, callback ){
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/confirm_request';
             $http.post(serviceUrl, 
                 {
                     email:          email,
                     agency_id:      agencyId,
+                    brand_id:       brandId,
                     is_member_amap: isMemberAMAP,
                     role:           role
                 })
@@ -72,14 +75,14 @@ conAngular
 
         }// rejectUserRequest
 
-        function createNewUserRequest( email, agencyName, userType, callback ){
+        function createNewUserRequest( email, agencyBrand, userType, callback ){
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/';
             $http.post(serviceUrl, 
                 {
                     new_user_request: {
-                        email:      email, 
-                        agency:     agencyName,
-                        user_type:  userType
+                        email:          email, 
+                        agency_brand:   agencyBrand,
+                        user_type:      userType
                     }
                 })
                .success(function ( response ) {
@@ -106,6 +109,30 @@ conAngular
                 callback( response );
            });
         }// changePassword
+
+        function getAgencyUserRequests( callback ){
+            var serviceUrl = $rootScope.apiUrl + 'new_user_requests/agency_users';
+            $http.get(serviceUrl)
+               .success(function ( response ) {
+                    console.log( response );
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    callback( response );
+               });
+        }// getAgencyUserRequests
+
+        function getBrandUserRequests( callback ){
+            var serviceUrl = $rootScope.apiUrl + 'new_user_requests/brand_users';
+            $http.get(serviceUrl)
+               .success(function ( response ) {
+                    console.log( response );
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    callback( response );
+               });
+        }// getBrandUserRequests
 
     }]);
 

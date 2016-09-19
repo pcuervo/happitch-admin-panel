@@ -10,20 +10,7 @@
                     <label for="email">Email</label>
                 </div>
             </div>
-            <div class="[ col s12 m3 ][ mt-20 ]"> 
-                <select name="agency" ng-model="agency" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
-                    <option value="" disabled selected>Selecciona la agencia</option>
-                    <option ng:repeat="agency in agencies" value="{{agency.id}}">{{agency.name}}</option>
-                </select>
-            </div>
-
-            <div class="[ clear ]"></div>
-            <div class="[ col s12 m3 offset-m3 ]"> 
-                <div class="input-field">
-                    <input type="text" id="user-type" ng-model="user.user_type" ng-readonly="true">
-                    <label for="user-type">Tipo de usuario</label>
-                </div>
-            </div>
+            <input type="hidden" id="user-type" ng-model="user.user_type" ng-readonly="true">
             <div class="[ col s12 m3 ]">
                 <div class="[ input-field ]">
                     <input class="[ filled-in ]" type="checkbox" id="checkbox-member-amap" value="1" name="memberAmap" />
@@ -31,9 +18,36 @@
                 </div>
             </div>
             <div class="[ clear ]"></div>
+            <div ng-if="2 == user.user_type">
+                <div class="[ col s12 m3 offset-m3 ]"> 
+                    <div class="input-field">
+                        <input type="text" id="agency-brand" ng-model="user.agency_brand" ng-readonly="true">
+                        <label for="agency-brand">Agencia solicitada por usuario</label>
+                    </div>
+                </div>
+                <div class="[ col s12 m3 ][ mt-20 ]"> 
+                    <select name="agency" ng-model="user.agency" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
+                        <option value="" disabled selected>Selecciona la agencia</option>
+                        <option ng:repeat="agency in agencies" value="{{agency.id}}">{{agency.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div ng-if="4 == user.user_type">
+                <div class="[ col s12 m3 offset-m3 ]"> 
+                    <div class="input-field">
+                        <input type="text" id="agency-brand" ng-model="user.agency_brand" ng-readonly="true">
+                        <label for="agency-brand">Marca solicitada por el usuario</label>
+                    </div>
+                </div>
+                <div class="[ col s12 m3 ][ mt-20 ]"> 
+                    <select name="brand" ng-model="user.brand" required data-parsley-error-message="Es obligatorio escoger marca para un nuevo usuario.">
+                        <option value="" disabled selected>Selecciona la marca</option>
+                        <option ng:repeat="brand in brands" value="{{brand.id}}">{{brand.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="[ clear ]"></div>
             <div class="[ col s12 ]"> 
-                <input type="hidden" name="entry_type" value="unit">
-
                 <div class="[ center-align ]">
                     <button class="[ waves-effect ][ btn ]">crear usuario</button>
                 </div>

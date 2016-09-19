@@ -1,0 +1,44 @@
+<p>This service fetches all existing Pitches</p>
+<h4>GET /pitches/</h4>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns all Pitches</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;pitches&quot;</span>: [
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Poust Side HD Controller&quot;</span>,
+      <span style="color: #007700">&quot;skill_category_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+      <span style="color: #007700">&quot;brief_date&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-09&quot;</span>,
+      <span style="color: #007700">&quot;brief_email_contact&quot;</span>: <span style="background-color: #fff0f0">&quot;virgil.conn@goyette.us&quot;</span>
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+      <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Pack Direct Component&quot;</span>,
+      <span style="color: #007700">&quot;skill_category_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+      <span style="color: #007700">&quot;brief_date&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-09&quot;</span>,
+      <span style="color: #007700">&quot;brief_email_contact&quot;</span>: <span style="background-color: #fff0f0">&quot;toy@rutherfordschmidt.ca&quot;</span>
+    }
+  ]
+}
+</pre></div>
+
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'index' )" data-parsley-validate>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div>

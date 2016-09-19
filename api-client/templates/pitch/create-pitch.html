@@ -1,0 +1,151 @@
+<p>This service creates a new Pitch</p>
+<h4>POST /pitches</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>name* (string)</li>
+    <li>brand_id* (integer)</li>
+    <li>brief_date* (date)</li>
+    <li>brief_email_contact* (string)</li>
+    <li>skill_categories* (array)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;ZEatomyf8K9qXsVLxyE4&quot;</span>,
+    <span style="color: #007700">&quot;skill_categories&quot;</span>: [<span style="color: #0000DD; font-weight: bold">1</span>, <span style="color: #0000DD; font-weight: bold">2</span>],
+    <span style="color: #007700">&quot;pitch&quot;</span>: 
+    {
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Pitch para marca de onda&quot;</span>,
+        <span style="color: #007700">&quot;brand_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+        <span style="color: #007700">&quot;brief_email_contact&quot;</span>: <span style="background-color: #fff0f0">&quot;pepe@pepsi.com&quot;</span>,
+        <span style="color: #007700">&quot;brief_date&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-10-10&quot;</span>
+    }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created Pitch object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Pitch para marca de onda&quot;</span>,
+    <span style="color: #007700">&quot;brief_date&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-10-10&quot;</span>,
+    <span style="color: #007700">&quot;brief_email_contact&quot;</span>: <span style="background-color: #fff0f0">&quot;pepe@pepsi.com&quot;</span>,
+    <span style="color: #007700">&quot;skill_categories&quot;</span>: [{
+        <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Publicidad&quot;</span>,
+        <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-24T18:00:06.057-05:00&quot;</span>,
+        <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-24T18:00:06.057-05:00&quot;</span>
+    }, {
+        <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Marketing&quot;</span>,
+        <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-24T18:12:27.316-05:00&quot;</span>,
+        <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-24T18:12:27.316-05:00&quot;</span>
+    }],
+    <span style="color: #007700">&quot;brand&quot;</span>: {
+        <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Sprite&quot;</span>,
+        <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Spike Spek&quot;</span>,
+        <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;spike@coca.com&quot;</span>,
+        <span style="color: #007700">&quot;contact_position&quot;</span>: <span style="background-color: #fff0f0">&quot;Brand Manager&quot;</span>,
+        <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-01T18:21:11.047-05:00&quot;</span>,
+        <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-01T18:23:28.830-05:00&quot;</span>,
+        <span style="color: #007700">&quot;company_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>
+    }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When name is empty or missing</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El nombre no puede estar vacío&quot;</span>
+    ]
+  }
+}
+</pre></div>
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When SkillCategories are empty or not found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;skill_categories&quot;</span>: <span style="background-color: #fff0f0">&quot;El pitch debe tener al menos una categoría de skills&quot;</span>
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'create' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-pitch-auth-token" ng-model="createPitch.authToken" required>
+            <label for="create-pitch-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-pitch-name" ng-model="createPitch.name" required>
+            <label for="create-pitch-name">Name</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ][ mt-20 ]">
+       <select ng-model="createPitch.brand" required>
+            <option value="" disabled selected>Choose Brand</option>
+            <option ng:repeat="brand in brands" value="{{brand.id}}">{{brand.name}}</option>
+        </select>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 m4 offset-m2 ]">    
+        <label class="[ fs-12 ]" for="">Brief Date (mm/dd/aaaa)</label>
+        <input class="datepicker" type="date" name="brief-date" ng-model="createPitch.briefDate" required>
+    </div>
+    <div class="[ col s12 m4 ][ mt-5 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-pitch-contact-email" ng-model="createPitch.briefEmailContact">
+            <label for="create-pitch-contact-email">Brief Contact Email</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="skill-categories">
+        <div class="[ col s10 m4 offset-m3 ][ mt-20 ]">
+            <select id="skill-category">
+                <option value="" disabled selected>Choose Skill Category</option>
+                <option ng:repeat="cat in skillCategories" value="{{cat.id}}">{{cat.name}}</option>
+            </select>
+        </div>
+        <a class="[ btn green ][ js-add-skill ][ mt-20 ]" href="#" ng-click="addSkillCategory()"><i class="[ material-icons ]">add</i></a>
+    </div>
+    <div class="clear"></div>
+    <div class="skill-categories-added" ng-show="skillCategoriesAdded.length">
+        <div ng-repeat="skillCat in skillCategoriesAdded track by $index">
+            <div class="[ col s10 m4 offset-m3 ][ input-field ]">
+                <input id="skill-cat-{{$index}}" type="text" value="{{skillCat.name}}" ng-readonly="true" data-id="{{skill-cat.id}}">
+            </div>
+            <a class="[ btn red ][ js-remove-skill-cat ][ mt-20 ]" href="#" ng-click="removeSkillCategory(index)"><i class="[ material-icons ]">remove</i></a>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div>

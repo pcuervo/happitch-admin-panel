@@ -1,0 +1,28 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Crear categoría de skills</h4>
+    <div class="[ row ]">
+        <form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="createSkillCat()" data-parsley-validate>
+            <div class="[ col s12 m4 offset-m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-skill-cat-name" ng-model="name" required>
+                    <label for="create-skill-cat-name">Nombre de categoría</label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 ]"> 
+                <div class="[ center-align ]">
+                    <button class="[ waves-effect ][ btn ]">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+  $('[data-parsley-validate]').parsley();
+</script>
+
+
+
+
+

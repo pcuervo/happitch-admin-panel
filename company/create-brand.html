@@ -1,0 +1,54 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Crear marca</h4>
+    <div class="[ row ]">
+        <form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="createBrand()" data-parsley-validate>
+            <div class="[ col s12 m4 offset-m2 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-brand-name" ng-model="name" required>
+                    <label for="create-brand-name">Nombre marca</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ][ mt-20 ]">
+               <select ng-model="company" required>
+                    <option value="" disabled selected>Selecciona la compañía</option>
+                    <option ng:repeat="company in companies" value="{{company.id}}">{{company.name}}</option>
+                </select>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-brand-contact-name" ng-model="contactName">
+                    <label for="create-brand-contact-name">Nombre del contacto</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-brand-contact-email" ng-model="contactEmail">
+                    <label for="create-brand-contact-email">Email del contacto</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-brand-contact-position" ng-model="contactPosition">
+                    <label for="create-brand-contact-position">Puesto del contato</label>
+                </div>
+            </div>
+            
+            <div class="clear"></div>
+            <div class="[ col s12 ]"> 
+                <div class="[ center-align ]">
+                    <button class="[ waves-effect ][ btn ]">Crear marca</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+  $('[data-parsley-validate]').parsley();
+</script>
+
+
+
+
+

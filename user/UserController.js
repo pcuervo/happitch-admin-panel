@@ -1,5 +1,5 @@
 conAngular
-    .controller('UserController', ['$scope', '$rootScope', '$state', '$stateParams', '$location', 'UserService', 'AgencyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $scope, $rootScope, $state, $stateParams, $location, UserService, AgencyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ){
+    .controller('UserController', ['$scope', '$rootScope', '$state', '$stateParams', '$location', 'UserService', 'AgencyService', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $scope, $rootScope, $state, $stateParams, $location, UserService, AgencyService, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ){
         
         (function initController() {
             var currentPath = $location.path();
@@ -10,24 +10,20 @@ conAngular
         * PUBLIC FUNCTIONS
         *******************/
 
-        $scope.captureItemData = function(){
-            $scope.currentStep = CONFIRMATION_STEP;
-            getItemImg();
-        }      
-
         $scope.confirmUserRequest = function(){
+            console.log('hi');
             var isMemberAMAP = $('#checkbox-member-amap:checked').length;
-            UserService.confirmUserRequest( $scope.user.email, $scope.agency, 2, isMemberAMAP, function ( response ){
+            UserService.confirmUserRequest( $scope.user.email, $scope.user.agency, $scope.user.brand, $scope.user.user_type, isMemberAMAP, function ( response ){
 
-                    if(response.errors) {
-                        console.log(response.errors);
-                        ErrorHelper.display( response.errors );
-                        return;
-                    }
-                    
-                    console.log( response );
-                    Materialize.toast('¡Usuario registrado exitosamente!', 4000, 'green');
-                    $state.go('/dashboard', {}, { reload: true });
+                if(response.errors) {
+                    console.log(response.errors);
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                
+                console.log( response );
+                Materialize.toast('¡Usuario registrado exitosamente!', 4000, 'green');
+                $state.go('/dashboard', {}, { reload: true });
             });
         }
 
@@ -80,6 +76,7 @@ conAngular
             if( currentPath.indexOf( '/view-user-request' ) > -1 ){
                 getNewUserRequest( $stateParams.requestId );
                 fetchAgencies();
+                fetchBrands();
                 return;
             }
 
@@ -110,6 +107,12 @@ conAngular
                 $scope.agencies = agencies;
             }); 
         }// fetchAgencies
+
+        function fetchBrands(){
+            CompanyService.getBrands( function( response ){
+                $scope.brands = response.brands;
+            }); 
+        }// fetchBrands
 
         function initUsersDataTable(){
             $scope.dtUsersOptions = DTOptionsBuilder.newOptions()

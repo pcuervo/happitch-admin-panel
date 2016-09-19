@@ -30,7 +30,6 @@ window.conApp = {};
 
     // set in true when first time were clicked on toggle button
     this.changed    = false;
-
     this.init();
   };
 
@@ -107,11 +106,17 @@ window.conApp = {};
         
         // open submenu
         if(toggle.length && subClosed) {
-          _this.toggleSub(toggle);
+            _this.toggleSub(toggle);
         }
 
         // highlight new active item
-        item.parent('li').addClass('active');
+        console.log( item );
+        if( item.length > 1 ){
+            $(item[1]).parent('li').addClass('active');   
+        } else {
+            item.parent('li').addClass('active');   
+        }
+        
       }
     }
   }

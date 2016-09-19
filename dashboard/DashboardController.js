@@ -8,10 +8,6 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
     * PUBLIC FUNCTIONS
     *******************/
 
-    $scope.someFunc = function( args ){
-
-    }// someFunc
-
 
 
     /******************
@@ -19,29 +15,49 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
     *******************/
 
     function initDashboard( role ){
-        getNewUserRequests();
-        initNewUserDataTable();
+        getAgencyUserRequests();
+        getBrandUserRequests();
+        initAgencyUserDataTable();
     }// initDashboard
 
-    function initNewUserDataTable(){
-        $scope.dtPendingEntryRequestsOptions = DTOptionsBuilder.newOptions()
+    function initAgencyUserDataTable(){
+        $scope.dtAgencyUserRequestsOptions = DTOptionsBuilder.newOptions()
                 .withPaginationType('full_numbers')
                 .withDisplayLength(20)
                 .withDOM('it')
                 .withOption('responsive', true)
                 .withOption('order', [])
                 .withOption('searching', false);
-        // $scope.dtPendingEntryRequestsColumnDefs = [
-        //     //DTColumnDefBuilder.newColumnDef(5).notSortable()
-        // ];
         DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
-    }// initNewUserDataTable
+    }// initAgencyUserDataTable
+
+    function initBrandUserDataTable(){
+        $scope.dtBrandUserRequestsOptions = DTOptionsBuilder.newOptions()
+                .withPaginationType('full_numbers')
+                .withDisplayLength(20)
+                .withDOM('itp')
+                .withOption('responsive', true)
+                .withOption('order', [])
+                .withOption('searching', false);
+        DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+    }// initBrandUserDataTable
 
     function getNewUserRequests(){
         UserService.getNewUserRequests( function( userRequests ){
-
             $scope.userRequests = userRequests;
         }); 
     }// getNewUserRequests
+
+    function getAgencyUserRequests(){
+        UserService.getAgencyUserRequests( function( userRequests ){
+            $scope.agencyUserRequests = userRequests;
+        }); 
+    }// getAgencyUserRequests
+
+    function getBrandUserRequests(){
+        UserService.getBrandUserRequests( function( userRequests ){
+            $scope.brandUserRequests = userRequests;
+        }); 
+    }// getBrandUserRequests
 
 }]);

@@ -1,0 +1,60 @@
+<p>This service fetches an existing Pitch</p>
+<h4>GET /pitches/:id</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>id (integer)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns a Pitch object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Poust Side HD Controller&quot;</span>,
+  <span style="color: #007700">&quot;brief_date&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-09&quot;</span>,
+  <span style="color: #007700">&quot;brief_email_contact&quot;</span>: <span style="background-color: #fff0f0">&quot;virgil.conn@goyette.us&quot;</span>,
+  <span style="color: #007700">&quot;skill_category&quot;</span>: {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Publicidad&quot;</span>,
+    <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-24T18:00:06.057-05:00&quot;</span>,
+    <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-08-24T18:00:06.057-05:00&quot;</span>
+  }
+}
+</pre></div>
+
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no pitch found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró el pitch con id: 11&quot;</span>
+}
+</pre></div>
+
+
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'show' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m4 ]"> 
+      <div class="input-field">
+          <input type="text" id="show-pitch-id" ng-model="showPitch.id" required>
+          <label for="show-pitch-id">ID</label>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div>

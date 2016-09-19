@@ -190,7 +190,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
         templateUrl: "dashboard/dashboard.html",
         controller: "DashboardController",
         data: {
-            pageTitle: 'Admin Dashboard with Material Design',
+            pageTitle: 'Admin Dashboard Happitch',
             crumbs: [{
                 title: '<i class="fa fa-home"></i> Home',
                 href: '#'
@@ -203,7 +203,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'conAngular',
-                    insertBefore: '#ngInsertBefore', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                    insertBefore: '#ngInsertBefore',
                     files: amapAssets('sortable')
                 }]);
             }]
@@ -226,32 +226,29 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'conAngular',
-                    insertBefore: '#ngInsertBefore', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                    insertBefore: '#ngInsertBefore',
                     files: amapAssets('parsley')
                 }]);
             }]
         } 
     })
-
-    // API Test
-    // User
-    // .state('/api-client', {
-    //     url: "/api-client/",
-    //     templateUrl: "api-client/api-client.html",
-    //     controller: "ApiController",
-    //     data: {
-    //         pageTitle: 'API Tester'
-    //     },
-    //     resolve: {
-    //         deps: ['$ocLazyLoad', function($ocLazyLoad) {
-    //             return $ocLazyLoad.load([{
-    //                 name: 'conAngular',
-    //                 insertBefore: '#ngInsertBefore', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-    //                 files: amapAssets('parsley')
-    //             }]);
-    //         }]
-    //     } 
-    // })
+    .state('/add-user', {
+        url: "/add-user",
+        templateUrl: "user/add-user.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Agregar usuario'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
 
     .state('/api-client', {
         url: "/api-client",
@@ -270,7 +267,6 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
-
     .state('/reset-password', {
         url: "/reset-password/:passwordToken",
         templateUrl: "user/reset-password.html",
@@ -288,11 +284,165 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
-   
+    .state('/create-skill-category', {
+        url: "/create-skill-category",
+        templateUrl: "agency/create-skill-category.html",
+        controller: "AgencyController",
+        data: {
+            pageTitle: 'Crear categoría de skill',
+            crumbs: [{
+                title: '<i class="fa fa-home"></i> Home',
+                href: '#'
+              }, {
+                title: 'Dashboard',
+                href: '#/create-skill-category'
+              }]
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-skill-categories', {
+        url: "/view-skill-categories",
+        templateUrl: "agency/view-skill-categories.html",
+        controller: "AgencyController",
+        data: {
+            pageTitle: 'Ver categorías de skills',
+            crumbs: [{
+                title: '<i class="fa fa-home"></i> Home',
+                href: '#'
+              }, {
+                title: 'Dashboard',
+                href: '#/create-skill-category'
+              }]
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+   .state('/create-skill', {
+        url: "/create-skill",
+        templateUrl: "agency/create-skill.html",
+        controller: "AgencyController",
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+   .state('/view-skills', {
+        url: "/view-skills",
+        templateUrl: "agency/view-skills.html",
+        controller: "AgencyController",
+        data: {
+            pageTitle: 'Ver skills',
+            crumbs: [{
+                title: '<i class="fa fa-home"></i> Home',
+                href: '#'
+              }, {
+                title: 'Dashboard',
+                href: '#/create-skill-category'
+              }]
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/create-company', {
+        url: "/create-company",
+        templateUrl: "company/create-company.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Crear compañía'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-companies', {
+        url: "/view-companies",
+        templateUrl: "company/view-companies.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Ver compañías'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/create-brand', {
+        url: "/create-brand",
+        templateUrl: "company/create-brand.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Crear marca'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-brands', {
+        url: "/view-brands",
+        templateUrl: "company/view-brands.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Ver marcas'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+
 }]);
 
 /* Init global settings and run the app */
-conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $cookies, $http, AuthenticationService) {
+conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $location, $cookies, $http, AuthenticationService) {
     // Set Environment
     $rootScope.env = 'test';
     // API URL
@@ -318,6 +468,20 @@ conAngular.run(['$rootScope', '$state', '$cookies', '$http', 'AuthenticationServ
     $rootScope.$state = $state;
     // keep user logged in after page refresh
     $rootScope.globals = $cookies.getObject('globals') || {};
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+
+        // redirect to login page if not logged in and trying to access a restricted page
+        var restrictedPage = $.inArray($state.get(), ['/login', '/api-client']) === -1;
+
+        $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
+        var loggedIn = $rootScope.loggedIn;
+
+        if ( !loggedIn && next.indexOf('api-client') < 1 ) {
+            event.preventDefault();
+            $state.go('/login');
+        }
+    });
 
 }]);
 

@@ -1,25 +1,34 @@
 conAngular
-    .controller('ApiController', ['$scope', '$rootScope', '$location', '$state', 'UserService', 'AgencyService', 'AuthenticationService', 'CompanyService', 'PitchService', function( $scope, $rootScope, $location, $state, UserService, AgencyService, AuthenticationService, CompanyService, PitchService ){
+    .controller('AgencyController', ['$scope', '$rootScope', '$location', '$state', 'UserService', 'AgencyService', 'AuthenticationService', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $scope, $rootScope, $location, $state, UserService, AgencyService, AuthenticationService, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ){
 
         (function initController() {
-            initApi();
-            $scope.apiUrl = $rootScope.apiUrl;
-            $scope.apiKey = $rootScope.apiKey;
+            var currentPath = $location.path();
+            initAgency( currentPath );
         })();
 
-        $scope.newUserRequest = function( action ){
-            switch( action ){
-                case 'create':
-                    createNewUserRequest( this.cnur.email, this.cnur.agencyBrand, this.cnur.userType );
-                    break;
-                case 'confirm':
-                    confirmRequest( this.confirmReq.email, this.confirmReq.agencyId, this.confirmReq.role, this.confirmReq.isMemberAMAP );
-                    break;
-                case 'reject':
-                    rejectRequest( this.rejectReq.email );
-                    break;
-            }
-        }// newUserRequest
+        $scope.createSkillCat = function(){
+            AgencyService.createSkillCat( $scope.authToken, $scope.name, function ( response ){
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    console.log( response.errors );
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                Materialize.toast('¡Se ha creado la categoría "' + $scope.name + '"!', 4000, 'green');
+            });
+        }// createSkillCat
+
+        $scope.createSkill = function(){
+            AgencyService.createSkill( $scope.authToken, $scope.name, $scope.skillCat, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.skillCatResponse = response;
+                if(response.errors) {
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                Materialize.toast('¡Se ha creado la categoría "' + $scope.name + '"!', 4000, 'green');
+            });
+        }// createSkill
 
         $scope.agencyService = function( action ){
             switch( action ){
@@ -37,10 +46,10 @@ conAngular
                     createAgency( this.createAgency.authToken, this.createAgency.name, this.createAgency.phone, this.createAgency.contactName, this.createAgency.contactEmail, this.createAgency.address, this.createAgency.latitude, this.createAgency.longitude, this.createAgency.websiteUrl, this.createAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename );
                     break;
                 case 'update':
-                    var goldenPitch = $('#checkbox-update-golden-pitch:checked').length;
-                    var silverPitch = $('#checkbox-update-silver-pitch:checked').length;
-                    var mediumRiskPitch = $('#checkbox-update-medium-risk-pitch:checked').length;
-                    var highRiskPitch = $('#checkbox-update-high-risk-pitch:checked').length;
+                    var goldenPitch = $('#checkbox-golden-pitch:checked').length;
+                    var silverPitch = $('#checkbox-silver-pitch:checked').length;
+                    var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
+                    var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
                     var logoFilename = '';
                     if( 'undefined' !== typeof $scope.imageExt ){
                         logoFilename = FormatHelper.slug( this.updateAgency.name ) + '.' + $scope.imageExt;
@@ -56,41 +65,6 @@ conAngular
             }
         }// agencies
 
-        $scope.sessions = function( action ){
-            switch( action ){
-                case 'login':
-                    loginUser( this.sessions.email, this.sessions.password );
-                    break;
-                case 'logout':
-                    logoutUser( this.sessions.authorizationToken );
-                    break;
-            }
-        }
-
-        $scope.successCaseService = function( action ){
-            switch( action ){
-                case 'create':
-                    var filename = '';
-                    if( 'undefined' !== typeof $scope.imageExt ){
-                        filename = FormatHelper.slug( this.createCase.name ) + '.' + $scope.imageExt;
-                    }
-                    createCase( this.createCase.authToken, this.createCase.agencyId, this.createCase.name, this.createCase.description, this.createCase.url, $scope.image, filename );
-                    break;
-                case 'update':
-                    var filename = '';
-                    if( 'undefined' !== typeof $scope.imageExt ){
-                        filename = FormatHelper.slug( this.updateCase.name ) + '.' + $scope.imageExt;
-                    }
-                    updateCase( this.updateCase.id, this.updateCase.authToken, this.updateCase.agencyId, this.updateCase.name, this.updateCase.description, this.updateCase.url, $scope.image, filename );
-                    break;
-                case 'show':
-                    showCase( this.showCase.id );
-                    break;
-                case 'destroy':
-                    destroyCase( this.destroyCase.id, this.destroyCase.authToken );
-                    break;
-            }
-        }// successCaseService
 
         $scope.skillCatService = function( action ){
             switch( action ){
@@ -120,106 +94,6 @@ conAngular
             }
         }// skillService
 
-        $scope.companyService = function( action ){
-            switch( action ){
-                case 'create':
-                    createCompany( this.createCompany.authToken, this.createCompany.name );
-                    break;
-                case 'index':
-                    getCompanies();
-                    break;
-                case 'show':
-                    showCompany( this.showCompany.id );
-                    break;
-                case 'indexBrands':
-                    getBrands();
-                    break;
-                case 'showBrand':
-                    showBrand( this.showBrand.id );
-                    break;
-                case 'createBrand':
-                    createBrand( this.createBrand.authToken, this.createBrand.name, this.createBrand.contactName, this.createBrand.contactEmail, this.createBrand.contactPosition, this.createBrand.company );
-                    break;
-                case 'showBrandByCompany':
-                    showBrandByCompany( this.showBrandByCompany.company );
-                    break;
-            }
-        }// skillService
-
-        $scope.pitchService = function( action ){
-            switch( action ){
-                case 'create':
-                    createPitch( this.createPitch.authToken, this.createPitch.name, this.createPitch.brand, this.createPitch.briefDate, this.createPitch.briefEmailContact, $scope.skillCategoriesAdded );
-                    break;
-                case 'index':
-                    getPitches();
-                    break;
-                case 'show':
-                    showPitch( this.showPitch.id );
-                    break;
-                case 'pitchesByBrand':
-                    pitchesByBrand( this.pitchesByBrand.brand );
-                    break;
-                case 'createPitchEval':
-                    var objectivesClear = $('#checkbox-clear-objectives:checked').length;
-                    var selectionCriteria = $('#checkbox-selection-criteria:checked').length;
-                    var budgetKnown = $('#checkbox-budget-known:checked').length;
-                    var deliverablesClear = $('#checkbox-deliverables-clear:checked').length;
-                    var marketingInvolved = $('#checkbox-mkt-involved:checked').length;
-                    var copyright = $('#checkbox-copyright:checked').length;
-
-                    createPitchEval( this.createPitchEval.authToken, this.createPitchEval.pitch, objectivesClear, selectionCriteria, budgetKnown, this.createPitchEval.timeToPresent, this.createPitchEval.numberAgencies, deliverablesClear, marketingInvolved, this.createPitchEval.timeKnowDecision, copyright, this.createPitchEval.numberRounds );
-                    break;
-            }
-        }// pitchService
-
-        $scope.setActive = function( tab ){
-            setCollectionInactive();
-            $('#'+tab).addClass('active');
-            switch( tab ){
-                case 'sessions':
-                    $scope.isSessions = true;
-                    break;
-                case 'users':
-                    $scope.isUsers = true;
-                    break;
-                case 'newUserRequests':
-                    $scope.isNewUserRequests = true;
-                    break;
-                case 'agencies':
-                    $("#create-agency-logo").change(function(){
-                        getImgData( 'create-agency-logo' );
-                    });
-                    $("#update-agency-logo").change(function(){
-                        getImgData( 'update-agency-logo' );
-                    });
-                    $scope.skillsAdded = []
-                    $scope.isAgencies = true;
-                    break;
-                case 'successCases':
-                    $("#create-success-case-image").change(function(){
-                        console.log('getting');
-                        getImgData( 'create-success-case-image' );
-                    });
-                    $scope.isCases = true;
-                    break;
-                case 'skills':
-                    $scope.isSkills = true;
-                    break;
-                case 'companies':
-                    $scope.isCompanies = true;
-                    break;
-                case 'brands':
-                    $scope.isBrands = true;
-                    break;
-                case 'pitches':
-                    $scope.skillCategoriesAdded = []
-                    $scope.isPitches = true;
-                    break;
-                default:
-                    $scope.isNewUserRequests = true;
-            }
-        }// updateUser
 
         $scope.addSkill = function(){
             skillToAdd = {};
@@ -235,32 +109,54 @@ conAngular
             $scope.skillsAdded.splice( index, 1 );
         }// removePart
 
-        $scope.addSkillCategory = function(){
-            $scope.skillCategoriesAdded.push($('#skill-category').val());
-            $('#skill-category').val('');
-        }
-
-        $scope.removeSkillCategory = function( index ){
-            $scope.skillCategoriesAdded.splice( index, 1 );
-        }
-
-        function initApi(){
-            $('ul.tabs').tabs();
-            $scope.isNewUserRequests = true;
-            $scope.testApiUrl   = 'http://localhost:3000/api/';
-            $scope.devApiUrl    = 'https://amap-dev.herokuapp.com/api/';
-            $scope.prodApiUrl   = 'https://amap-prod.herokuapp.com/api/'
-            $scope.testApiKey   = 'd2d6279345763f64ce21183142e974b8';
-            fetchAgencies();
-            fetchSkillCategories();
-            fetchSkills();
-            fetchCompanies();
-            fetchBrands();
-            fetchPitches();
-        }
 
         /*********************
-         API FUNCTIONS
+        * #GENERAL FUNCTIONS
+        *********************/
+
+        function initAgency( path ){
+            $scope.authToken = $rootScope.globals.currentUser.authdata;
+
+            switch( path ){
+                case '/view-skill-categories':
+                    fetchSkillCategories();
+                    initSkillCatDataTable();
+                    break;
+                case '/create-skill':
+                    fetchSkillCategories();
+                    break;
+                case '/view-skills':
+                    fetchSkills();
+                    initSkillDataTable();
+                    break;
+            }
+
+        }
+
+        function initSkillCatDataTable(){
+            $scope.dtSkillCatOptions = DTOptionsBuilder.newOptions()
+                    .withPaginationType('full_numbers')
+                    .withDisplayLength(10)
+                    .withDOM('itp')
+                    .withOption('responsive', true)
+                    .withOption('order', [])
+                    .withOption('searching', false);
+            DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+        }// initSkillCatDataTable
+
+        function initSkillDataTable(){
+            $scope.dtSkillOptions = DTOptionsBuilder.newOptions()
+                    .withPaginationType('full_numbers')
+                    .withDisplayLength(10)
+                    .withDOM('itp')
+                    .withOption('responsive', true)
+                    .withOption('order', [])
+                    .withOption('searching', false);
+            DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+        }// initSkillDataTable
+
+        /*********************
+        * #API FUNCTIONS
         *********************/
         
         function createNewUserRequest( email, agencyBrand, userType ){
@@ -425,19 +321,6 @@ conAngular
             });
         }// destroyCase
 
-        function createSkillCat( authToken,  name ){
-            AgencyService.createSkillCat( authToken, name, function ( response ){
-                $scope.showAgenciesResponse = true;
-                $scope.skillCatResponse = response;
-                if(response.errors) {
-                    console.log( response.errors );
-                    Materialize.toast('SkillCategory could not be created!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('SkillCategory created!', 4000, 'green');
-            });
-        }// createSkillCat
-
         function showSkillCat( id ){
             AgencyService.showSkillCat( id, function ( response ){
                 $scope.showAgenciesResponse = true;
@@ -461,19 +344,6 @@ conAngular
                 Materialize.toast('SkillCategory fetched successfully!', 4000, 'green');
             });
         }// getSkillCategories
-
-        function createSkill( authToken,  name, cat ){
-            AgencyService.createSkill( authToken, name, cat, function ( response ){
-                $scope.showAgenciesResponse = true;
-                $scope.skillCatResponse = response;
-                if(response.errors) {
-                    console.log( response.errors );
-                    Materialize.toast('Skill could not be created!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('Skill created!', 4000, 'green');
-            });
-        }// createSkill
 
         function showSkill( id ){
             AgencyService.showSkill( id, function ( response ){
@@ -560,79 +430,6 @@ conAngular
             });
         }// createBrand
 
-        function getPitches(){
-            PitchService.getAll( function ( response ){
-                $scope.showPitchesResponse = true;
-                $scope.pitchResponse = response;
-                if(response.errors) {
-                    Materialize.toast('Pitches could not be fetched!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('Pitches fetched successfully!', 4000, 'green');
-            });
-        }// getPitches
-
-        function showPitch( id ){
-            PitchService.show( id, function ( response ){
-                $scope.showPitchesResponse = true;
-                $scope.pitchResponse = response;
-                if(response.errors) {
-                    Materialize.toast('Pitch could not be fetched!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('Pitch fetched successfully!', 4000, 'green');
-            });
-        }// showPitch
-
-        function showBrandByCompany( id ){
-            CompanyService.showBrandByCompany( id, function ( response ){
-                $scope.showCompaniesResponse = true;
-                $scope.companyResponse = response;
-                if(response.errors) {
-                    Materialize.toast('Brand could not be fetched!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('Brand fetched successfully!', 4000, 'green');
-            });
-        }// showBrandByCompany
-
-        function createPitch( authToken, name, brandId, briefDate, briefEmailContact, skillCategories ){
-            console.log( skillCategories );
-            PitchService.create( authToken, name, brandId, briefDate, briefEmailContact, skillCategories,  function ( response ){
-                $scope.showPitchesResponse = true;
-                $scope.pitchResponse = response;
-                if(response.errors) {
-                    Materialize.toast('Pitch could not be created!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('Pitch created!', 4000, 'green');
-            });
-        }// createPitch
-
-        function pitchesByBrand( id ){
-            PitchService.byBrand( id, function ( response ){
-                $scope.showPitchesResponse = true;
-                $scope.pitchResponse = response;
-                if(response.errors) {
-                    Materialize.toast('Pitches could not be fetched!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('Pitches fetched successfully!', 4000, 'green');
-            });
-        }// pitchesByBrand
-
-        function createPitchEval( authToken, pitch, objectivesClear, selectionCriteria, budgetKnown, timeToPresent, numberAgencies, deliverablesClear, marketingInvolved, timeKnowDecision, copyright, numberRounds ){
-            PitchService.createEvaluation( authToken, pitch, objectivesClear, selectionCriteria, budgetKnown, timeToPresent, numberAgencies, deliverablesClear, marketingInvolved, timeKnowDecision, copyright, numberRounds,  function ( response ){
-                $scope.showPitchesResponse = true;
-                $scope.pitchResponse = response;
-                if(response.errors) {
-                    Materialize.toast('PitchEvaluation could not be created!', 4000, 'red');
-                    return;
-                }
-                Materialize.toast('PitchEvaluation created!', 4000, 'green');
-            });
-        }// createPitchEval
-
 
         /*********************
          HELPER FUNCTIONS
@@ -652,27 +449,17 @@ conAngular
 
         function fetchSkills(){
             AgencyService.getSkills( function( skills ){
+                console.log(skills);
                 $scope.skills = skills;
             }); 
         }// fetchSkills
 
         function fetchCompanies(){
             CompanyService.getAll( function( response ){
+                console.log( response );
                 $scope.companies = response.companies;
             }); 
         }// fetchCompanies
-
-        function fetchBrands(){
-            CompanyService.getBrands( function( response ){
-                $scope.brands = response.brands;
-            }); 
-        }// fetchBrands
-
-        function fetchPitches(){
-            PitchService.getAll( function ( response ){
-                $scope.pitches = response.pitches;
-            });
-        }
 
         function setCollectionInactive(tab){
             $('.collection-item').removeClass('active');
@@ -684,7 +471,6 @@ conAngular
             $scope.isSkills = false;
             $scope.isCompanies = false;
             $scope.isBrands = false;
-            $scope.isPitches = false;
         }
 
         function getImgData( id ){
