@@ -53,6 +53,13 @@ conAngular
                 case 'addSkills':
                     addSkillsToAgency( this.addSkills.authToken, this.addSkills.id, $scope.skillsAdded );
                     break;
+                case 'addCriteria':
+                    var criteriaIds = getCriteriaIds( $scope.criteriaAdded );
+                    addCriteriaToAgency( this.addCriteria.authToken, this.addCriteria.id, criteriaIds );
+                    break;
+                case 'addExclusivity':
+                    addExclusivityToAgency( this.addExclusivity.authToken, this.addExclusivity.id, $scope.brandsAdded );
+                    break;
             }
         }// agencies
 
@@ -193,8 +200,11 @@ conAngular
                     $("#update-agency-logo").change(function(){
                         getImgData( 'update-agency-logo' );
                     });
-                    $scope.skillsAdded = []
+                    $scope.skillsAdded = [];
+                    $scope.criteriaAdded = [];
+                    $scope.brandsAdded = [];
                     $scope.isAgencies = true;
+                    fetchCriteria();
                     break;
                 case 'successCases':
                     $("#create-success-case-image").change(function(){
@@ -213,6 +223,7 @@ conAngular
                     $scope.isBrands = true;
                     break;
                 case 'pitches':
+                    fetchBrands();
                     $scope.skillCategoriesAdded = []
                     $scope.isPitches = true;
                     break;
@@ -244,6 +255,20 @@ conAngular
             $scope.skillCategoriesAdded.splice( index, 1 );
         }
 
+        $scope.addCriterium = function(){
+            criteriumToAdd = {};
+            criteriumToAdd['id'] = $('#criterium').val()
+            criteriumToAdd['name'] = $('#criterium option:selected').text()
+            $scope.criteriaAdded.push(criteriumToAdd);
+            $('#criterium').val('');
+        }
+
+        $scope.addExclusivityBrand = function(){
+            $scope.brandsAdded.push($('#exclusivity-brand').val());
+            console.log($scope.brandsAdded);
+            $('#exclusivity-brand').val('');
+        }
+
         function initApi(){
             $('ul.tabs').tabs();
             $scope.isNewUserRequests = true;
@@ -255,8 +280,8 @@ conAngular
             fetchSkillCategories();
             fetchSkills();
             fetchCompanies();
-            fetchBrands();
-            fetchPitches();
+            //fetchBrands();
+            //fetchPitches();
         }
 
         /*********************
@@ -374,6 +399,30 @@ conAngular
                 Materialize.toast('Skills added!', 4000, 'green');
             });
         }// addSkillsToAgency
+
+        function addCriteriaToAgency( authToken, id, criteria ){
+            AgencyService.addCriteria( authToken, id, criteria, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.agencyResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Criteria could not be added!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Criteria added!', 4000, 'green');
+            });
+        }// addCriteriaToAgency
+
+        function addExclusivityToAgency( authToken, id, brands ){
+            AgencyService.addExclusivity( authToken, id, brands, function ( response ){
+                $scope.showAgenciesResponse = true;
+                $scope.agencyResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Brands could not be added!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Brands added!', 4000, 'green');
+            });
+        }// addExclusivityToAgency
 
         function createCase( authToken, agencyId, name, description, url, image, filename  ){
             AgencyService.createCase( authToken, agencyId, name, description, url, image, filename, function ( response ){
@@ -674,6 +723,12 @@ conAngular
             });
         }
 
+        function fetchCriteria(){
+            AgencyService.getCriteria( function( response ){
+                $scope.criteria = response.criteria;
+            }); 
+        }// fetchCriteria
+
         function setCollectionInactive(tab){
             $('.collection-item').removeClass('active');
             $scope.isNewUserRequests = false;
@@ -699,5 +754,13 @@ conAngular
                 console.log($scope.imageExt);
             }
         }// getItemImg
+
+        function getCriteriaIds( criteriaArr ){
+            idsArr = [];
+            $.each( criteriaArr, function(i, val){
+                idsArr.push(val.id);
+            })
+            return idsArr;
+        }
 
     }]);

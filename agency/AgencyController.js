@@ -30,70 +30,26 @@ conAngular
             });
         }// createSkill
 
-        $scope.agencyService = function( action ){
-            switch( action ){
-                case 'create':
-                    var goldenPitch = $('#checkbox-golden-pitch:checked').length;
-                    var silverPitch = $('#checkbox-silver-pitch:checked').length;
-                    var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
-                    var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
+        $scope.createAgency = function(){
+            var goldenPitch = $('#checkbox-golden-pitch:checked').length;
+            var silverPitch = $('#checkbox-silver-pitch:checked').length;
+            var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
+            var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
 
-                    var logoFilename = '';
-                    if( 'undefined' !== typeof $scope.imageExt ){
-                        logoFilename = FormatHelper.slug( this.createAgency.name ) + '.' + $scope.imageExt;
-                    }
-                    console.log(logoFilename);
-                    createAgency( this.createAgency.authToken, this.createAgency.name, this.createAgency.phone, this.createAgency.contactName, this.createAgency.contactEmail, this.createAgency.address, this.createAgency.latitude, this.createAgency.longitude, this.createAgency.websiteUrl, this.createAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename );
-                    break;
-                case 'update':
-                    var goldenPitch = $('#checkbox-golden-pitch:checked').length;
-                    var silverPitch = $('#checkbox-silver-pitch:checked').length;
-                    var mediumRiskPitch = $('#checkbox-medium-risk-pitch:checked').length;
-                    var highRiskPitch = $('#checkbox-high-risk-pitch:checked').length;
-                    var logoFilename = '';
-                    if( 'undefined' !== typeof $scope.imageExt ){
-                        logoFilename = FormatHelper.slug( this.updateAgency.name ) + '.' + $scope.imageExt;
-                    }
-                    updateAgency( this.updateAgency.id, this.updateAgency.authToken, this.updateAgency.name, this.updateAgency.phone, this.updateAgency.contactName, this.updateAgency.contactEmail, this.updateAgency.address, this.updateAgency.latitude, this.updateAgency.longitude, this.updateAgency.websiteUrl, this.updateAgency.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename );
-                    break;
-                case 'show':
-                    showAgency( this.showAgency.id );
-                    break;
-                case 'addSkills':
-                    addSkillsToAgency( this.addSkills.authToken, this.addSkills.id, $scope.skillsAdded );
-                    break;
+            var logoFilename = '';
+            if( 'undefined' !== typeof $scope.imageExt ){
+                logoFilename = FormatHelper.slug( $scope.name ) + '.' + $scope.imageExt;
             }
-        }// agencies
 
-
-        $scope.skillCatService = function( action ){
-            switch( action ){
-                case 'create':
-                    createSkillCat( this.createSkillCat.authToken, this.createSkillCat.name );
-                    break;
-                case 'index':
-                    getSkillCategories()
-                    break;
-                case 'show':
-                    showSkillCat( this.showSkillCat.id );
-                    break;
-            }
-        }// skillCatService
-
-        $scope.skillService = function( action ){
-            switch( action ){
-                case 'create':
-                    createSkill( this.createSkill.authToken, this.createSkill.name, this.createSkill.skillCat );
-                    break;
-                case 'index':
-                    getSkillCategories();
-                    break;
-                case 'show':
-                    showSkill( this.showSkill.id );
-                    break;
-            }
-        }// skillService
-
+            AgencyService.create( $scope.authToken, $scope.name, $scope.phone, $scope.contactName, $scope.contactEmail, $scope.address, '', '', $scope.websiteUrl, $scope.numEmployees, goldenPitch, silverPitch, mediumRiskPitch, highRiskPitch, $scope.image, logoFilename, function ( response ){
+                if(response.errors) {
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                Materialize.toast('¡Se ha creado la agencia "' + $scope.name + '"!', 4000, 'green');
+                $state.go('/view-agencies', {}, { reload: true });
+            });
+        }// createAgency
 
         $scope.addSkill = function(){
             skillToAdd = {};
@@ -129,6 +85,15 @@ conAngular
                     fetchSkills();
                     initSkillDataTable();
                     break;
+                case '/view-agencies':
+                    fetchAgencies();
+                    initAgencyDataTable();
+                    break;
+                case '/add-agency':
+                    $("#create-agency-logo").change(function(){
+                        getImgData( 'create-agency-logo' );
+                    });
+                    break;
             }
 
         }
@@ -154,6 +119,17 @@ conAngular
                     .withOption('searching', false);
             DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
         }// initSkillDataTable
+
+        function initAgencyDataTable(){
+            $scope.dtAgencyOptions = DTOptionsBuilder.newOptions()
+                    .withPaginationType('full_numbers')
+                    .withDisplayLength(10)
+                    .withDOM('itp')
+                    .withOption('responsive', true)
+                    .withOption('order', [])
+                    .withOption('searching', false);
+            DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+        }// initAgencyDataTable
 
         /*********************
         * #API FUNCTIONS
@@ -437,6 +413,7 @@ conAngular
         
         function fetchAgencies(){
             AgencyService.getAll( function( agencies ){
+                console.log(agencies);
                 $scope.agencies = agencies;
             }); 
         }// fetchAgencies
@@ -460,18 +437,6 @@ conAngular
                 $scope.companies = response.companies;
             }); 
         }// fetchCompanies
-
-        function setCollectionInactive(tab){
-            $('.collection-item').removeClass('active');
-            $scope.isNewUserRequests = false;
-            $scope.isUsers = false;
-            $scope.isSessions = false;
-            $scope.isAgencies = false;
-            $scope.isCases = false;
-            $scope.isSkills = false;
-            $scope.isCompanies = false;
-            $scope.isBrands = false;
-        }
 
         function getImgData( id ){
             var imgId = id;

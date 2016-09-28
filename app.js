@@ -439,6 +439,41 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
         } 
     })
 
+    .state('/view-agencies', {
+        url: "/view-agencies",
+        templateUrl: "agency/view-agencies.html",
+        controller: "AgencyController",
+        data: {
+            pageTitle: 'Ver agencias'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/add-agency', {
+        url: "/add-agency",
+        templateUrl: "agency/add-agency.html",
+        controller: "AgencyController",
+        data: {
+            pageTitle: 'Crear agencia'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+
 }]);
 
 /* Init global settings and run the app */

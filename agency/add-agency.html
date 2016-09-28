@@ -1,0 +1,103 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Crear agencia</h4>
+    <div class="[ row ]">
+        <form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" enctype="multipart/form-data"  ng-submit="createAgency()" data-parsley-validate>
+            <div class="[ col s12 m4 offset-m2 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-agency-name" ng-model="name" required>
+                    <label for="create-agency-name">Nombre de la agencia</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-agency-phone" ng-model="phone">
+                    <label for="create-agency-phone">Teléfono</label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m4 offset-m2 ]"> 
+                <div class="input-field">
+                    <input type="number" id="create-agency-num-employees" ng-model="numEmployees">
+                    <label for="create-agency-num-employees">Número de empleados</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-agency-website-url" ng-model="websiteUrl">
+                    <label for="create-agency-website-url">Sitio web (ej. http://google.com)</label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m4 offset-m2 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-agency-contact-name" ng-model="contactName">
+                    <label for="create-agency-contact-name">Nombre de contacto</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-agency-contact-email" ng-model="contactEmail">
+                    <label for="create-agency-contact-email">Email de contacto</label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m8 offset-m2 ]"> 
+                <div class="input-field">
+                    <input type="text" id="create-agency-address" ng-model="address">
+                    <label for="create-agency-address">Dirección</label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m4 offset-m2 ]">
+                <div class="[ input-field ]">
+                    <input class="[ filled-in ]" type="checkbox" id="checkbox-golden-pitch" value="1" name="goldenPitch" />
+                    <label for="checkbox-golden-pitch">Golden Pitch</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]">
+                <div class="[ input-field ]">
+                    <input class="[ filled-in ]" type="checkbox" id="checkbox-silver-pitch" value="1" name="silverPitch" />
+                    <label for="checkbox-silver-pitch">Silver Pitch</label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m4 offset-m2 ]">
+                <div class="[ input-field ]">
+                    <input class="[ filled-in ]" type="checkbox" id="checkbox-medium-risk-pitch" value="1" name="medium-riskPitch" />
+                    <label for="checkbox-medium-risk-pitch">Medium Risk Pitch</label>
+                </div>
+            </div>
+            <div class="[ col s12 m4 ]">
+                <div class="[ input-field ]">
+                    <input class="[ filled-in ]" type="checkbox" id="checkbox-high-risk-pitch" value="1" name="high-riskPitch" />
+                    <label for="checkbox-high-risk-pitch">High Risk Pitch</label>
+                </div>
+            </div>
+            <div class="[ col s12 m8 offset-m2 ]">
+                <div class="file-field input-field">
+                    <input class="file-path validate" type="text" placeholder="click here to upload image">
+                    <div class="">
+                        <span>Subir imagen</span>
+                        <input type="file" id="create-agency-logo" ng-model="logo" />
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="[ col s12 ]"> 
+                <div class="[ center-align ]">
+                    <button class="[ waves-effect ][ btn ]">Crear</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+  $('[data-parsley-validate]').parsley();
+</script>
+
+
+
+
+

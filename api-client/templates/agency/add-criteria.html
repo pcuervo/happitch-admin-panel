@@ -1,0 +1,113 @@
+<p>This service adds criteria to an agency</p>
+<h4>POST /agencies/add_criteria</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer) - Agency ID</li>
+    <li>criteria* (array) - An array of criteria ids.</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;ZEatomyf8K9qXsVLxyE4&quot;</span>,
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;criteria&quot;</span>: [ <span style="color: #0000DD; font-weight: bold">1</span>, <span style="color: #0000DD; font-weight: bold">2</span>, <span style="color: #0000DD; font-weight: bold">3</span> ]
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the criteria array that were added to the agency</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">[
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Locavore scenester vinyl +1 butcher master cleanse keffiyeh vice next level.&quot;</span>,
+    <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T18:14:38.358-05:00&quot;</span>,
+    <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T18:14:38.358-05:00&quot;</span>
+  },
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Sartorial jean shorts food truck organic dreamcatcher 8-bit leggings.&quot;</span>,
+    <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T18:14:38.381-05:00&quot;</span>,
+    <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T18:14:38.381-05:00&quot;</span>
+  },
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+    <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;Photo booth skateboard Portland cred Williamsburg food truck.&quot;</span>,
+    <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T18:14:38.384-05:00&quot;</span>,
+    <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T18:14:38.384-05:00&quot;</span>
+  }
+]
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When agency is not found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró la agencia con id: &quot;</span>
+}
+</pre></div>
+
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When there are no criteria to add</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró ningún criterio para agregar&quot;</span>
+}
+</pre></div>
+
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]"  ng-submit="agencyService( 'addCriteria' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="add-criteria-id" ng-model="addCriteria.id" required>
+            <label for="add-criteria-id">Agency ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="add-criteria-auth-token" ng-model="addCriteria.authToken" required>
+            <label for="add-criteria-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="criteria">
+        <div class="[ col s12 m4 offset-m4 ][ mt-20 ]">
+            <select id="criterium" >
+                <option value="" disabled selected>Choose Criterium</option>
+                <option ng:repeat="criterium in criteria" value="{{criterium.id}}">{{criterium.name}}</option>
+            </select>
+        </div>
+        <a class="[ btn green ][ js-add-criteria ][ mt-20 ]" href="#" ng-click="addCriterium()"><i class="[ material-icons ]">add</i></a>
+    </div>  
+    <div class="clear"></div>
+    <div class="criterias-added" ng-show="criteriaAdded.length">
+        <div ng-repeat="criteria in criteriaAdded track by $index">
+            <div class="[ col m4 offset-m4 ][ input-field ]">
+                <input id="criteria-{{$index}}" type="text" value="{{criteria.name}}" ng-readonly="true" data-id="{{criteria.id}}">
+            </div>
+            <a class="[ btn red ][ js-remove-criteria ][ mt-20 ]" href="#" ng-click="removeSkill(index)"><i class="[ material-icons ]">remove</i></a>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ agencyResponse | json }}</p>
+</div>

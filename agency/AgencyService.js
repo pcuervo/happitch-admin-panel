@@ -16,6 +16,9 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         service.showSkill = showSkill;
         service.getSkills = getSkills;
         service.addSkills = addSkills;
+        service.addCriteria = addCriteria;
+        service.getCriteria = getCriteria;
+        service.addExclusivity = addExclusivity;
     return service;
 
     function getAll( callback ){
@@ -276,5 +279,50 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
             callback( response );
         });
     }// addSkills
+
+    function addCriteria( authToken, id, criteria, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/add_criteria';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id:         id,
+            criteria:   criteria
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// addCriteria
+
+    function getCriteria( callback ){
+        var serviceUrl = $rootScope.apiUrl + 'criteria/';
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getCriteria
+
+    function addExclusivity( authToken, id, brands, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/add_exclusivity_brands';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id:         id,
+            brands:     brands
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// addExclusivity
 }]);
 
