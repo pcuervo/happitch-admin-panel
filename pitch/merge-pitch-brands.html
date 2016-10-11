@@ -1,0 +1,35 @@
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ]">Pitches dados de alta para {{ brand.name }}</h4>
+        <p class="[ center-align ]">Selecciona 2 pitches para compararlos.</p>
+        <form ng-submit="comparePitches()">
+            <table datatable="ng" dt-options="dtPitchesOptions" dt-column-defs="dtPitchesColumnDefs" class="[ row-border hover ] [ col s12 ]">
+                <thead>
+                    <tr>
+                        <th class="[ center-align ]">Nombre</th>
+                        <th class="[ center-align ]">Marca</th>
+                        <th class="[ center-align ]">Compañía</th>
+                        <th class="[ center-align ]">Comparar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pitch in pitches">
+                        <td class="[ center-align ]">{{ pitch.name }}</td>
+                        <td class="[ center-align ]">{{ pitch.brand.name }}</td>
+                        <td class="[ center-align ]">{{ pitch.company }}</td>
+                        <td class="[ center-align ]">
+                            <div class="[ input-field ]">
+                                <input class="[ filled-in ]" type="checkbox" id="{{pitch.id}}" value="{{pitch.id}}" name="item_id" />
+                                <label for="{{pitch.id}}"></label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+            <div class="clear"></div>
+            <div class="[ col s12 ][ center-align ]">
+                <button class="[ btn ][ waves-effect ]">Comparar</button>
+            </div>
+        </form>
+    </div>
+</div>

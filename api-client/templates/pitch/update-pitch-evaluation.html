@@ -1,8 +1,9 @@
-<p>This service creates a new PitchEvaluation</p>
-<h4>POST /pitch_evaluations</h4>
+<p>This service updates a PitchEvaluation</p>
+<h4>POST /pitch_evaluations/update</h4>
 <h4>Parameters:</h4>
 <ul>
     <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer) - PitchEvaluation id</li>
     <li>pitch_id* (integer)</li>
     <li>are_objectives_clear* (boolean)</li>
     <li>has_selection_criteria* (boolean)</li>
@@ -19,11 +20,12 @@
     <li>
         <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
         <div class="[ collapsible-body ]">
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
-    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;ZEatomyf8K9qXsVLxyE4&quot;</span>,
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;y3k7LWsAHBELqyJbxMhp&quot;</span>,
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="background-color: #fff0f0">&quot;6&quot;</span>,
     <span style="color: #007700">&quot;pitch_evaluation&quot;</span>: 
     {
-        <span style="color: #007700">&quot;pitch_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+        <span style="color: #007700">&quot;pitch_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
         <span style="color: #007700">&quot;has_selection_criteria&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
         <span style="color: #007700">&quot;are_objectives_clear&quot;</span>: <span style="background-color: #fff0f0">&quot;true&quot;</span>,
         <span style="color: #007700">&quot;time_to_present&quot;</span>: <span style="background-color: #fff0f0">&quot;1s&quot;</span>,
@@ -95,16 +97,22 @@
     </li>
 </ul>
 
-<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'createPitchEval' )" data-parsley-validate>
-    <div class="[ col s12 m4 offset-m4 ]"> 
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'updatePitchEval' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
         <div class="input-field">
-            <input type="text" id="create-pitch-eval-auth-token" ng-model="createPitchEval.authToken" required>
-            <label for="create-pitch-eval-auth-token">Authorization Token</label>
+            <input type="text" id="update-pitch-eval-id" ng-model="updatePitchEval.id" required>
+            <label for="update-pitch-eval-id">Pitch Evaluation ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="update-pitch-eval-auth-token" ng-model="updatePitchEval.authToken" required>
+            <label for="update-pitch-eval-auth-token">Authorization Token</label>
         </div>
     </div>
     <div class="clear"></div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-       <select ng-model="createPitchEval.pitch" required>
+       <select ng-model="updatePitchEval.pitch">
             <option value="" disabled selected>Choose Pitch</option>
             <option ng:repeat="pitch in pitches" value="{{pitch.id}}">{{pitch.name}}</option>
         </select>
@@ -122,7 +130,7 @@
         </div>
     </div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-       <select ng-model="createPitchEval.timeToPresent" required>
+       <select ng-model="updatePitchEval.timeToPresent">
             <option value="" disabled selected>Time to present</option>
             <option value="1s">1s</option>
             <option value="2s">2s</option>
@@ -138,7 +146,7 @@
         </div>
     </div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-       <select ng-model="createPitchEval.numberAgencies" required>
+       <select ng-model="updatePitchEval.numberAgencies">
             <option value="" disabled selected>Participant agencies</option>
             <option value="2 - 4">2 - 4</option>
             <option value="> 4">> 4</option>
@@ -152,7 +160,7 @@
         </div>
     </div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-        <select ng-model="createPitchEval.isMktInvolved">
+        <select ng-model="updatePitchEval.isMktInvolved">
             <option value="" disabled selected>Is a marketing senior involved?</option>
             <option value="si">si</option>
             <option value="no">no</option>
@@ -161,7 +169,7 @@
     </div>
     <div class="clear"></div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-       <select ng-model="createPitchEval.timeKnowDecision" required>
+        <select ng-model="updatePitchEval.timeKnowDecision">
             <option value="" disabled selected>Time to know decision</option>
             <option value="2s">2s</option>
             <option value="3s">3s</option>
@@ -172,7 +180,7 @@
         </select>
     </div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-        <select ng-model="createPitchEval.copyright" required>
+        <select ng-model="updatePitchEval.copyright" >
             <option value="" disabled selected>Deliver copyright for pitching?</option>
             <option value="si">si</option>
             <option value="no">no</option>
@@ -180,7 +188,7 @@
         </select>
     </div>
     <div class="[ col s12 m3 ][ mt-20 ]">
-       <select ng-model="createPitchEval.numberRounds" required>
+       <select ng-model="updatePitchEval.numberRounds" >
             <option value="" disabled selected>Number of rounds</option>
             <option value="1r">1r</option>
             <option value="2r">2r</option>

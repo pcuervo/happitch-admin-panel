@@ -172,10 +172,25 @@ conAngular
                     var selectionCriteria = $('#checkbox-selection-criteria:checked').length;
                     var budgetKnown = $('#checkbox-budget-known:checked').length;
                     var deliverablesClear = $('#checkbox-deliverables-clear:checked').length;
-                    var marketingInvolved = $('#checkbox-mkt-involved:checked').length;
-                    var copyright = $('#checkbox-copyright:checked').length;
 
-                    createPitchEval( this.createPitchEval.authToken, this.createPitchEval.pitch, objectivesClear, selectionCriteria, budgetKnown, this.createPitchEval.timeToPresent, this.createPitchEval.numberAgencies, deliverablesClear, marketingInvolved, this.createPitchEval.timeKnowDecision, copyright, this.createPitchEval.numberRounds );
+                    createPitchEval( this.createPitchEval.authToken, this.createPitchEval.pitch, objectivesClear, selectionCriteria, budgetKnown, this.createPitchEval.timeToPresent, this.createPitchEval.numberAgencies, deliverablesClear, this.createPitchEval.isMktInvolved, this.createPitchEval.timeKnowDecision, this.updatePitchEval.copyright, this.createPitchEval.numberRounds );
+                    break;
+                case 'byUser':
+                    pitchesByUser( this.byUser.authToken );
+                    break;
+                case 'updatePitchEval':
+                    var objectivesClear = $('#checkbox-clear-objectives:checked').length;
+                    var selectionCriteria = $('#checkbox-selection-criteria:checked').length;
+                    var budgetKnown = $('#checkbox-budget-known:checked').length;
+                    var deliverablesClear = $('#checkbox-deliverables-clear:checked').length;
+
+                    updatePitchEval( this.updatePitchEval.authToken, this.updatePitchEval.id, this.updatePitchEval.pitch, objectivesClear, selectionCriteria, budgetKnown, this.updatePitchEval.timeToPresent, this.updatePitchEval.numberAgencies, deliverablesClear, this.updatePitchEval.isMktInvolved, this.updatePitchEval.timeKnowDecision, this.updatePitchEval.copyright, this.updatePitchEval.numberRounds );
+                    break;
+                case 'cancel':
+                    cancelPitch( this.cancel.id, this.cancel.authToken );
+                    break;
+                case 'decline':
+                    declinePitch( this.decline.id, this.decline.authToken );
                     break;
             }
         }// pitchService
@@ -224,6 +239,7 @@ conAngular
                     break;
                 case 'pitches':
                     fetchBrands();
+                    fetchPitches();
                     $scope.skillCategoriesAdded = []
                     $scope.isPitches = true;
                     break;
@@ -681,6 +697,54 @@ conAngular
                 Materialize.toast('PitchEvaluation created!', 4000, 'green');
             });
         }// createPitchEval
+
+        function updatePitchEval( authToken, id, pitch, objectivesClear, selectionCriteria, budgetKnown, timeToPresent, numberAgencies, deliverablesClear, marketingInvolved, timeKnowDecision, copyright, numberRounds ){
+            PitchService.updateEvaluation( authToken, id, pitch, objectivesClear, selectionCriteria, budgetKnown, timeToPresent, numberAgencies, deliverablesClear, marketingInvolved, timeKnowDecision, copyright, numberRounds,  function ( response ){
+                $scope.showPitchesResponse = true;
+                $scope.pitchResponse = response;
+                if(response.errors) {
+                    Materialize.toast('PitchEvaluation could not be updated!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('PitchEvaluation updated!', 4000, 'green');
+            });
+        }// updatePitchEval
+
+        function pitchesByUser( authToken ){
+            PitchService.byUser( authToken, function ( response ){
+                $scope.showPitchesResponse = true;
+                $scope.pitchResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Pitches could not be fetched!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Pitches created!', 4000, 'green');
+            });
+        }// byUser
+
+        function cancelPitch( id, authToken ){
+            PitchService.cancel( id, authToken, function ( response ){
+                $scope.showPitchesResponse = true;
+                $scope.pitchResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Pitches could not be cancelled!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Pitch has been cancelled!', 4000, 'green');
+            });
+        }// cancelPitch
+
+        function declinePitch( id, authToken ){
+            PitchService.decline( id, authToken, function ( response ){
+                $scope.showPitchesResponse = true;
+                $scope.pitchResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Pitches could not be declined!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Pitch has been declined!', 4000, 'green');
+            });
+        }// declinePitch
 
 
         /*********************

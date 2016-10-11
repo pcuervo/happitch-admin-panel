@@ -1,0 +1,77 @@
+<p>This service cancels a PitchEvaluation</p>
+<h4>POST /pitch_evaluations/cancel</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer): PitchEvaluation id.</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;AyABBkykhsvypomedaVG&quot;</span>,
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="background-color: #fff0f0">&quot;6&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns the cancelled Pitch object</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;pitch_status&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">6</span>,
+  <span style="color: #007700">&quot;pitch_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
+  <span style="color: #007700">&quot;user_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">112</span>,
+  <span style="color: #007700">&quot;evaluation_status&quot;</span>: <span style="color: #008800; font-weight: bold">true</span>,
+  <span style="color: #007700">&quot;are_objectives_clear&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;time_to_present&quot;</span>: <span style="background-color: #fff0f0">&quot;1s&quot;</span>,
+  <span style="color: #007700">&quot;is_budget_known&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;number_of_agencies&quot;</span>: <span style="background-color: #fff0f0">&quot;2 - 4&quot;</span>,
+  <span style="color: #007700">&quot;are_deliverables_clear&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;time_to_know_decision&quot;</span>: <span style="background-color: #fff0f0">&quot;3s&quot;</span>,
+  <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">167</span>,
+  <span style="color: #007700">&quot;activity_status&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;was_won&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-09-19T16:27:14.438-05:00&quot;</span>,
+  <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-10-11T11:52:18.660-05:00&quot;</span>,
+  <span style="color: #007700">&quot;number_of_rounds&quot;</span>: <span style="background-color: #fff0f0">&quot;1r&quot;</span>,
+  <span style="color: #007700">&quot;has_selection_criteria&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;is_marketing_involved&quot;</span>: <span style="background-color: #fff0f0">&quot;si&quot;</span>,
+  <span style="color: #007700">&quot;deliver_copyright_for_pitching&quot;</span>: <span style="background-color: #fff0f0">&quot;si&quot;</span>
+}
+</pre></div>
+
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'cancel' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="cancel-id" ng-model="cancel.id" required>
+            <label for="cancel-id">PitchEvaluation ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="cancel-auth-token" ng-model="cancel.authToken" required>
+            <label for="cancel-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div>

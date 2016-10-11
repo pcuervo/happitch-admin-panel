@@ -474,6 +474,60 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
         } 
     })
 
+    .state('/merge-pitch-companies', {
+        url: "/merge-pitch-companies",
+        templateUrl: "pitch/merge-pitch-companies.html",
+        controller: "PitchController",
+        data: {
+            pageTitle: 'Pitches por compañía'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+
+    .state('/merge-pitch-brands', {
+        url: "/merge-pitch-brands/:brandId",
+        templateUrl: "pitch/merge-pitch-brands.html",
+        controller: "PitchController",
+        data: {
+            pageTitle: 'Pitches por marca'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+
+    .state('/compare-pitches', {
+        url: "/compare-pitches/:pitches",
+        templateUrl: "pitch/compare-pitches.html",
+        controller: "PitchController",
+        data: {
+            pageTitle: 'Comparar pitches'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+
 }]);
 
 /* Init global settings and run the app */
