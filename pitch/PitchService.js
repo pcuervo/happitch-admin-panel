@@ -11,6 +11,8 @@ conAngular.service('PitchService', ['$http', '$rootScope', function($http, $root
         service.merge = merge;
         service.cancel = cancel;
         service.decline = decline;
+        service.archive = archive;
+        service.destroyEvaluation = destroyEvaluation;
     return service;
 
     function getAll( callback ){
@@ -188,6 +190,38 @@ conAngular.service('PitchService', ['$http', '$rootScope', function($http, $root
             callback( response );
         });
     }// decline
+
+    function archive( id, authToken, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/archive';
+        $http.post(serviceUrl, 
+            {
+                auth_token: authToken,
+                id:         id
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// archive
+
+    function destroyEvaluation( id, authToken, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/destroy';
+        $http.post(serviceUrl, 
+            {
+                auth_token: authToken,
+                id:         id
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// destroyEvaluation
 
 }]);
 

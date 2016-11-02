@@ -173,7 +173,7 @@ conAngular
                     var budgetKnown = $('#checkbox-budget-known:checked').length;
                     var deliverablesClear = $('#checkbox-deliverables-clear:checked').length;
 
-                    createPitchEval( this.createPitchEval.authToken, this.createPitchEval.pitch, objectivesClear, selectionCriteria, budgetKnown, this.createPitchEval.timeToPresent, this.createPitchEval.numberAgencies, deliverablesClear, this.createPitchEval.isMktInvolved, this.createPitchEval.timeKnowDecision, this.updatePitchEval.copyright, this.createPitchEval.numberRounds );
+                    createPitchEval( this.createPitchEval.authToken, this.createPitchEval.pitch, objectivesClear, selectionCriteria, budgetKnown, this.createPitchEval.timeToPresent, this.createPitchEval.numberAgencies, deliverablesClear, this.createPitchEval.isMktInvolved, this.createPitchEval.timeKnowDecision, this.createPitchEval.copyright, this.createPitchEval.numberRounds );
                     break;
                 case 'byUser':
                     pitchesByUser( this.byUser.authToken );
@@ -191,6 +191,12 @@ conAngular
                     break;
                 case 'decline':
                     declinePitch( this.decline.id, this.decline.authToken );
+                    break;
+                case 'archive':
+                    archivePitch( this.archive.id, this.archive.authToken );
+                    break;
+                case 'destroyEvaluation':
+                    destroyEvaluation( this.destroyEvaluation.id, this.destroyEvaluation.authToken );
                     break;
             }
         }// pitchService
@@ -242,6 +248,13 @@ conAngular
                     fetchPitches();
                     $scope.skillCategoriesAdded = []
                     $scope.isPitches = true;
+                    break;
+                case 'morePitches':
+                    fetchPitches();
+                    $scope.isMorePitches = true;
+                    break;
+                case 'agencyDashboards':
+                    $scope.isAgencyDashboards = true;
                     break;
                 default:
                     $scope.isNewUserRequests = true;
@@ -746,6 +759,30 @@ conAngular
             });
         }// declinePitch
 
+        function archivePitch( id, authToken ){
+            PitchService.archive( id, authToken, function ( response ){
+                $scope.showPitchesResponse = true;
+                $scope.pitchResponse = response;
+                if(response.errors) {
+                    Materialize.toast('Pitches could not be archived!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Pitch has been archived!', 4000, 'green');
+            });
+        }// archivePitch
+
+        function destroyEvaluation( id, authToken ){
+            PitchService.destroyEvaluation( id, authToken, function ( response ){
+                $scope.showPitchesResponse = true;
+                $scope.pitchResponse = response;
+                if(response.errors) {
+                    Materialize.toast('PitchEvaluation could not be destroyed!', 4000, 'red');
+                    return;
+                }
+                Materialize.toast('Pitch has been destroyed!', 4000, 'green');
+            });
+        }// destroyEvaluation
+
 
         /*********************
          HELPER FUNCTIONS
@@ -804,6 +841,8 @@ conAngular
             $scope.isCompanies = false;
             $scope.isBrands = false;
             $scope.isPitches = false;
+            $scope.isMorePitches = false;
+            $scope.isAgencyDashboards = false;
         }
 
         function getImgData( id ){

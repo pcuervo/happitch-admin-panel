@@ -1,0 +1,64 @@
+<p>This service return the average score of pitches per month, for the industry.</p>
+<h4>POST /pitch_evaluations/average_per_month_industry</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;bLnbTvCsNAn4eDFBB2aZ&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns the scores grouped by month.</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">[
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span style="color: #007700">&quot;score&quot;</span>: <span style="background-color: #fff0f0">&quot;31.5333333333333333&quot;</span>,
+    <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;09-16&quot;</span>
+  },
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+    <span style="color: #007700">&quot;score&quot;</span>: <span style="background-color: #fff0f0">&quot;8.7333333333333333&quot;</span>,
+    <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;10-16&quot;</span>
+  }
+]
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<!-- <form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'destroyEvaluation' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="destroy-eval-id" ng-model="destroyEvaluation.id" required>
+            <label for="destroy-eval-id">PitchEvaluation ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="destroy-eval-auth-token" ng-model="destroyEvaluation.authToken" required>
+            <label for="destroy-eval-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div> -->

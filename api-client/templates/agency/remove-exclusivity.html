@@ -1,0 +1,101 @@
+<p>This service removes exclusive brands from an agency</p>
+<h4>POST /agencies/remove_exclusivity_brands</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer) - Agency ID</li>
+    <li>brands* (array) - An array of brands' ids.</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;kCEg9ryafBVy2n6Ps7qR&quot;</span>,
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="background-color: #fff0f0">&quot;157&quot;</span>,
+    <span style="color: #007700">&quot;brands&quot;</span>: [<span style="background-color: #fff0f0">&quot;44&quot;</span>]
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the exclusivity brands array from the agency</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">[
+  {
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">61</span>,
+    <span style="color: #007700">&quot;agency_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">219</span>,
+    <span style="color: #007700">&quot;brand&quot;</span>: <span style="background-color: #fff0f0">&quot;Pepsi&quot;</span>,
+    <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-11-01T14:04:53.419-06:00&quot;</span>,
+    <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-11-01T14:04:53.419-06:00&quot;</span>
+  }
+]
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When agency is not found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró la agencia con id: &quot;</span>
+}
+</pre></div>
+
+             <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span> When there are no brands sent</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No se encontró ninguna marca de exclusividad&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+<!-- 
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]"  ng-submit="agencyService( 'addExclusivity' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m2 ]"> 
+        <div class="input-field">
+            <input type="text" id="add-exclusivity-id" ng-model="addExclusivity.id" required>
+            <label for="add-exclusivity-id">Agency ID</label>
+        </div>
+    </div>
+    <div class="[ col s12 m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="add-exclusivity-auth-token" ng-model="addExclusivity.authToken" required>
+            <label for="add-exclusivity-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="exclusivity-brand">
+        <div class="[ col s12 m4 offset-m4 ]">
+            <div class="input-field">
+                <input type="text" id="exclusivity-brand">
+                <label for="add-exclusivity-brand">Brand Name</label>
+            </div>
+        </div>
+        <a class="[ btn green ][ js-add-exclusivity ][ mt-20 ]" href="#" ng-click="addExclusivityBrand()"><i class="[ material-icons ]">add</i></a>
+    </div>  
+    <div class="clear"></div>
+    <div class="brands-added" ng-show="brandsAdded.length">
+        <div ng-repeat="brand in brandsAdded track by $index">
+            <div class="[ col m4 offset-m4 ][ input-field ]">
+                <input id="brand-{{$index}}" type="text" value="{{brand}}" ng-readonly="true">
+            </div>
+            <a class="[ btn red ][ js-remove-brand ][ mt-20 ]" href="#" ng-click="removeExclusivityBrand(index)"><i class="[ material-icons ]">remove</i></a>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showAgenciesResponse">
+    <h5>Response:</h5>
+    <p>{{ agencyResponse | json }}</p>
+</div> -->

@@ -540,8 +540,8 @@ conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'Authe
     var prod = 'amap-prod.herokuapp.com/api/'
     if( 'test' == $rootScope.env ){
         $rootScope.apiUrl = test;
-        $rootScope.apiKey = 'Token d2d6279345763f64ce21183142e974b8';
-        $http.defaults.headers.common['Authorization'] = 'Token d2d6279345763f64ce21183142e974b8'; 
+        $rootScope.apiKey = 'Token dcfbad63799d40cb13300c347665cb36';
+        $http.defaults.headers.common['Authorization'] = 'Token dcfbad63799d40cb13300c347665cb36'; 
     } else if ( 'stage' == $rootScope.env ){
         $rootScope.apiUrl = stage;
         $rootScope.apiKey = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
@@ -566,7 +566,8 @@ conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'Authe
         $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
         var loggedIn = $rootScope.loggedIn;
 
-        if ( !loggedIn && next.indexOf('api-client') < 1 ) {
+        console.log( next );
+        if ( !loggedIn && next.indexOf('api-client') < 1 && next.indexOf('reset-password') < 1 ) {
             event.preventDefault();
             $state.go('/login');
         }
