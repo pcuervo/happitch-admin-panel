@@ -26,9 +26,11 @@ conAngular
 
 				var userObj = response;
                 var userName = '';
+                var agencyId = '';
                 if( userObj.first_name ) userName = userObj.first_name + ' ' + userObj.last_name;
-				
-			    AuthenticationService.setCredentials( userObj.id, userName, $scope.email, userObj.role, userObj.auth_token, $scope.password );
+                if( typeof userObj.agency_id != 'undefined') agencyId = userObj.agency_id;
+
+			    AuthenticationService.setCredentials( userObj.id, userName, $scope.email, userObj.role, userObj.auth_token, agencyId );
 				$scope.logged_in = true;
 
                 Materialize.toast('¡Hola bienvenido al SIL!', 4000);

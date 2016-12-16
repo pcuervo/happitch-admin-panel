@@ -20,18 +20,24 @@
     <div class="[ nano-content ]">
         <ul>
             <li class="active">
-                <a href="#/dashboard" class="waves-effect waves-blue"><i class="[ material-icons ]">dashboard</i> Dashboard</a>
+                <a href="#/dashboard" class="waves-effect waves-blue"><i class="[ material-icons ]">dashboard</i> Dashboard {{ roleName }}</a>
             </li>
             <li>
                 <a class="yay-sub-toggle waves-effect waves-blue" ><i class="[ material-icons ]">person</i> Usuarios <span class="yay-collapse-icon"><i class="[ material-icons ][ center-align ]">expand_more</i></span></a>
                 <ul>
+                    <li ng-show="1 == role"><a class="waves-effect waves-blue" href="#/view-user-requests"><i class="[ material-icons ]">person_add</i>Aprobar usuarios</a>
+                    </li>
                     <li><a class="waves-effect waves-blue" href="#/add-user"><i class="[ material-icons ]">person_add</i>Agregar usuario</a>
                     </li>
-                    <li><a class="waves-effect waves-blue" href="#/view-users"><i class="[ material-icons ]">visibility</i>Ver usuarios</a>
+                    <li><a class="waves-effect waves-blue" href="#/view-users"><i class="[ material-icons ]">visibility</i>Ver usuarios plataforma</a>
+                    </li>
+                    <li ng-show="1 == role"><a class="waves-effect waves-blue" href="#/add-user"><i class="[ material-icons ]">person_add</i>Agregar usuario Administrador</a>
+                    </li>
+                    <li ng-show="1 == role"><a class="waves-effect waves-blue" href="#/view-users"><i class="[ material-icons ]">visibility</i>Ver usuarios administradores</a>
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-show="1 == role">
                 <a class="yay-sub-toggle waves-effect waves-blue" ><i class="[ material-icons ]">person</i> Agencias <span class="yay-collapse-icon"><i class="[ material-icons ][ center-align ]">expand_more</i></span></a>
                 <ul>
                     <li><a class="waves-effect waves-blue" href="#/add-agency"><i class="[ material-icons ]">person_add</i>Agregar agencia</a>
@@ -40,7 +46,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-show="1 == role">
                 <a class="yay-sub-toggle waves-effect waves-blue" ><i class="[ material-icons ]">thumb_up</i> Skills <span class="yay-collapse-icon"><i class="[ material-icons ][ center-align ]">expand_more</i></span></a>
                 <ul>
                     <li><a class="waves-effect waves-blue" href="#/create-skill-category"><i class="[ material-icons ]">add</i>Agregar categoría</a>
@@ -53,7 +59,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li ng-show="1 == role">
                 <a class="yay-sub-toggle waves-effect waves-blue" ><i class="[ material-icons ]">assignment_ind</i> Marcas <span class="yay-collapse-icon"><i class="[ material-icons ][ center-align ]">expand_more</i></span></a>
                 <ul>
                     <li><a class="waves-effect waves-blue" href="#/create-company"><i class="[ material-icons ]">add</i>Agregar compañía</a>
@@ -66,20 +72,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a class="yay-sub-toggle waves-effect waves-blue" ><i class="[ material-icons ]">assignment_ind</i> Marcas <span class="yay-collapse-icon"><i class="[ material-icons ][ center-align ]">expand_more</i></span></a>
-                <ul>
-                    <li><a class="waves-effect waves-blue" href="#/create-company"><i class="[ material-icons ]">add</i>Agregar compañía</a>
-                    </li>
-                    <li><a class="waves-effect waves-blue" href="#/view-companies"><i class="[ material-icons ]">visibility</i>Ver compañías</a>
-                    </li>
-                    <li><a class="waves-effect waves-blue" href="#/create-brand"><i class="[ material-icons ]">add</i>Agregar marca</a>
-                    </li>
-                    <li><a class="waves-effect waves-blue" href="#/view-brands"><i class="[ material-icons ]">visibility</i>Ver marcas</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
+            <li ng-show="1 == role">
                 <a class="yay-sub-toggle waves-effect waves-blue" ><i class="[ material-icons ]">assignment_ind</i> Pitches <span class="yay-collapse-icon"><i class="[ material-icons ][ center-align ]">expand_more</i></span></a>
                 <ul>
                     <li><a class="waves-effect waves-blue" href="#/merge-pitch-companies"><i class="[ material-icons ]">call_merge</i>Unificación de pitch</a>

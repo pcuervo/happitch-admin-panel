@@ -10,10 +10,29 @@ conAngular
         * PUBLIC FUNCTIONS
         *******************/
 
-        $scope.confirmUserRequest = function(){
-            console.log('hi');
+        $scope.registerUser = function(){
             var isMemberAMAP = $('#checkbox-member-amap:checked').length;
-            UserService.confirmUserRequest( $scope.user.email, $scope.user.agency, $scope.user.brand, $scope.user.user_type, isMemberAMAP, function ( response ){
+            if( 2 == $scope.role ){
+                $scope.role = 3;
+                $scope.agency =  $rootScope.globals.currentUser.agencyId;
+            }
+            UserService.registerUser( $scope.authToken, $scope.first_name, $scope.last_name, $scope.email, $scope.role, isMemberAMAP, $scope.agency, $scope.company, function ( response ){
+
+                if(response.errors) {
+                    console.log(response.errors);
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                
+                console.log( response );
+                Materialize.toast('¡Usuario registrado exitosamente!', 4000, 'green');
+                //$state.go('/dashboard', {}, { reload: true });
+            });
+        }
+
+        $scope.confirmUserRequest = function(){
+            var isMemberAMAP = $('#checkbox-member-amap:checked').length;
+            UserService.confirmUserRequest( $scope.user.email, $scope.user.agency, $scope.user.company, $scope.user.user_type, isMemberAMAP, function ( response ){
 
                 if(response.errors) {
                     console.log(response.errors);
@@ -27,31 +46,17 @@ conAngular
             });
         }
 
-        $scope.updateUser = function(){
-
-            // Add feedback saving
-            console.log('actualizando usuario...');
-
-            var userImgName = $scope.firstName.toLowerCase() + '-' + $scope.lastName.toLowerCase() + '.' + $scope.userImgExt;
-            UserService.update( $scope.id, $scope.email, $scope.firstName, $scope.lastName, $scope.userImg, userImgName, function ( response ){
-
-                    if(response.errors) {
-                        console.log(response.errors);
-                        ErrorHelper.display( response.errors );
-                        return;
-                    }
-                    console.log( response.user )
-                    if( '/images/thumb/missing.png' != response.user.avatar_thumb ){
-                        $('#user-avatar').attr('src', response.user.avatar_thumb );
-                    }
-                    Materialize.toast('¡Usuario "' + $scope.firstName + ' ' + $scope.lastName + '" actualizado exitosamente!', 4000, 'green');
-                    if( '/edit-profile' === currentPath ){
-                        $state.go('/my-account', {}, { reload: true });
-                        return;
-                    }
-                    $state.go('/view-users', {}, { reload: true });
+        $scope.declineRequest = function( email ){
+            UserService.rejectUserRequest( email, function ( response ){
+                if(response.errors) {
+                    console.log(response.errors);
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                Materialize.toast( response.success, 4000, 'green');
+                $state.go('/view-user-requests', {}, { reload: true });
             });
-        }// updateUser
+        }// declineRequest
 
         $scope.changePassword = function(){
             console.log( $scope.token );
@@ -67,16 +72,40 @@ conAngular
             });
         }// changePassword
 
+        $scope.showAgencyCompany = function(){
+            if( 2 == $scope.role || 3 == $scope.role ){
+                $scope.isAgency = true;
+                $scope.isCompany = false;
+                return;
+            }
+
+            $scope.isAgency = false;
+            $scope.isCompany = true;
+        }
+
+        $scope.getUserName = function( user ){
+            if( user.first_name ) return user.first_name + ' ' + user.last_name;
+            return '-';
+        }
+
+        $scope.getUserRole = function( role ){
+            if( 2 == role ) return 'Administrador';
+            return 'Regular';
+        }
+
 
         /******************
         * PRIVATE FUNCTIONS
         *******************/
 
         function initUsers( currentPath ){
-            if( currentPath.indexOf( '/view-user-request' ) > -1 ){
+            $scope.authToken = $rootScope.globals.currentUser.authdata;
+            $scope.role = $rootScope.globals.currentUser.role;
+
+            if( currentPath.indexOf( '/view-user-request/' ) > -1 ){
                 getNewUserRequest( $stateParams.requestId );
                 fetchAgencies();
-                fetchBrands();
+                fetchCompanies();
                 return;
             }
 
@@ -85,6 +114,25 @@ conAngular
                 return;
             }
 
+            switch( currentPath ){
+                case '/view-user-requests':
+                    getAgencyUserRequests();
+                    break;
+                case '/add-user':
+                    fetchAgencies();
+                    fetchCompanies();
+                    if( $scope.role == 2 ){
+                        getAgency( $scope.globals.currentUser.agencyId );
+                    }
+                    break;
+                case '/view-users':
+                    if( $scope.role == 2 ){
+                        fetchAgencyUsers( $scope.globals.currentUser.agencyId );
+                    } else {
+                        //fetchUsers();
+                    }
+                    break;
+            }
         }
 
         function getAllUsers(){
@@ -114,6 +162,13 @@ conAngular
             }); 
         }// fetchBrands
 
+        function fetchCompanies(){
+            CompanyService.getAll( function( response ){
+                $scope.companies = response.companies;
+            }); 
+        }// fetchCompanies
+
+
         function initUsersDataTable(){
             $scope.dtUsersOptions = DTOptionsBuilder.newOptions()
                     .withPaginationType('full_numbers')
@@ -127,5 +182,25 @@ conAngular
             ];
             DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
         }// initUsersDataTable
+
+        function getAgencyUserRequests(){
+            UserService.getAgencyUserRequests( function( userRequests ){
+                $scope.agencyUserRequests = userRequests;
+            }); 
+        }// getAgencyUserRequests
+
+        function getAgency( id ){
+            console.log(id);
+            AgencyService.show( id, function( agency ){
+                console.log( agency );
+                $scope.agencyName = agency.name;
+            }); 
+        }
+
+        function fetchAgencyUsers( id ){
+            AgencyService.getUsers( id, function( users ){
+                $scope.users = users;
+            }); 
+        }// fetchAgencyUsers
 
     }]);

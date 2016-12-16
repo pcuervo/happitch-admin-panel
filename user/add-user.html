@@ -1,47 +1,74 @@
 <div class="page-title" data-ng-include="'navigation/breadcrumbs.html'"></div>
 
 <div class="[ card-panel ]">
-    <h4 class="[ center-align ]">Confirmar solicitud de usuario</h4>
+    <h4 class="[ center-align ]">Agregar usuarios agencia o marca</h4>
     <div class="[ row ]">
         <form name="entry_form" class="[ mt-40 ][ left-align ]" ng-submit="registerUser()" data-parsley-validate>
             <div class="[ col s12 m3 offset-m3 ]"> 
                 <div class="input-field">
-                    <input type="text" id="firstName" ng-model="firstName" required>
+                    <input type="text" id="firstName" ng-model="firstName">
                     <label for="firstName">Nombre</label>
                 </div>
             </div>
             <div class="[ col s12 m3 ]"> 
                 <div class="input-field">
-                    <input type="text" id="lastName" ng-model="lastName" required>
+                    <input type="text" id="lastName" ng-model="lastName">
                     <label for="lastName">Apellido(s)</label>
                 </div>
             </div>
             <div class="[ clear ]"></div>
             <div class="[ col s12 m3 offset-m3 ]"> 
                 <div class="input-field">
-                    <input type="text" id="email" ng-model="user.email" required>
+                    <input type="text" id="email" ng-model="email" required>
                     <label for="email">Email</label>
                 </div>
             </div>
-            <div class="[ col s12 m3 ]"> 
-                <select name="agency" ng-model="agency" required data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
+            <div class="[ col s12 m3 ]" ng-show="2 == role"> 
+                <div class="input-field">
+                    <input type="text" id="agency-name" ng-model="agencyName" ng-readonly="true">
+                    <label for="agency-name">Agencia</label>
+                </div>
+            </div>
+            <div class="[ col s12 m3 ][ mt-10 ]" ng-show="1 == role"> 
+                <select name="role" ng-model="role" required data-parsley-error-message="Es obligatorio escoger el tipo de usuario" ng-change="showAgencyCompany()">
                     <option value="" disabled selected>Selecciona el tipo de usuario</option>
-                    <option value="1">Administrador AMAP</option>
                     <option value="2">Agencia (admin)</option>
                     <option value="3">Agencia (regular)</option>
-                    <option value="4">Marca</option>
+                    <option value="4">Cliente (admin)</option>
+                    <option value="5">Cliente (regular)</option>
                 </select>
             </div>
+            <div class="clear"></div>
+            <div class="[ col s12 m3 offset-m3 ]" ng-show="isAgency && role != 2">
+                <select name="agency" ng-model="agency" data-parsley-error-message="Es obligatorio escoger agencia para un nuevo usuario.">
+                    <option value="" disabled selected>Selecciona la agencia</option>
+                    <option ng:repeat="agency in agencies" value="{{agency.id}}">{{agency.name}}</option>
+                </select>
+            </div>
+            <div class="[ col s12 m3 ]" ng-show="isAgency && role != 2">
+                <div class="[ center-align ]">
+                    <a href="#/add-agency" class="[ waves-effect ][ btn ]">Agregar otra</a>
+                </div>
+            </div>
+            <div class="[ col s12 m3 offset-m3 ]" ng-show="isCompany">
+                <select name="company" ng-model="company" data-parsley-error-message="Es obligatorio escoger compañía para un nuevo usuario.">
+                    <option value="" disabled selected>Selecciona la compañía</option>
+                    <option ng:repeat="company in companies" value="{{company.id}}">{{company.name}}</option>
+                </select>
+            </div>
+            <div class="[ col s12 m3 ]" ng-show="isCompany">
+                <div class="[ center-align ]">
+                    <a href="#/create-company" class="[ waves-effect ][ btn ]">Agregar otra</a>
+                </div>
+            </div>
             <div class="[ clear ]"></div>
-            <div class="[ col s12 m3 ]">
+            <div class="[ col s12 m3 offset-m5 ]">
                 <div class="[ input-field ]">
-                    <input class="[ filled-in ]" type="checkbox" id="checkbox-high-value" value="1" name="highValue" />
-                    <label for="checkbox-high-value">¿Es miembro de la AMAP?</label>
+                    <input class="[ filled-in ]" type="checkbox" id="checkbox-member-amap" value="1" name="highValue" />
+                    <label for="checkbox-member-amap">¿Es miembro de la AMAP?</label>
                 </div>
             </div>
             <div class="[ col s12 ]"> 
-                <input type="hidden" name="entry_type" value="unit">
-
                 <div class="[ center-align ]">
                     <button class="[ waves-effect ][ btn ]">crear usuario</button>
                 </div>

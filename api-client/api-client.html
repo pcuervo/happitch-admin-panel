@@ -136,6 +136,7 @@
                 <li class="tab col s3"><a class="active" href="#get_companies">All Companies</a></li>
                 <li class="tab col s3"><a href="#show_company">Show Company</a></li>
                 <li class="tab col s3"><a href="#create_company">Create Company</a></li>
+                <li class="tab col s3"><a href="#update_company">Update Company</a></li>
             </ul>
             <div id="get_companies" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/company/get-companies.html'"></div>
@@ -145,6 +146,9 @@
             </div>
             <div id="create_company" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/company/create-company.html'"></div>
+            </div>
+            <div id="update_company" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/company/update-company.html'"></div>
             </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isBrands">
@@ -214,9 +218,12 @@
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isMorePitches">
             <ul class="tabs">
                 <li class="tab col s3 [ active ]"><a href="#destroy_pitch_evaluation">Destroy Evaluation</a></li>
-                <li class="tab col s3"><a href="#create_pitch_results">Pitch Results</a></li>
+                <li class="tab col s3"><a href="#create_pitch_results">Create Pitch Results</a></li>
+                <li class="tab col s3"><a href="#show_pitch_results">Show Pitch Results</a></li>
+                <li class="tab col s3"><a href="#update_pitch_results">update Pitch Results</a></li>
                 <li class="tab col s3"><a href="#create_pitch_winner_surveys">Winner Survey</a></li>
                 <li class="tab col s3"><a href="#search">Search</a></li>
+                <li class="tab col s3"><a href="#filter">Filter</a></li>
             </ul>
             <div id="destroy_pitch_evaluation" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/destroy-pitch-evaluation.html'"></div>
@@ -224,18 +231,29 @@
             <div id="create_pitch_results" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/create-pitch-results.html'"></div>
             </div>
+            <div id="show_pitch_results" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/show-pitch-result.html'"></div>
+            </div>
+            <div id="update_pitch_results" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/update-pitch-results.html'"></div>
+            </div>
             <div id="create_pitch_winner_surveys" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/create-pitch-winner-surveys.html'"></div>
             </div>
             <div id="search" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/search.html'"></div>
             </div>
+            <div id="filter" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/pitch/filter.html'"></div>
+            </div>
         </div>
         <div class="[ col s12 m9 l10 ][ service-details ]" ng-show="isAgencyDashboards">
             <ul class="tabs">
                 <li class="tab col s3 [ active ]"><a href="#avg_per_month_by_user">Per Month By User</a></li>
-                <li class="tab col s3 [ active ]"><a href="#avg_per_month_by_agency">Per Month By Agency</a></li>
-                <li class="tab col s3 [ active ]"><a href="#avg_per_month_industry">Per Month Industry</a></li>
+                <li class="tab col s3"><a href="#avg_per_month_by_agency">Per Month By Agency</a></li>
+                <li class="tab col s3"><a href="#avg_per_month_industry">Per Month Industry</a></li>
+                <li class="tab col s3"><a href="#dashboard_summary_by_agency">Summary By Agency</a></li>
+                <li class="tab col s3"><a href="#dashboard_summary_by_user">Summary By User</a></li>
             </ul>
             <div id="avg_per_month_by_user" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/dashboard/avg-per-month-by-user.html'"></div>
@@ -245,6 +263,12 @@
             </div>
             <div id="avg_per_month_by_industry" class="[ mt-20 ]">
                 <div class="[ card-panel ]" ng-include src="'api-client/templates/dashboard/avg-per-month-industry.html'"></div>
+            </div>
+            <div id="dashboard_summary_by_agency" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/dashboard/summary-by-agency.html'"></div>
+            </div>
+            <div id="dashboard_summary_by_user" class="[ mt-20 ]">
+                <div class="[ card-panel ]" ng-include src="'api-client/templates/dashboard/summary-by-user.html'"></div>
             </div>
         </div>
     </div>

@@ -1,0 +1,50 @@
+<p>This service fetches an existing Pitch</p>
+<h4>GET /pitch_results/:id</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>id (integer)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns a Pitch object</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;agency_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;pitch_id&quot;</span>: <span style="color: #0000DD; font-weight: bold">3</span>,
+  <span style="color: #007700">&quot;was_proposal_presented&quot;</span>: <span style="color: #008800; font-weight: bold">false</span>,
+  <span style="color: #007700">&quot;got_response&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;was_pitch_won&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;got_feedback&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;has_someone_else_won&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;when_will_you_get_response&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+  <span style="color: #007700">&quot;when_are_you_presenting&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-11-25&quot;</span>,
+  <span style="color: #007700">&quot;created_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-11-10T18:10:28.413-06:00&quot;</span>,
+  <span style="color: #007700">&quot;updated_at&quot;</span>: <span style="background-color: #fff0f0">&quot;2016-11-10T18:10:28.413-06:00&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="pitchService( 'show' )" data-parsley-validate>
+    <div class="[ col s12 m4 offset-m4 ]"> 
+      <div class="input-field">
+          <input type="text" id="show-pitch-id" ng-model="showPitch.id" required>
+          <label for="show-pitch-id">ID</label>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showPitchesResponse">
+    <h5>Response:</h5>
+    <p>{{ pitchResponse | json }}</p>
+</div>

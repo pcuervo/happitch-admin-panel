@@ -24,17 +24,21 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
        });
     }// login
 
-    function setCredentials( id, name, email, role, authToken ) {
+    function setCredentials( id, name, email, role, authToken, agencyId ) {
 
             $rootScope.globals = {
                 currentUser: {
-                id:             id,
-                name:           name,
-                    email:      email,
-                    authdata:   authToken,
-                role:           role,
+                    id:             id,
+                    name:           name,
+                    email:          email,
+                    authdata:       authToken,
+                    role:           role,
                 }
             };
+            
+            if( typeof agencyId != 'undefined'){
+                $rootScope.globals.currentUser['agencyId'] = agencyId;
+            }
  
             $cookies.putObject('globals', $rootScope.globals);
         $cookies.put('loggedIn', true);

@@ -1,0 +1,60 @@
+<p>This service return the dashboard summary of an agency.</p>
+<h4>POST /pitch_evaluations/dashboard_summary_by_agency</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer): Agency ID</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;id&quot;</span>:<span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;teqECHs82jW3KFojexp-&quot;</span>
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns the number of pitches by type as well as won and lost pitches.</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;happitch&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;happy&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+  <span style="color: #007700">&quot;ok&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;unhappy&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+  <span style="color: #007700">&quot;lost&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+  <span style="color: #007700">&quot;won&quot;</span>: <span style="color: #0000DD; font-weight: bold">0</span>,
+  <span style="color: #007700">&quot;users&quot;</span>: [
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+      <span style="color: #007700">&quot;first_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Miguel&quot;</span>,
+      <span style="color: #007700">&quot;last_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Cabral&quot;</span>
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+      <span style="color: #007700">&quot;first_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Juan&quot;</span>,
+      <span style="color: #007700">&quot;last_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Topo&quot;</span>
+    }
+  ]
+}
+</pre></div>
+
+
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no agency found</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: <span style="background-color: #fff0f0">&quot;No agency found with id: 10101&quot;</span>
+}
+</pre></div>
+        </div>
+    </li>
+</ul>

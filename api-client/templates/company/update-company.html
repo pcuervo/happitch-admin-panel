@@ -1,0 +1,93 @@
+<p>This service updates an existing company</p>
+<h4>POST /companies/update</h4>
+<h4>Parameters:</h4>
+<ul>
+    <li>auth_token* (string): Authorization token generated after for each user after login.</li>
+    <li>id* (integer) - Company ID</li>
+    <li>name (string)</li>
+    <li>contact_name (string)</li>
+    <li>contact_email (string)</li>
+    <li>contact_position (string)</li>
+    <li>logo (base64)</li>
+</ul>
+<ul class="[ collapsible ]" data-collapsible="accordion">
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
+        <div class="[ collapsible-body ]">
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;t2838qq6W9evS8X2snFX&quot;</span>,
+    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">181</span>,
+    <span style="color: #007700">&quot;filename&quot;</span>: <span style="background-color: #fff0f0">&quot;img.png&quot;</span>,
+    <span style="color: #007700">&quot;logo&quot;</span>: <span style="background-color: #fff0f0">&quot;BASE64&quot;</span>,
+    <span style="color: #007700">&quot;company&quot;</span>: 
+    {
+        <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;The Coca Cola Company&quot;</span>,
+        <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Juan Pérez&quot;</span>,
+        <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;juan@cocacola.com&quot;</span>,
+        <span style="color: #007700">&quot;contact_position&quot;</span>: <span style="background-color: #fff0f0">&quot;Brand Manager&quot;</span>
+    }
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 201 Created. </span>Returns the newly created Company object</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">4</span>,
+  <span style="color: #007700">&quot;name&quot;</span>: <span style="background-color: #fff0f0">&quot;The Coca Cola Company&quot;</span>,
+  <span style="color: #007700">&quot;contact_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Juan Pérez&quot;</span>,
+  <span style="color: #007700">&quot;contact_email&quot;</span>: <span style="background-color: #fff0f0">&quot;juan@cocacoal.com&quot;</span>,
+  <span style="color: #007700">&quot;contact_position&quot;</span>: <span style="background-color: #fff0f0">&quot;Brand Manager&quot;</span>,
+  <span style="color: #007700">&quot;brands&quot;</span>: ['Sprite','Squirt']
+}
+</pre></div>
+
+        </div>
+    </li>
+    <li>
+        <div class="[ collapsible-header ][ waves-effect waves-red ]"><i class="[ material-icons ]">clear</i>Error Responses</div>
+        <div class="[ collapsible-body ]">
+            <p><span class="[ fw-700 ]">HTTP 422 Unprocessable Entity. </span>When there is no Company name present</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;errors&quot;</span>: {
+    <span style="color: #007700">&quot;name&quot;</span>: [
+      <span style="background-color: #fff0f0">&quot;El nombre de la compañía no puede estar vacío&quot;</span>
+    ]
+  }
+}
+</pre></div>
+
+        </div>
+    </li>
+</ul>
+<!-- 
+<form name="entry_form" class="[ mt-40 ][ left-align ][ col s12 ]" ng-submit="companyService( 'create' )" data-parsley-validate>
+  <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-company-auth-token" ng-model="createCompany.authToken" required>
+            <label for="create-company-auth-token">Authorization Token</label>
+        </div>
+    </div>
+    <div class="[ clear ]"></div>
+    <div class="[ col s12 m4 offset-m4 ]"> 
+        <div class="input-field">
+            <input type="text" id="create-company-name" ng-model="createCompany.name" required>
+            <label for="create-company-name">Company Name</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="[ col s12 ]"> 
+        <div class="[ center-align ]">
+            <button class="[ waves-effect ][ btn ]">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="[ col s12 ]" ng-show="showCompaniesResponse">
+    <h5>Response:</h5>
+    <p>{{ companyResponse | json }}</p>
+</div>
+ -->

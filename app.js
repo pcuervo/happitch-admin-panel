@@ -24,6 +24,7 @@ window.amapAssets = function(get) {
         ],
 
         rickshaw: [
+            //'https://d3js.org//d3.v3.min.js',
             'assets/d3/d3.min.js',
             'assets/rickshaw/rickshaw.min.css',
             'assets/rickshaw/rickshaw.min.js',
@@ -204,7 +205,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
                 return $ocLazyLoad.load([{
                     name: 'conAngular',
                     insertBefore: '#ngInsertBefore',
-                    files: amapAssets('sortable')
+                    files: amapAssets('flot')
                 }]);
             }]
         } 
@@ -215,6 +216,23 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
         controller: "LogoutController"
     })
     // User
+    .state('/view-user-requests', {
+        url: "/view-user-requests",
+        templateUrl: "user/view-user-requests.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Ver solicitudes pendientes'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
     .state('/view-user-request', {
         url: "/view-user-request/:requestId",
         templateUrl: "user/view-user-request.html",
@@ -245,6 +263,23 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
                     name: 'conAngular',
                     insertBefore: '#ngInsertBefore',
                     files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-users', {
+        url: "/view-users",
+        templateUrl: "user/view-users.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Ver usuarios'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
                 }]);
             }]
         } 
@@ -527,16 +562,15 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
-
 }]);
 
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $location, $cookies, $http, AuthenticationService) {
     // Set Environment
-    $rootScope.env = 'test';
+    $rootScope.env = 'stage';
     // API URL
     var test = 'http://localhost:3000/api/';
-    var stage = 'http://amap-dev.herokuapp.com/api/'
+    var stage = 'https://amap-dev.herokuapp.com/api/'
     var prod = 'amap-prod.herokuapp.com/api/'
     if( 'test' == $rootScope.env ){
         $rootScope.apiUrl = test;

@@ -19,6 +19,9 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         service.addCriteria = addCriteria;
         service.getCriteria = getCriteria;
         service.addExclusivity = addExclusivity;
+        service.getUsers = getUsers;
+        service.dashboardSummary = dashboardSummary;
+        service.dashboardAvgPerMonth = dashboardAvgPerMonth;
     return service;
 
     function getAll( callback ){
@@ -145,6 +148,7 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
     }// createCase
 
     function show( id, callback ){
+        console.log( id );
         var serviceUrl = $rootScope.apiUrl + 'agencies/' + id;
         $http.get(serviceUrl)
         .success(function ( response ) {
@@ -324,5 +328,50 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
             callback( response );
         });
     }// addExclusivity
+
+    function getUsers( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/get_users';
+        $http.post(serviceUrl, 
+        {
+            id: id
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getUsers
+
+    function dashboardSummary( authToken, id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/dashboard_summary_by_agency';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id: id
+        })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// dashboardSummary
+
+    function dashboardAvgPerMonth( authToken, id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/average_per_month_by_agency';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id: id
+        })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// dashboardAvgPerMonth
 }]);
 

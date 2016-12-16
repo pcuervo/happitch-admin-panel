@@ -36,13 +36,13 @@
                 <div class="[ col s12 m3 offset-m3 ]"> 
                     <div class="input-field">
                         <input type="text" id="agency-brand" ng-model="user.agency_brand" ng-readonly="true">
-                        <label for="agency-brand">Marca solicitada por el usuario</label>
+                        <label for="agency-brand">Compañía solicitada por el usuario</label>
                     </div>
                 </div>
                 <div class="[ col s12 m3 ][ mt-20 ]"> 
-                    <select name="brand" ng-model="user.brand" required data-parsley-error-message="Es obligatorio escoger marca para un nuevo usuario.">
-                        <option value="" disabled selected>Selecciona la marca</option>
-                        <option ng:repeat="brand in brands" value="{{brand.id}}">{{brand.name}}</option>
+                    <select name="company" ng-model="user.company" required data-parsley-error-message="Es obligatorio escoger compañía para un nuevo usuario.">
+                        <option value="" disabled selected>Selecciona la compañía</option>
+                        <option ng:repeat="company in companies" value="{{company.id}}">{{company.name}}</option>
                     </select>
                 </div>
             </div>

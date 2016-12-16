@@ -5,6 +5,7 @@ conAngular
 
         service.getNewUserRequests      = getNewUserRequests;
         service.getNewUserRequest       = getNewUserRequest;
+        service.registerUser            = registerUser;
         service.confirmUserRequest      = confirmUserRequest;
         service.rejectUserRequest       = rejectUserRequest;
         service.createNewUserRequest    = createNewUserRequest;
@@ -37,26 +38,53 @@ conAngular
                });
         }// getNewUserRequest
 
-        function confirmUserRequest( email, agencyId, brandId, role, isMemberAMAP, callback ){
+        function confirmUserRequest( email, agencyId, companyId, role, isMemberAMAP, callback ){
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/confirm_request';
             $http.post(serviceUrl, 
-                {
-                    email:          email,
-                    agency_id:      agencyId,
-                    brand_id:       brandId,
-                    is_member_amap: isMemberAMAP,
-                    role:           role
-                })
-               .success(function ( response ) {
-                    console.log( response );
-                    callback( response );
-               })
-               .error(function ( response ) {
-                    console.log( response );
-                    callback( response );
-               });
+            {
+                email:          email,
+                agency_id:      agencyId,
+                company_id:     companyId,
+                is_member_amap: isMemberAMAP,
+                role:           role
+            })
+           .success(function ( response ) {
+                console.log( response );
+                callback( response );
+           })
+           .error(function ( response ) {
+                console.log( response );
+                callback( response );
+           });
 
         }// confirmUserRequest
+
+        function registerUser( authToken, firstName, lastName, email, role, isMemberAMAP, agencyId, companyId, callback ){
+            var serviceUrl = $rootScope.apiUrl + 'users/';
+            $http.post(serviceUrl, 
+            {
+                auth_token: authToken,
+                agency_id:      agencyId,
+                company_id:     companyId,
+                user: {
+                    first_name:     firstName,
+                    last_name:      lastName,
+                    email:          email,
+                    is_member_amap: isMemberAMAP,
+                    role:           role
+                }
+    
+            })
+           .success(function ( response ) {
+                console.log( response );
+                callback( response );
+           })
+           .error(function ( response ) {
+                console.log( response );
+                callback( response );
+           });
+
+        }// registerUser
 
         function rejectUserRequest( email, callback ){
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/reject_request';
@@ -114,7 +142,6 @@ conAngular
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/agency_users';
             $http.get(serviceUrl)
                .success(function ( response ) {
-                    console.log( response );
                     callback( response );
                })
                .error(function ( response ) {

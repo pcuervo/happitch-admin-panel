@@ -10,8 +10,8 @@
         <div class="[ collapsible-header ][ waves-effect waves-blue ]"><i class="[ material-icons ]">code</i>Example params</div>
         <div class="[ collapsible-body ]">
 <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{   
-    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
-    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;bLnbTvCsNAn4eDFBB2aZ&quot;</span>
+    <span style="color: #007700">&quot;id&quot;</span>:<span style="color: #0000DD; font-weight: bold">1</span>,
+    <span style="color: #007700">&quot;auth_token&quot;</span>: <span style="background-color: #fff0f0">&quot;teqECHs82jW3KFojexp-&quot;</span>
 }
 </pre></div>
 
@@ -20,19 +20,38 @@
     <li>
         <div class="[ collapsible-header ][ waves-effect waves-green ]"><i class="[ material-icons ]">done</i>Successful Response</div>
         <div class="[ collapsible-body ]">
-            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns the scores grouped by month.</p>
-<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">[
-  {
-    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
-    <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">31</span>,
-    <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;09-16&quot;</span>
-  },
-  {
-    <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
-    <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">18</span>,
-    <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;10-16&quot;</span>
-  }
-]
+            <p><span class="[ fw-700 ]">HTTP 200 OK. </span>Returns the scores grouped by month along with the users.</p>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;average_per_month&quot;</span>: [
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+      <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">32</span>,
+      <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;09-16&quot;</span>
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+      <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">23</span>,
+      <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;10-16&quot;</span>
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #008800; font-weight: bold">null</span>,
+      <span style="color: #007700">&quot;score&quot;</span>: <span style="color: #0000DD; font-weight: bold">22</span>,
+      <span style="color: #007700">&quot;month_year&quot;</span>: <span style="background-color: #fff0f0">&quot;11-16&quot;</span>
+    }
+  ],
+  <span style="color: #007700">&quot;users&quot;</span>: [
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">2</span>,
+      <span style="color: #007700">&quot;first_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Israel&quot;</span>,
+      <span style="color: #007700">&quot;last_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Admin&quot;</span>
+    },
+    {
+      <span style="color: #007700">&quot;id&quot;</span>: <span style="color: #0000DD; font-weight: bold">1</span>,
+      <span style="color: #007700">&quot;first_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Miguel&quot;</span>,
+      <span style="color: #007700">&quot;last_name&quot;</span>: <span style="background-color: #fff0f0">&quot;Cabral&quot;</span>
+    }
+  ]
+}
 </pre></div>
 
         </div>
