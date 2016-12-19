@@ -204,6 +204,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
                     name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
                     insertBefore: '#ngInsertBefore',
                     files: amapAssets('flot')
                 }]);
