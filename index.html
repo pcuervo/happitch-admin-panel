@@ -39,10 +39,9 @@
 
 <body ng-controller="AppController">
 
-    <nav data-ng-include="'navigation/top-navbar.html'" data-ng-controller="NavbarController" class="[ navbar-top ][ navbar-dark ]" ng-show="loggedIn">
-    </nav>
+    <nav data-ng-include="'navigation/top-navbar.html'" data-ng-controller="NavbarController" class="[ navbar-top ][ navbar-dark ]" ng-show="loggedIn"></nav>
 
-    <aside data-ng-include="'navigation/sidebar.html'" data-ng-controller="SidebarController" class="[ yaybar yay-hide-to-small yay-gestures yay-shrink ]" ng-show="loggedIn"></aside>
+    <aside data-ng-include="'navigation/sidebar.html'" data-ng-controller="SidebarController" class="[ yaybar yay-hide-to-small yay-gestures yay-shrink ][ grey darken-4 ]" ng-show="loggedIn"></aside>
 
     <!-- Load Spinner -->
     <div ng-load-spinner class="load-spinner" id="loader">
@@ -54,8 +53,7 @@
     <!-- /Load Spinner -->
 
     <!-- Main Content -->
-    <section class="[  ]" ng-class="{ 'content-wrap-no-menu': loggedIn==false, 'content-wrap': loggedIn==true }" ui-view>
-    </section>
+    <section class="[ content-wrap-constant ]" ng-class="{ 'content-wrap-no-menu': loggedIn==false, 'content-wrap': loggedIn==true }" ui-view></section>
     <!-- /Main Content -->
 
     <!-- Footer -->

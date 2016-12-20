@@ -33,7 +33,6 @@ conAngular
 			    AuthenticationService.setCredentials( userObj.id, userName, $scope.email, userObj.role, userObj.auth_token, agencyId );
 				$scope.logged_in = true;
 
-                Materialize.toast('¡Hola bienvenido al SIL!', 4000);
 				$state.go('/dashboard');
 			});
 		}// login

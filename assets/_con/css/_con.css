@@ -7864,6 +7864,16 @@ html {
 /*
 * Main container
 */
+
+.content-wrap-constant{
+  background: #00a9af;
+background: -moz-linear-gradient(-45deg,  #00a9af 0%, #dde11e 100%);
+background: -webkit-linear-gradient(-45deg,  #00a9af 0%,#dde11e 100%);
+background: linear-gradient(135deg,  #00a9af 0%,#dde11e 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a9af', endColorstr='#dde11e',GradientType=1 );
+
+}
+
 .content-wrap {
   min-height: 100%;
   min-height: 100vh;
@@ -7874,10 +7884,8 @@ html {
   padding-top: 71.9px;
   padding-top: -webkit-calc(55px + 1.3rem);
   padding-top: calc(55px + 1.3rem);
-  background: #fff;
   -webkit-transition: margin-left 300ms ease-in-out;
-          transition: margin-left 300ms ease-in-out;
-  background: #F9F9F9; }
+          transition: margin-left 300ms ease-in-out; }
   .content-wrap .page-title {
     display: block;
     margin: -1.3rem;
@@ -8587,9 +8595,10 @@ body {
     width: auto;
     height: 100%; }
     .navbar-top .brand-logo > img {
-      height: 100%;
+      height: 60%;
       width: auto;
-      vertical-align: top; }
+      vertical-align: middle;
+    }
   .navbar-top, .navbar-top .nav-wrapper i, .navbar-top a.button-collapse, .navbar-top .button-collapse.sp-cancel, .navbar-top a.button-collapse i, .navbar-top .button-collapse.sp-cancel i {
     height: 55px;
     line-height: 55px; }
@@ -10242,7 +10251,13 @@ table.dataTable.no-footer {
   min-height: 100%;
   min-height: 100vh;
   padding-top: 80px;
-  background: #35384C; }
+  background: #00a9af;
+background: -moz-linear-gradient(-45deg,  #00a9af 0%, #dde11e 100%);
+background: -webkit-linear-gradient(-45deg,  #00a9af 0%,#dde11e 100%);
+background: linear-gradient(135deg,  #00a9af 0%,#dde11e 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a9af', endColorstr='#dde11e',GradientType=1 );
+
+}
   #sign-in .logo, #sign-up .logo, #forgot-password .logo, #lock .logo {
     margin-top: -10px; }
   #sign-in .logo img, #sign-up .logo img, #forgot-password .logo img, #lock .logo img {
@@ -13050,8 +13065,8 @@ html.rtl .spinner-layer .left {
     #JSON Snippets API Tester
 \*-------------------------------------------*/
 
-.json-container { 
-  background: #ffffff; 
+.json-container {
+  background: #ffffff;
   overflow:auto;width:auto;border:solid gray;
   border-width:.1em .1em .1em .8em;
   padding:.2em .6em;
