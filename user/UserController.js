@@ -16,7 +16,7 @@ conAngular
                 $scope.role = 3;
                 $scope.agency =  $rootScope.globals.currentUser.agencyId;
             }
-            UserService.registerUser( $scope.authToken, $scope.first_name, $scope.last_name, $scope.email, $scope.role, isMemberAMAP, $scope.agency, $scope.company, function ( response ){
+            UserService.registerUser( $scope.authToken, $scope.firstName, $scope.lastName, $scope.email, $scope.role, isMemberAMAP, $scope.agency, $scope.company, function ( response ){
 
                 if(response.errors) {
                     console.log(response.errors);
@@ -126,22 +126,23 @@ conAngular
                     }
                     break;
                 case '/view-users':
+                    LoaderHelper.showLoader('Obteniendo usuarios...');
                     if( $scope.role == 2 ){
                         fetchAgencyUsers( $scope.globals.currentUser.agencyId );
                     } else {
-                        //fetchUsers();
+                        fetchUsers();
                     }
                     break;
             }
         }
 
-        function getAllUsers(){
-
+        function fetchUsers(){
             UserService.getAll( function( users ){
                 $scope.users = users;
+                LoaderHelper.hideLoader();
             }); 
 
-        }// getAllUsers
+        }// fetchUsers
 
         function getNewUserRequest( id ){
             UserService.getNewUserRequest( id, function( user ){
@@ -200,6 +201,7 @@ conAngular
         function fetchAgencyUsers( id ){
             AgencyService.getUsers( id, function( users ){
                 $scope.users = users;
+                LoaderHelper.hideLoader();
             }); 
         }// fetchAgencyUsers
 

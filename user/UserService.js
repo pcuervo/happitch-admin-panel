@@ -12,6 +12,7 @@ conAngular
         service.changePassword          = changePassword;
         service.getAgencyUserRequests   = getAgencyUserRequests;
         service.getBrandUserRequests    = getBrandUserRequests;
+        service.getAll                  = getAll;
         return service;
 
 
@@ -160,6 +161,17 @@ conAngular
                     callback( response );
                });
         }// getBrandUserRequests
+
+        function getAll( callback ){
+            var serviceUrl = $rootScope.apiUrl + 'users';
+            $http.get(serviceUrl)
+               .success(function ( response ) {
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    callback( response );
+               });
+        }// getAll
 
     }]);
 
