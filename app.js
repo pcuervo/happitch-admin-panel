@@ -638,7 +638,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $location, $cookies, $http, AuthenticationService) {
     // Set Environment
-    $rootScope.env = 'test';
+    $rootScope.env = 'stage';
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'https://amap-dev.herokuapp.com/api/'

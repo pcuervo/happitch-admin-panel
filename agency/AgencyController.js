@@ -110,6 +110,12 @@ conAngular
         return '-';
     }
 
+    $scope.getSize = function( numEmployees ){
+        if( numEmployees < 40 ) return 'Chica';
+        if( numEmployees > 40 && numEmployees < 90 ) return 'Mediana';
+        if( numEmployees > 90 ) return 'Grande';
+    }
+
     /*********************
     * #GENERAL FUNCTIONS
     *********************/
@@ -529,7 +535,7 @@ conAngular
             console.log( agency );
             $scope.agency = agency;
             $scope.hasMap = false;
-            $scope.agencySize = getSize( agency.num_employees );
+            $scope.agencySize = $scope.getSize( agency.num_employees );
             console.log( agency.latitude );
             if( null != agency.latitude ){
                 $scope.hasMap = true;
@@ -559,12 +565,6 @@ conAngular
         var map = $(addressId).geocomplete("map");
         map.setCenter( latLng );
         map.setZoom( zoom );
-    }
-
-    function getSize( numEmployees ){
-        if( numEmployees < 40 ) return 'Chica';
-        if( numEmployees > 40 && numEmployees < 90 ) return 'Mediana';
-        if( numEmployees > 90 ) return 'Grande';
     }
 
     function initChartLostVsWon( won, lost ){
