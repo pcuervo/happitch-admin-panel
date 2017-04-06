@@ -13,6 +13,7 @@ conAngular
         service.getAgencyUserRequests   = getAgencyUserRequests;
         service.getBrandUserRequests    = getBrandUserRequests;
         service.getAll                  = getAll;
+        service.getAdminUsers           = getAdminUsers;
         return service;
 
 
@@ -20,7 +21,6 @@ conAngular
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/';
             $http.get(serviceUrl)
                .success(function ( response ) {
-                    console.log( response );
                     callback( response );
                })
                .error(function ( response ) {
@@ -50,11 +50,9 @@ conAngular
                 role:           role
             })
            .success(function ( response ) {
-                console.log( response );
                 callback( response );
            })
            .error(function ( response ) {
-                console.log( response );
                 callback( response );
            });
 
@@ -77,11 +75,9 @@ conAngular
     
             })
            .success(function ( response ) {
-                console.log( response );
                 callback( response );
            })
            .error(function ( response ) {
-                console.log( response );
                 callback( response );
            });
 
@@ -94,11 +90,9 @@ conAngular
                     email: email
                 })
                .success(function ( response ) {
-                    console.log( response );
                     callback( response );
                })
                .error(function ( response ) {
-                    console.log( response );
                     callback( response );
                });
 
@@ -154,7 +148,7 @@ conAngular
             var serviceUrl = $rootScope.apiUrl + 'new_user_requests/brand_users';
             $http.get(serviceUrl)
                .success(function ( response ) {
-                    console.log( response );
+
                     callback( response );
                })
                .error(function ( response ) {
@@ -172,6 +166,17 @@ conAngular
                     callback( response );
                });
         }// getAll
+
+        function getAdminUsers( callback ){
+            var serviceUrl = $rootScope.apiUrl + 'users/admin';
+            $http.get(serviceUrl)
+               .success(function ( response ) {
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    callback( response );
+               });
+        }// getAdminUsers
 
     }]);
 

@@ -1,0 +1,125 @@
+<div class="page-title" data-ng-include="'navigation/breadcrumbs.html'"></div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ][ no-margin-top ]">
+        <div class="[ col s12 m2 ]"> 
+            <img class="[ img-responsive ][ circle ]" src="{{ company.logo }}" alt="Logo {{ company.name }}">
+        </div>
+        <div class="[ col s12 m4 ][ mt-20 ]"> 
+            <h3 class="[ left-align ]">{{ company.name }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Datos generales</h4>
+    <div class="[ row ]">
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-company-contact-name" ng-model="company.contact_name" ng-readonly="true">
+                <label for="create-company-contact-name">Persona de contacto</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-company-contact-position" ng-model="company.contact_position" ng-readonly="true">
+                <label for="create-company-contact-position">Posición de contacto</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-company-contact-email" ng-model="company.contact_email" ng-readonly="true">
+                <label for="create-company-contact-email">Email de contacto</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Desempeño</h4>
+        <div class="[ col s12 ][ center-align ]">
+            <h5>Número de pitches por tipo</h5>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/happitch.png" alt="Happitch">
+            <h6>Happitch: {{ happitch }}</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/happy.png" alt="Happy">
+            <h6>Happy: {{ happy }}</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/unhappy.png" alt="Unhappy">
+            <h6>Unhappy: {{ ok }}</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/bad_pitch.png" alt="Bad Pitch">
+            <h6>Bad Pitch: {{ unhappy }}</h6>
+        </div>
+        <div class="clear"></div>
+        <div class="[ col s12 m8 l6 offset-m2 offset-l3 ][ center-align ]">
+            <flot dataset="lostVsWonData" options="lostVsWonOpts" style="display: block; height: 300px"></flot>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Recomendaciones</h4>
+        <div class="[ col s12 m6 l4 ][ center-align ]" ng-repeat="reco in recommendations">
+            <img src="assets/_con/icons/{{ getRecoIcon( reco.reco_id ) }}@2x.png" alt="Recomendaciones para agencias">
+            <p>{{ reco.body }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="[ col s12 m6 ]">
+        <div class="card">
+            <div class="title">
+                <h5>Marcas</h5>
+            </div>
+            <div class="content">
+                <table datatable="ng" dt-options="dtBrandsOptions" dt-column-defs="dtBrandsColumnDefs" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th class="[ center-align ][ hide-on-small-only ]">Nombre</th>
+                            <th class="[ center-align ]">Ver detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="brand in company.brands">
+                            <td class="[ center-align ][ hide-on-small-only ]">{{ brand.name }}</td>
+                            <td class="[ center-align ]">
+                                <a href="#/view-brand/{{brand.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+    </div>
+
+    <div class="[ col s12 m6 ]">
+        <div class="card">
+            <div class="title">
+                <h5>Usuarios</h5>
+            </div>
+            <div class="content">
+                <table datatable="ng" dt-options="dtBrandsOptions" dt-column-defs="dtBrandsColumnDefs" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th class="[ center-align ][ hide-on-small-only ]">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in company.users">
+                            <td class="[ center-align ][ hide-on-small-only ]">{{ user.email }}</td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+    </div>
+</div>

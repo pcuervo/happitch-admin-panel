@@ -10,6 +10,8 @@
                     <th class="[ center-align ]">Nombre</th>
                     <th class="[ center-align ][ hide-on-small-only ]">Correo</th>
                     <th class="[ center-align ][ hide-on-small-only ]">Rol</th>
+                    <th class="[ center-align ][ hide-on-small-only ]">Agencia / Compañía</th>
+                    <th class="[ center-align ][ hide-on-small-only ]">¿Es miembro de AMAP?</th>
                     <th class="[ center-align ]">Acciones</th>
                 </tr>
             </thead>
@@ -18,6 +20,8 @@
                     <td>{{ getUserName( u ) }}</td>
                     <td class="[ center-align ][ hide-on-small-only ]">{{ u.email }}</td>
                     <td class="[ center-align ][ hide-on-small-only ]">{{ getUserRole( u.role ) }}</td>
+                    <td class="[ center-align ][ hide-on-small-only ]">{{ u.agency_company }}</td>
+                    <td class="[ center-align ][ hide-on-small-only ]">{{ u.is_member_amap ? 'Si' : 'No' }}</td>
                     <td class="[ center-align ]">
                         <a href="#/edit-user/{{u.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">mode_edit</i></a></i></a>
                         <a href="#/delete-user/{{u.id}}" class="[ btn waves-effect waves-green red ]"><i class="[ material-icons ]">delete</i></a></i></a>

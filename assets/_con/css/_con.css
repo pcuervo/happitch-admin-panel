@@ -13061,6 +13061,10 @@ html.rtl .spinner-layer .left {
   height: auto;
 }
 
+.no-margin-top {
+  margin-top: 0; 
+}
+
 /*-------------------------------------------*\
     #JSON Snippets API Tester
 \*-------------------------------------------*/

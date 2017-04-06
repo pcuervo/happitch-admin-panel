@@ -10,7 +10,8 @@
                         <th class="[ center-align ]">Persona de contacto</th>
                         <th class="[ center-align ]">Email de contacto</th>
                         <th class="[ center-align ]">Sitio web</th>
-                        <th class="[ center-align ]">Número de empleados</th>
+                        <th class="[ center-align ]">Tamaño</th>
+                        <th class="[ center-align ]">Ver detalle</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +22,9 @@
                         <td class="[ center-align ]">{{ agency.contact_email }}</td>
                         <td class="[ center-align ]">{{ agency.website_url }}</td>
                         <td class="[ center-align ]">{{ agency.num_employees }}</td>
+                        <td class="[ center-align ]">
+                            <a href="#/view-agency/{{agency.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a></i></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>  

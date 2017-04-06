@@ -5,6 +5,7 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
         service.logout = logout;
         service.setCredentials = setCredentials;
         service.clearCredentials = clearCredentials;
+        service.isLoggedIn = isLoggedIn;
 
     return service;
 
@@ -24,42 +25,54 @@ conAngular.service('AuthenticationService', ['$http', '$cookies', '$rootScope', 
        });
     }// login
 
-    function setCredentials( id, name, email, role, authToken, agencyId ) {
+    function isLoggedIn(token, callback) {
+        var serviceUrl = $rootScope.apiUrl  + 'sessions/is_active';
+        $http.post(serviceUrl, { 
+            auth_token: token
+        })
+       .success(function (response) {
+            callback(response);
+       })
+       .error(function (response) {
+            callback(response);
+       });
+    }// login
 
-            $rootScope.globals = {
-                currentUser: {
-                    id:             id,
-                    name:           name,
-                    email:          email,
-                    authdata:       authToken,
-                    role:           role,
-                }
-            };
-            
-            if( typeof agencyId != 'undefined'){
-                $rootScope.globals.currentUser['agencyId'] = agencyId;
-            }
- 
-            $cookies.putObject('globals', $rootScope.globals);
-        $cookies.put('loggedIn', true);
-        }
- 
-        function clearCredentials() {
+    function setCredentials( id, name, email, role, authToken, agencyId, companyId ) {
 
-            $rootScope.globals = {};
-            $rootScope.loggedIn = false;
+        $rootScope.globals = {
+            currentUser: {
+                id:             id,
+                name:           name,
+                email:          email,
+                authdata:       authToken,
+                role:           role,
+            }
+        };
         
-            $cookies.remove('globals');
-            $cookies.put('loggedIn', false);
-            //$http.defaults.headers.common.Authorization = 'Basic ';
-
-        }
+        if( typeof agencyId != 'undefined'){
+            $rootScope.globals.currentUser['agencyId'] = agencyId;
+        }
+        if( typeof companyId != 'undefined'){
+            $rootScope.globals.currentUser['companyId'] = companyId;
+        }
+ 
+        $cookies.putObject('globals', $rootScope.globals);
+        $cookies.put('loggedIn', true);
+    }
+ 
+    function clearCredentials() {
+        $rootScope.globals = {};
+        $rootScope.loggedIn = false;
+        $cookies.remove('globals');
+        $cookies.put('loggedIn', false);
+    }
 
     function logout( authToken ){
         var serviceUrl = $rootScope.apiUrl  + 'sessions/destroy/';
         $http.post(serviceUrl,  { id: authToken })
            .success(function (response) {
-                console.log( response );
+                return response;
            })
            .error(function (response) {
                 console.log( response )

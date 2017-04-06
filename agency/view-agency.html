@@ -1,0 +1,146 @@
+<div class="page-title" data-ng-include="'navigation/breadcrumbs.html'"></div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ][ no-margin-top ]">
+        <div class="[ col s12 m1 ]"> 
+            <img class="[ img-responsive ][ circle ]" src="{{ agency.logo }}" alt="Logo {{ agency.name }}">
+        </div>
+        <div class="[ col s12 m4 ][ mt-20 ]"> 
+            <h3 class="[ left-align ]">{{ agency.name }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Datos generales</h4>
+    <div class="[ row ]">
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-agency-contact-name" ng-model="agency.contact_name" ng-readonly="true">
+                <label for="create-agency-contact-name">Persona de contacto</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-agency-contact-email" ng-model="agency.contact_email" ng-readonly="true">
+                <label for="create-agency-contact-email">Email de contacto</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-agency-phone" ng-model="agency.phone" ng-readonly="true">
+                <label for="create-agency-phone">Teléfono</label>
+            </div>
+        </div>
+        <div class="[ col s12 m6 ]"> 
+            <div class="input-field">
+                <input type="text" id="create-agency-website-url" ng-model="agency.website_url" ng-readonly="true">
+                <label for="create-agency-website-url">Sitio web</label>
+            </div>
+        </div>
+        <div class="[ col s12 m6 ]"> 
+            <div class="input-field">
+                <input type="text" id="agency-size" ng-model="agencySize" ng-readonly="true">
+                <label for="agency-size">Tamaño de la agencia</label>
+            </div>
+        </div>
+        <div class="[ col s12 m12 ]"> 
+            <div class="input-field">
+                <input type="text" id="address" ng-model="agency.address" ng-readonly="true">
+                <label for="create-agency-address">Address</label>
+            </div>
+        </div>
+        <div class="[ col s12 m12 ][ map-container ]" ng-show="hasMap"> 
+            <div id="map"></div>
+        </div>
+        <h4 class="[ center-align ]">Participa en:</h4>
+        <div class="[ col s6 m3 ][ center-align ]" ng-show="agency.golden_pitch">
+            <img src="assets/_con/images/happitch.png" alt="Happitch">
+            <h6>Happitch</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]" ng-show="agency.silver_pitch">
+            <img src="assets/_con/images/happy.png" alt="Happy">
+            <h6>Happy</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]" ng-show="agency.medium_risk_pitch">
+            <img src="assets/_con/images/unhappy.png" alt="Unhappy">
+            <h6>Unhappy</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]" ng-show="agency.high_risk_pitch">
+            <img src="assets/_con/images/bad_pitch.png" alt="Bad Pitch">
+            <h6>Bad Pitch</h6>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Desempeño</h4>
+        <div class="[ col s12 ][ center-align ]">
+            <h5>Número de pitches por tipo</h5>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/happitch.png" alt="Happitch">
+            <h6>Happitch: {{ happitch }}</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/happy.png" alt="Happy">
+            <h6>Happy: {{ happy }}</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/unhappy.png" alt="Unhappy">
+            <h6>Unhappy: {{ ok }}</h6>
+        </div>
+        <div class="[ col s6 m3 ][ center-align ]">
+            <img src="assets/_con/images/bad_pitch.png" alt="Bad Pitch">
+            <h6>Bad Pitch: {{ unhappy }}</h6>
+        </div>
+        <div class="clear"></div>
+        <hr>
+        <div class="[ col s12 m8 l6 offset-m2 offset-l3 ][ center-align ]">
+            <h5 class="[ mb-20 ]">Rate de bateo (pitches ganados vs pitches perdidos)</h5>
+            <flot dataset="lostVsWonData" options="lostVsWonOpts" style="display: block; height: 300px"></flot>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Recomendaciones</h4>
+        <div class="[ col s12 m6 l4 ][ center-align ]" ng-repeat="reco in recommendations">
+            <img src="assets/_con/icons/{{ getRecoIcon( reco.reco_id ) }}@2x.png" alt="Recomendaciones para agencias">
+            <p>{{ reco.body }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <div class="[ col s12 m6 offset-m3  ]">
+            <h4 class="[ center-align ]">Usuarios</h4>
+            <table datatable="ng" dt-options="dtUsersOptions" dt-column-defs="dtUsersColumnDefs" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th class="[ center-align ][ hide-on-small-only ]">Correo</th>
+                        <!-- <th class="[ center-align ]">Ver detalle</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users">
+                        <td class="[ center-align ][ hide-on-small-only ]">{{ user.email }}</td>
+                        <!-- <td class="[ center-align ]">
+                            <a href="#/view-user/{{user.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a></i></a>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

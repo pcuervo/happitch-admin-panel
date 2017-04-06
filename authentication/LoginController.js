@@ -27,10 +27,12 @@ conAngular
 				var userObj = response;
                 var userName = '';
                 var agencyId = '';
+                var companyId = '';
                 if( userObj.first_name ) userName = userObj.first_name + ' ' + userObj.last_name;
                 if( typeof userObj.agency_id != 'undefined') agencyId = userObj.agency_id;
+                if( typeof userObj.company_id != 'undefined') companyId = userObj.company_id;
 
-			    AuthenticationService.setCredentials( userObj.id, userName, $scope.email, userObj.role, userObj.auth_token, agencyId );
+			    AuthenticationService.setCredentials( userObj.id, userName, $scope.email, userObj.role, userObj.auth_token, agencyId, companyId );
 				$scope.logged_in = true;
 
 				$state.go('/dashboard');
