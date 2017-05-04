@@ -268,9 +268,43 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
+    .state('/add-admin', {
+        url: "/add-admin",
+        templateUrl: "user/add-admin.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Agregar usuario'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
     .state('/view-users', {
         url: "/view-users",
         templateUrl: "user/view-users.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Ver usuarios'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-admin-users', {
+        url: "/view-admin-users",
+        templateUrl: "user/view-admin-users.html",
         controller: "UserController",
         data: {
             pageTitle: 'Ver usuarios'
@@ -440,6 +474,24 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
+    .state('/view-company', {
+        url: "/view-company/:companyId",
+        templateUrl: "company/view-company.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Ver anunciante'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables,geoAutocomplete,maps,flot')
+                }]);
+            }]
+        } 
+    })
     .state('/create-brand', {
         url: "/create-brand",
         templateUrl: "company/create-brand.html",
@@ -488,6 +540,24 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
                     name: 'conAngular',
                     insertBefore: '#ngInsertBefore',
                     files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-agency', {
+        url: "/view-agency/:agencyId",
+        templateUrl: "agency/view-agency.html",
+        controller: "AgencyController",
+        data: {
+            pageTitle: 'Ver agencia'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables,geoAutocomplete,maps,flot')
                 }]);
             }]
         } 
@@ -572,7 +642,7 @@ conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'Authe
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'https://amap-dev.herokuapp.com/api/'
-    var prod = 'amap-prod.herokuapp.com/api/'
+    var prod = 'https://amap-prod.herokuapp.com/api/'
     if( 'test' == $rootScope.env ){
         $rootScope.apiUrl = test;
         $rootScope.apiKey = 'Token dcfbad63799d40cb13300c347665cb36';
@@ -583,8 +653,8 @@ conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'Authe
         $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
     } else {
         $rootScope.apiUrl = prod;
-        $rootScope.apiKey = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
-        $http.defaults.headers.common['Authorization'] = 'Token 40e97aa81c2be2de4b99f1c243bec9c4';
+        $rootScope.apiKey = 'Token 732f80decfc02b204a53e2480e5b7ec5';
+        $http.defaults.headers.common['Authorization'] = 'Token 732f80decfc02b204a53e2480e5b7ec5';
     }
     
     $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
@@ -594,15 +664,24 @@ conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'Authe
     $rootScope.globals = $cookies.getObject('globals') || {};
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-
-        // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($state.get(), ['/login', '/api-client']) === -1;
-
         $rootScope.loggedIn = $cookies.get('loggedIn') == 'true' ? true : false;
-        var loggedIn = $rootScope.loggedIn;
+        if( typeof $rootScope.globals.currentUser != 'undefined' ){
+            AuthenticationService.isLoggedIn( $rootScope.globals.currentUser.authdata, function( response ){
 
-        console.log( next );
-        if ( !loggedIn && next.indexOf('api-client') < 1 && next.indexOf('reset-password') < 1 ) {
+                if( response.errors ){
+                    Materialize.toast('¡Tu sesión ha expirado, por favor ingresa nuevamente!', 4000, 'red');
+                    event.preventDefault();
+                    $state.go('/login');
+                    return;
+                }
+                
+                $rootScope.loggedIn = true;
+            } );
+        } else {
+            $rootScope.loggedIn = false;
+        }
+
+        if ( ! $rootScope.loggedIn && next.indexOf('api-client') < 1 && next.indexOf('reset-password') < 1 ) {
             event.preventDefault();
             $state.go('/login');
         }

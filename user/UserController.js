@@ -11,12 +11,17 @@ conAngular
         *******************/
 
         $scope.registerUser = function(){
+            console.log('registering...');
             var isMemberAMAP = $('#checkbox-member-amap:checked').length;
             if( 2 == $scope.role ){
-                $scope.role = 3;
                 $scope.agency =  $rootScope.globals.currentUser.agencyId;
+                $scope.currentRole = 2;
             }
-            UserService.registerUser( $scope.authToken, $scope.first_name, $scope.last_name, $scope.email, $scope.role, isMemberAMAP, $scope.agency, $scope.company, function ( response ){
+            if( 4 == $scope.role ){
+                $scope.company =  $rootScope.globals.currentUser.companyId;
+                $scope.currentRole = 4;
+            }
+            UserService.registerUser( $scope.authToken, $scope.firstName, $scope.lastName, $scope.email, $scope.currentRole, isMemberAMAP, $scope.agency, $scope.company, function ( response ){
 
                 if(response.errors) {
                     console.log(response.errors);
@@ -26,7 +31,25 @@ conAngular
                 
                 console.log( response );
                 Materialize.toast('¡Usuario registrado exitosamente!', 4000, 'green');
-                //$state.go('/dashboard', {}, { reload: true });
+                $state.go('/view-users', {}, { reload: true });
+            });
+        }
+
+        $scope.registerAdmin = function(){
+            if( 2 == $scope.role ){
+                $scope.agency =  $rootScope.globals.currentUser.agencyId;
+            }
+            UserService.registerUser( $scope.authToken, $scope.firstName, $scope.lastName, $scope.email, 1, 1, '', '', function ( response ){
+
+                if(response.errors) {
+                    console.log(response.errors);
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                
+                console.log( response );
+                Materialize.toast('¡Usuario registrado exitosamente!', 4000, 'green');
+                $state.go('/view-admin-users', {}, { reload: true });
             });
         }
 
@@ -59,21 +82,18 @@ conAngular
         }// declineRequest
 
         $scope.changePassword = function(){
-            console.log( $scope.token );
-            console.log( $scope.password );
             UserService.changePassword( $scope.token, $scope.password, function ( response ){
                 if(response.errors) {
-                    console.log(response.errors);
                     ErrorHelper.display( response.errors );
                     return;
                 }
+                $scope.successfulReset = true;
                 Materialize.toast('¡Se ha cambiado tu contraseña!', 4000, 'green');
-                // $state.go('/my-account', {}, { reload: true });
             });
         }// changePassword
 
         $scope.showAgencyCompany = function(){
-            if( 2 == $scope.role || 3 == $scope.role ){
+            if( 2 == $scope.currentRole || 3 == $scope.currentRole ){
                 $scope.isAgency = true;
                 $scope.isCompany = false;
                 return;
@@ -89,8 +109,13 @@ conAngular
         }
 
         $scope.getUserRole = function( role ){
-            if( 2 == role ) return 'Administrador';
-            return 'Regular';
+            switch( role ){
+                case 1: return 'Administrador';
+                case 2: 
+                case 3: return 'Agencia';
+                case 4: 
+                case 5: return 'Anunciante';
+            }
         }
 
 
@@ -99,9 +124,11 @@ conAngular
         *******************/
 
         function initUsers( currentPath ){
-            $scope.authToken = $rootScope.globals.currentUser.authdata;
-            $scope.role = $rootScope.globals.currentUser.role;
-
+            if( 'undefined' != typeof $rootScope.globals.currentUser ){
+                $scope.authToken = $rootScope.globals.currentUser.authdata;
+                $scope.role = $rootScope.globals.currentUser.role;    
+            }
+                
             if( currentPath.indexOf( '/view-user-request/' ) > -1 ){
                 getNewUserRequest( $stateParams.requestId );
                 fetchAgencies();
@@ -124,24 +151,40 @@ conAngular
                     if( $scope.role == 2 ){
                         getAgency( $scope.globals.currentUser.agencyId );
                     }
+                    if( $scope.role == 4 ){
+                        getCompany( $scope.globals.currentUser.companyId );
+                    }
                     break;
                 case '/view-users':
+                    LoaderHelper.showLoader('Obteniendo usuarios...');
                     if( $scope.role == 2 ){
                         fetchAgencyUsers( $scope.globals.currentUser.agencyId );
                     } else {
-                        //fetchUsers();
+                        fetchUsers();
                     }
+                    break;
+                case '/view-admin-users':
+                    LoaderHelper.showLoader('Obteniendo administradores...');
+                    fetchAdminUsers();
                     break;
             }
         }
 
-        function getAllUsers(){
-
+        function fetchUsers(){
             UserService.getAll( function( users ){
                 $scope.users = users;
+                LoaderHelper.hideLoader();
             }); 
 
-        }// getAllUsers
+        }// fetchUsers
+
+        function fetchAdminUsers(){
+            UserService.getAdminUsers( function( users ){
+                $scope.users = users;
+                LoaderHelper.hideLoader();
+            }); 
+
+        }// fetchAdminUsers
 
         function getNewUserRequest( id ){
             UserService.getNewUserRequest( id, function( user ){
@@ -190,16 +233,23 @@ conAngular
         }// getAgencyUserRequests
 
         function getAgency( id ){
-            console.log(id);
             AgencyService.show( id, function( agency ){
                 console.log( agency );
                 $scope.agencyName = agency.name;
             }); 
         }
 
+        function getCompany( id ){
+            CompanyService.show( id, function( company ){
+                console.log( company );
+                $scope.companyName = company.name;
+            }); 
+        }
+
         function fetchAgencyUsers( id ){
             AgencyService.getUsers( id, function( users ){
                 $scope.users = users;
+                LoaderHelper.hideLoader();
             }); 
         }// fetchAgencyUsers
 

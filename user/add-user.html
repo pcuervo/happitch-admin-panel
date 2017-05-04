@@ -1,7 +1,8 @@
 <div class="page-title" data-ng-include="'navigation/breadcrumbs.html'"></div>
 
 <div class="[ card-panel ]">
-    <h4 class="[ center-align ]">Agregar usuarios agencia o marca</h4>
+    <h4 class="[ center-align ]" ng-show="1 == role">Agregar usuarios tipo agencia o anunciante</h4>
+    <h4 class="[ center-align ]" ng-show="1 != role">Agregar usuarios</h4>
     <div class="[ row ]">
         <form name="entry_form" class="[ mt-40 ][ left-align ]" ng-submit="registerUser()" data-parsley-validate>
             <div class="[ col s12 m3 offset-m3 ]"> 
@@ -29,13 +30,17 @@
                     <label for="agency-name">Agencia</label>
                 </div>
             </div>
+            <div class="[ col s12 m3 ]" ng-show="4 == role"> 
+                <div class="input-field">
+                    <input type="text" id="company-name" ng-model="companyName" ng-readonly="true">
+                    <label for="company-name">Compañía</label>
+                </div>
+            </div>
             <div class="[ col s12 m3 ][ mt-10 ]" ng-show="1 == role"> 
-                <select name="role" ng-model="role" required data-parsley-error-message="Es obligatorio escoger el tipo de usuario" ng-change="showAgencyCompany()">
+                <select name="currentRole" ng-model="currentRole" ng-required="1 == role" data-parsley-error-message="Es obligatorio escoger el tipo de usuario" ng-change="showAgencyCompany()">
                     <option value="" disabled selected>Selecciona el tipo de usuario</option>
-                    <option value="2">Agencia (admin)</option>
-                    <option value="3">Agencia (regular)</option>
-                    <option value="4">Cliente (admin)</option>
-                    <option value="5">Cliente (regular)</option>
+                    <option value="2">Agencia</option>
+                    <option value="4">Cliente</option>
                 </select>
             </div>
             <div class="clear"></div>
@@ -62,7 +67,7 @@
                 </div>
             </div>
             <div class="[ clear ]"></div>
-            <div class="[ col s12 m3 offset-m5 ]">
+            <div class="[ col s12 m3 offset-m5 ]" ng-show="isAgency">
                 <div class="[ input-field ]">
                     <input class="[ filled-in ]" type="checkbox" id="checkbox-member-amap" value="1" name="highValue" />
                     <label for="checkbox-member-amap">¿Es miembro de la AMAP?</label>
@@ -74,15 +79,9 @@
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 
 <script>
   $('[data-parsley-validate]').parsley();
 </script>
-
-
-
-
-

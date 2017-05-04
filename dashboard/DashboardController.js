@@ -1,4 +1,4 @@
-conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserService', 'DashboardService', 'AgencyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $rootScope, $scope, UserService, DashboardService, AgencyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ) {
+conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserService', 'DashboardService', 'AgencyService', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $rootScope, $scope, UserService, DashboardService, AgencyService, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ) {
 
     (function initController() {
         $scope.role = $rootScope.globals.currentUser.role;
@@ -16,8 +16,84 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
     }
 
     $scope.getUserRole = function( role ){
-        if( 2 == role ) return 'Administrador';
-        return 'Regular';
+        if( 1 == role ) return 'Administrador AMAP';
+        if( 2 == role ) return 'Administrador Agencia';
+        if( 4 == role ) return 'Administrador Anunciante';
+        return '-';
+    }
+
+    $scope.getRecoIcon = function( recoId ){
+        var icon;
+        switch( recoId ){
+            case 'agency_communication':
+            case 'agency_list':
+                icon = 'communication';
+                break;
+            case 'agency_budget_1':
+                icon = 'list';
+                break;
+            case 'agency_budget_3':
+            case 'agency_sharing':
+            case 'agency_number_5':
+            case 'agency_number_7':
+                icon = 'budget';
+                break;
+            case 'agency_time':
+                icon = 'criteria';
+                break;
+            case 'agency_property':
+                icon = 'eye';
+                break;
+            case 'agency_deliverable':
+                icon = 'number';
+                break;
+            case 'agency_careful':
+                icon = 'time';
+                break;
+            case 'agency_speak':
+                icon = 'moreTime';
+                break;
+            case 'client_objective_25':
+            case 'client_objective_50':
+                icon = 'communication';
+                break;
+            case 'client_objective_75':
+                icon = 'list';
+                break;
+            case 'client_budget_25':
+            case 'client_budget_50':
+            case 'client_budget_75':
+            case 'client_budget_100':
+                icon = 'budget';
+                break;
+            case 'client_criteria':
+                icon = 'criteria';
+                break;
+            case 'client_number_5':
+                icon = 'eye';
+                break;
+            case 'client_number_7':
+                icon = 'number';
+                break;
+            case 'client_time':
+                icon = 'time';
+                break;
+            case 'client_more_time':
+                icon = 'moreTime';
+                break;
+            case 'client_property':
+                icon = 'property';
+                break;
+            case 'client_deliverable_25':
+            case 'client_deliverable_50':
+            case 'client_deliverable_75':
+            case 'client_deliverable_100':
+                icon = 'deliverable';
+                break;
+            default:
+                icon = 'property';
+        }   
+        return icon;
     }
 
 
@@ -37,7 +113,10 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
             case 2:
                 initDashboardAgency();
                 fetchAgencyUsers( $rootScope.globals.currentUser.agencyId );
-                //initUsersDataTable();
+                break;
+            case 4:
+                initDashboardCompany();
+                fetchCompanyUsers( $rootScope.globals.currentUser.agencyId );
                 break;
         }
         
@@ -50,12 +129,12 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
         DashboardService.amap( function( stats ){
             $scope.totalAgencies = stats.total_agencies;
             $scope.totalPitches = stats.total_pitches;
+            $scope.totalCompanies = stats.total_companies;
             $scope.totalBrands = stats.total_brands;
             $scope.worstPitches = stats.worst_pitches;
             $scope.topPitches = stats.top_pitches;
             initChartPitchesByType( stats.total_happitch, stats.total_happy, stats.total_ok, stats.total_unhappy );
             initChartClosedVsPending( stats.total_pending, stats.total_closed );
-            console.log( stats );
             LoaderHelper.hideLoader();
         });
     }
@@ -70,13 +149,32 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
             $scope.happy = stats.happy;
             $scope.ok = stats.ok;
             $scope.unhappy = stats.unhappy;
+            $scope.recommendations = stats.recommendations;
             initChartLostVsWon( stats.lost, stats.won );
-            console.log( stats );
             LoaderHelper.hideLoader();
         });
 
         AgencyService.dashboardAvgPerMonth( $scope.auth_token, $rootScope.globals.currentUser.agencyId, function( stats ){
-            console.log( stats );
+            //LoaderHelper.hideLoader();
+        });
+        
+    }
+
+    function initDashboardCompany(){
+        // Init data
+        LoaderHelper.showLoader('Obteniendo resumen del anunciante...');
+
+        CompanyService.dashboardSummary( $scope.auth_token, $rootScope.globals.currentUser.agencyId, function( stats ){
+            $scope.happitch = stats.happitch;
+            $scope.happy = stats.happy;
+            $scope.ok = stats.ok;
+            $scope.unhappy = stats.unhappy;
+            $scope.recommendations = stats.recommendations;
+            initChartLostVsWon( stats.lost, stats.won );
+            //LoaderHelper.hideLoader();
+        });
+
+        CompanyService.dashboardAvgPerMonth( $scope.auth_token, $rootScope.globals.currentUser.agencyId, function( stats ){
             LoaderHelper.hideLoader();
         });
         
@@ -225,5 +323,11 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
             $scope.users = users;
         }); 
     }// fetchAgencyUsers
+
+    function fetchCompanyUsers( id ){
+        CompanyService.getUsers( id, function( users ){
+            $scope.users = users;
+        }); 
+    }// fetchCompanyUsers
 
 }]);

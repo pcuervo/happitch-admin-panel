@@ -8,6 +8,9 @@ conAngular.service('CompanyService', ['$http', '$rootScope', function($http, $ro
         service.showBrand = showBrand;
         service.createBrand = createBrand;
         service.showBrandByCompany = showBrandByCompany;
+        service.dashboardSummary = dashboardSummary;
+        service.dashboardAvgPerMonth = dashboardAvgPerMonth;
+        service.getUsers = getUsers;
     return service;
 
     function getAll( callback ){
@@ -103,6 +106,51 @@ conAngular.service('CompanyService', ['$http', '$rootScope', function($http, $ro
             callback( response );
         });
     }// showBrandByCompany
+
+    function dashboardSummary( authToken, id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/dashboard_summary_by_client';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id: id
+        })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// dashboardSummary
+
+    function getUsers( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'companies/get_users';
+        $http.post(serviceUrl, 
+        {
+            id: id
+        })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getUsers
+
+    function dashboardAvgPerMonth( authToken, id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/average_per_month_by_company';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id: id
+        })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// dashboardAvgPerMonth
 
 }]);
 

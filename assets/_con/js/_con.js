@@ -110,7 +110,6 @@ window.conApp = {};
         }
 
         // highlight new active item
-        console.log( item );
         if( item.length > 1 ){
             $(item[1]).parent('li').addClass('active');   
         } else {

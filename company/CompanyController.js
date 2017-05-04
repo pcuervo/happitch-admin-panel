@@ -1,4 +1,4 @@
-conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location', '$state', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $scope, $rootScope, $location, $state, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ){
+conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location', '$state',  '$stateParams', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $scope, $rootScope, $location, $state, $stateParams, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ){
 
     (function initController() {
         var currentPath = $location.path();
@@ -39,6 +39,46 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
         return brands.slice( 0, -2 );
     }
 
+    $scope.getRecoIcon = function( recoId ){
+        var icon;
+        switch( recoId ){
+            case 'client_objective_25':
+            case 'client_objective_50':
+                icon = 'communication';
+                break;
+            case 'client_objective_75':
+                icon = 'list';
+                break;
+            case 'client_budget_25':
+            case 'client_budget_50':
+            case 'client_budget_75':
+            case 'client_budget_100':
+                icon = 'budget';
+                break;
+            case 'client_criteria':
+                icon = 'criteria';
+                break;
+            case 'client_number_5':
+                icon = 'eye';
+                break;
+            case 'client_number_7':
+                icon = 'number';
+                break;
+            case 'client_time':
+                icon = 'time';
+                break;
+            case 'client_more_time':
+                icon = 'moreTime';
+                break;
+            case 'client_property':
+                icon = 'property';
+                break;
+            default:
+                icon = 'deliverable';
+        }   
+        return icon;
+    }
+
 
     /*********************
     * #GENERAL FUNCTIONS
@@ -46,6 +86,24 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
 
     function initCompany( path ){
         $scope.authToken = $rootScope.globals.currentUser.authdata;
+
+        if( path.indexOf( '/view-company/' ) > -1 ){
+            getCompany( $stateParams.companyId );
+
+            CompanyService.dashboardSummary( $scope.auth_token, $stateParams.companyId, function( stats ){
+                // $scope.users = stats.users;
+                $scope.happitch = stats.happitch;
+                $scope.happy = stats.happy;
+                $scope.ok = stats.ok;
+                $scope.unhappy = stats.unhappy;
+                $scope.recommendations = stats.recommendations;
+                initChartPitchesByType( stats.happitch, stats.happy, stats.ok, stats.unhappy );
+                // LoaderHelper.hideLoader();
+                console.log( stats );
+            });
+            initBrandsDataTable();
+            return;
+        }
 
         switch( path ){
             case '/view-companies':
@@ -66,11 +124,11 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
     function initCompanyDataTable(){
         $scope.dtCompanyOptions = DTOptionsBuilder.newOptions()
                 .withPaginationType('full_numbers')
-                .withDisplayLength(10)
-                .withDOM('itp')
+                .withDisplayLength(25)
+                .withDOM('fitp')
                 .withOption('responsive', true)
                 .withOption('order', [])
-                .withOption('searching', false);
+                .withOption('searching', true);
         DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
     }// initCompanyDataTable
 
@@ -88,6 +146,13 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
     /*********************
     * #CRUD 
     *********************/
+
+    function getCompany( id ){
+        CompanyService.show( id, function( company ){
+            console.log( company );
+            $scope.company = company;
+        }); 
+    }// getCompany
 
     function getCompanies(){
         CompanyService.getAll( function ( response ){
@@ -180,5 +245,49 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
             $scope.brands = response.brands;
         });
     }// fetchBrands
+
+    function initBrandsDataTable(){
+        $scope.dtBrandsOptions = DTOptionsBuilder.newOptions()
+                .withPaginationType('full_numbers')
+                .withDisplayLength(25)
+                .withDOM('t')
+                .withOption('responsive', true)
+                .withOption('order', [])
+                .withOption('searching', false);
+        DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+    }// initBrandsDataTable
+
+    function initChartPitchesByType( happitch, happy, ok, unhappy ){
+
+        $scope.lostVsWonData = [];
+        $scope.lostVsWonData.push( { label: "Happitch", data: happitch, color: "#EA8543" } );
+        $scope.lostVsWonData.push( { label: "Happy", data: happy, color: "#126692" } );
+        $scope.lostVsWonData.push( { label: "Unhappy", data: ok, color: "#EB12B5" } );
+        $scope.lostVsWonData.push( { label: "Bad Pitch", data: unhappy, color: "#FD1A2A" } );
+        
+        $scope.lostVsWonOpts = {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true
+            },
+            legend: {
+                backgroundOpacity: 0,
+                labelBoxBorderColor: "#fff"
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                shifts: {
+                    x: 20,
+                    y: 0
+                },
+                defaultTheme: false
+            }
+        };
+    }// initChartPitchesByType
 
 }]);

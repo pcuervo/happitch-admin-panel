@@ -22,6 +22,7 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
         service.getUsers = getUsers;
         service.dashboardSummary = dashboardSummary;
         service.dashboardAvgPerMonth = dashboardAvgPerMonth;
+        service.getRecommendations = getRecommendations;
     return service;
 
     function getAll( callback ){
@@ -373,5 +374,16 @@ conAngular.service('AgencyService', ['$http', '$rootScope', function($http, $roo
             callback( response );
         });
     }// dashboardAvgPerMonth
+
+    function getRecommendations( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'agencies/get_recommendations/' + id;
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getRecommendations
 }]);
 
