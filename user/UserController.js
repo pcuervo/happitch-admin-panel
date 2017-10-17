@@ -54,7 +54,12 @@ conAngular
         }
 
         $scope.confirmUserRequest = function(){
-            var isMemberAMAP = $('#checkbox-member-amap:checked').length;
+            if( 2 == $scope.user_type ){
+                var isMemberAMAP = $('#checkbox-member-amap:checked').length;
+            } else {
+                var isMemberAMAP = 1;
+            }
+            
             UserService.confirmUserRequest( $scope.user.email, $scope.user.agency, $scope.user.company, $scope.user.user_type, isMemberAMAP, function ( response ){
 
                 if(response.errors) {
@@ -65,7 +70,7 @@ conAngular
                 
                 console.log( response );
                 Materialize.toast('¡Usuario registrado exitosamente!', 4000, 'green');
-                $state.go('/dashboard', {}, { reload: true });
+                $state.go('/view-users', {}, { reload: true });
             });
         }
 
@@ -118,6 +123,21 @@ conAngular
             }
         }
 
+        $scope.deleteUser = function( id ){
+            var reassingEvaluations = false;
+            if( 'undefined' !== typeof $scope.newUser ) reassingEvaluations = true;
+
+            UserService.deleteUser( $scope.token, id, reassingEvaluations, $scope.newUser, function ( response ){
+                console.log( response );
+                if(response.errors) {
+                    ErrorHelper.display( response.errors );
+                    return;
+                }
+                Materialize.toast('¡Se ha eliminado el usuario correctamente!', 4000, 'green');
+                $state.go('/view-users', {}, { reload: true });
+            });
+        }
+
 
         /******************
         * PRIVATE FUNCTIONS
@@ -136,6 +156,12 @@ conAngular
                 return;
             }
 
+             if( currentPath.indexOf( '/delete-user/' ) > -1 ){
+                LoaderHelper.showLoader('Cargando información del usuario...');
+                getUser( $stateParams.userId );
+                return;
+            }
+
             if( currentPath.indexOf( '/reset-password' ) > -1 ){
                 $scope.token = $stateParams.passwordToken;
                 return;
@@ -144,6 +170,7 @@ conAngular
             switch( currentPath ){
                 case '/view-user-requests':
                     getAgencyUserRequests();
+                    getBrandUserRequests();
                     break;
                 case '/add-user':
                     fetchAgencies();
@@ -191,7 +218,7 @@ conAngular
                 console.log( user );
                 $scope.user = user;
             }); 
-        }// getUser
+        }// getNewUserRequest
 
         function fetchAgencies(){
             AgencyService.getAll( function( agencies ){
@@ -232,6 +259,12 @@ conAngular
             }); 
         }// getAgencyUserRequests
 
+        function getBrandUserRequests(){
+            UserService.getBrandUserRequests( function( userRequests ){
+                $scope.brandUserRequests = userRequests;
+            }); 
+        }// getBrandUserRequests
+
         function getAgency( id ){
             AgencyService.show( id, function( agency ){
                 console.log( agency );
@@ -252,5 +285,14 @@ conAngular
                 LoaderHelper.hideLoader();
             }); 
         }// fetchAgencyUsers
+
+        function getUser( id ){
+            UserService.get( id, function( user ){
+                console.log( user );
+                $scope.user = user;
+                LoaderHelper.hideLoader();
+                if( user.agency_id !== -1 ) fetchAgencyUsers( user.agency_id );
+            }); 
+        }// getNewUserRequest
 
     }]);

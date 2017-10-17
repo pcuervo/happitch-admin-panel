@@ -42,6 +42,45 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
         }); 
     }
 
+    $scope.getRecoIcon = function( recoId ){
+        var icon;
+        switch( recoId ){
+            case 'client_objective_25':
+            case 'client_objective_50':
+                icon = 'communication';
+                break;
+            case 'client_objective_75':
+                icon = 'list';
+                break;
+            case 'client_budget_25':
+            case 'client_budget_50':
+            case 'client_budget_75':
+            case 'client_budget_100':
+                icon = 'budget';
+                break;
+            case 'client_criteria':
+                icon = 'criteria';
+                break;
+            case 'client_number_5':
+                icon = 'eye';
+                break;
+            case 'client_number_7':
+                icon = 'number';
+                break;
+            case 'client_time':
+                icon = 'time';
+                break;
+            case 'client_more_time':
+                icon = 'moreTime';
+                break;
+            case 'client_property':
+                icon = 'property';
+                break;
+            default:
+                icon = 'deliverable';
+        }   
+        return icon;
+    }
 
     /*********************
     * #GENERAL FUNCTIONS
@@ -65,10 +104,21 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
             return;
         }
 
+        if( path.indexOf( '/view-pitch/' ) > -1 ){
+            getPitch( $stateParams.pitchId );
+            getStats( $stateParams.pitchId );
+            initAgencyDataTable();
+            return;
+        }
+
         switch( path ){
             case '/merge-pitch-companies':
                 fetchPitches();
                 initPitchesDataTable();
+                break;
+            case '/view-pitches':
+                LoaderHelper.showLoader('Cargando pitches...');
+                fetchPitches();
                 break;
         }
     }
@@ -92,15 +142,14 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
 
     function fetchPitchesByBrand( id ){
         PitchService.byBrand( id, function ( pitches ){
-            console.log( pitches );
             $scope.pitches = pitches;            
         });
     }// fetchPitchesByBrand
 
     function fetchPitches(){
         PitchService.getAll( function( response ){
-            console.log( response );
             $scope.pitches = response.pitches;
+            LoaderHelper.hideLoader();
         }); 
     }// fetchCompanies
 
@@ -121,5 +170,43 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
             $scope.pitch2 = response;            
         });
     }
+
+    function getPitch( pitchId ){
+        PitchService.show( pitchId, function ( pitch ){
+            console.log( pitch );
+            $scope.pitch = pitch;      
+            $scope.total_evaluations = pitch.pitch_evaluations.length;      
+        });
+    }
+
+    function getStats( pitchId ){
+        PitchService.getStats( pitchId, function ( response ){
+            $scope.stats = response.stats;
+
+            $scope.averageImgSrc = getPitchTypeImg( $scope.stats.average_type );
+            $scope.lowestImgSrc = getPitchTypeImg( $scope.stats.lowest_type );
+            $scope.highestImgSrc = getPitchTypeImg( $scope.stats.highest_type );
+        });
+    }
+
+    function getPitchTypeImg( pitchType ){
+        switch( pitchType ){
+            case 'unhappy': return 'bad_pitch';
+            case 'ok': return 'unhappy';
+            default: 
+                return pitchType;
+        }
+    }
+
+    function initAgencyDataTable(){
+        $scope.dtAgencyOptions = DTOptionsBuilder.newOptions()
+                .withPaginationType('full_numbers')
+                .withDisplayLength(10)
+                .withDOM('itp')
+                .withOption('responsive', true)
+                .withOption('order', [])
+                .withOption('searching', false);
+        DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+    }// initAgencyDataTable
 
 }]);

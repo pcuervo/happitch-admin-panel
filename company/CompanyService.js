@@ -11,6 +11,9 @@ conAngular.service('CompanyService', ['$http', '$rootScope', function($http, $ro
         service.dashboardSummary = dashboardSummary;
         service.dashboardAvgPerMonth = dashboardAvgPerMonth;
         service.getUsers = getUsers;
+        service.getPitches = getPitches;
+        service.unifyCompany = unifyCompany;
+        service.unifyBrand = unifyBrand;
     return service;
 
     function getAll( callback ){
@@ -137,6 +140,21 @@ conAngular.service('CompanyService', ['$http', '$rootScope', function($http, $ro
         });
     }// getUsers
 
+    function getPitches( authToken, id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'companies/get_pitches';
+        $http.post(serviceUrl, 
+        {
+            auth_token: authToken,
+            id: id
+        })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getPitches
+
     function dashboardAvgPerMonth( authToken, id, callback ){
         var serviceUrl = $rootScope.apiUrl + 'pitch_evaluations/average_per_month_by_company';
         $http.post(serviceUrl, 
@@ -151,6 +169,38 @@ conAngular.service('CompanyService', ['$http', '$rootScope', function($http, $ro
             callback( response );
         });
     }// dashboardAvgPerMonth
+
+    function unifyCompany( authToken, id, incorrectCompanyId, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'companies/unify';
+        $http.post(serviceUrl, 
+            {
+                auth_token:           authToken,
+                id:                   id,
+                incorrect_company_id: incorrectCompanyId
+            })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// createBrand
+
+    function unifyBrand( authToken, id, incorrectBrandId, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'brands/unify';
+        $http.post(serviceUrl, 
+            {
+                auth_token:           authToken,
+                id:                   id,
+                incorrect_brand_id: incorrectBrandId
+            })
+        .success(function ( response ) {
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// createBrand
 
 }]);
 

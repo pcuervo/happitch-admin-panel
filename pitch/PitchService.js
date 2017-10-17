@@ -13,6 +13,7 @@ conAngular.service('PitchService', ['$http', '$rootScope', function($http, $root
         service.decline = decline;
         service.archive = archive;
         service.destroyEvaluation = destroyEvaluation;
+        service.getStats = getStats;
     return service;
 
     function getAll( callback ){
@@ -223,5 +224,16 @@ conAngular.service('PitchService', ['$http', '$rootScope', function($http, $root
         });
     }// destroyEvaluation
 
+    function getStats( id, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitches/stats/'+id;
+        $http.get(serviceUrl)
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// getAll
 }]);
 

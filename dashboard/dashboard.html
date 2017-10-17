@@ -49,56 +49,42 @@
 				</div>
 			</div>
 	  	</div>
-	  	<div class="col s6 m3">
+		<div class="col s12">
 			<div class="card">
 				<div class="title">
-					<h5>Top Briefing Pitches</h5>
+					<h5>Histórico de pitches por mes (último año)</h5>
+				</div>
+				<div class="content">
+					<flot dataset="monthlyPitchesData" options="monthlyPitchesOpts" style="display: block; height: 300px"></flot>
+				</div>
+			</div>
+		</div>
+	  	<div class="col s6">
+			<div class="card">
+				<div class="title">
+					<h5>Pitches mejor brifeados (por promedio)</h5>
 				</div>
 				<div class="content">
 					<ul>
-						<li ng-repeat="(pitch, avg) in topPitches track by $index"><h6>{{ ($index+1) + '. ' + pitch }}</h6>{{ ' promedio: ' + avg }}</li>
+						<li ng-repeat="(pitch, avg) in topPitches track by $index"><h6>{{ ($index+1) + '. ' + pitch + ': ' + avg }}</h6></li>
 					</ul>
 				</div>
 			</div>
 	  	</div>
-	  	<div class="col s6 m3">
+	  	<div class="col s6">
 			<div class="card">
 				<div class="title">
-					<h5>Worst Briefing Pitches</h5>
+					<h5>Pitches peor brifeados (por promedio)</h5>
 				</div>
 				<div class="content">
 					<ul>
-						<li ng-repeat="(pitch, avg) in worstPitches track by $index"><h6>{{ ($index+1) + '. ' + pitch }}</h6>{{ ' promedio: ' + avg }}</li>
-					</ul>
-				</div>
-			</div>
-	  	</div>
-	  	<div class="col s6 m3">
-			<div class="card">
-				<div class="title">
-					<h5>Worst Briefing Pitches</h5>
-				</div>
-				<div class="content">
-					<ul>
-						<li ng-repeat="(pitch, avg) in worstPitches track by $index"><h6>{{ ($index+1) + '. ' + pitch }}</h6>{{ ' promedio: ' + avg }}</li>
-					</ul>
-				</div>
-			</div>
-	  	</div>
-	  	<div class="col s6 m3">
-			<div class="card">
-				<div class="title">
-					<h5>Worst Briefing Pitches</h5>
-				</div>
-				<div class="content">
-					<ul>
-						<li ng-repeat="(pitch, avg) in worstPitches track by $index"><h6>{{ ($index+1) + '. ' + pitch }}</h6>{{ ' promedio: ' + avg }}</li>
+						<li ng-repeat="(pitch, avg) in worstPitches track by $index"><h6>{{ ($index+1) + '. ' + pitch + ': ' + avg }}</li>
 					</ul>
 				</div>
 			</div>
 	  	</div>
 	</div>
-
+	<div class="clear"></div>
 	<div class="[ card-panel ]">
 		<div class="[ row ]">
 	   	 	<div class="[ col s12  ]">
@@ -118,9 +104,9 @@
 			                <td class="[ center-align ]">{{ request.email }}</td>
 			                <td class="[ center-align ]">{{ request.created_at | date:'yyyy-MM-dd h:mm:ss a' }}</td>
 			                <td class="[ center-align ]">
-			                	<a class="[ col s12 ][ btn btn-extra green ][ waves-effect ]" href="#/view-user-request/{{request.id}}"><i class="[ material-icons ]">visibility</i></a>
+			                	<a class="[ btn btn-extra green ][ waves-effect ]" href="#/view-user-request/{{request.id}}"><i class="[ material-icons ]">visibility</i></a>
+			                	<button class="[ btn btn-extra red ][ waves-effect ]" ng-click="declineRequest( request.email )"><i class="[ material-icons ]">cancel</i></button>
 			                </td>
-
 			            </tr>
 			        </tbody>
 			    </table>  
@@ -147,9 +133,9 @@
 			                <td class="[ center-align ]">{{ request.email }}</td>
 			                <td class="[ center-align ]">{{ request.created_at | date:'yyyy-MM-dd h:mm:ss a' }}</td>
 			                <td class="[ center-align ]">
-			                	<a class="[ col s12 ][ btn btn-extra green ][ waves-effect ]" href="#/view-user-request/{{request.id}}"><i class="[ material-icons ]">visibility</i></a>
+			                	<a class="[ btn btn-extra green ][ waves-effect ]" href="#/view-user-request/{{request.id}}"><i class="[ material-icons ]">visibility</i></a>
+			                	<button class="[ btn btn-extra red ][ waves-effect ]" ng-click="declineRequest( request.email )"><i class="[ material-icons ]">cancel</i></button>
 			                </td>
-
 			            </tr>
 			        </tbody>
 			    </table>  

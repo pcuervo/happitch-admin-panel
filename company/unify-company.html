@@ -1,0 +1,24 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Unificar anunciantes</h4>
+    <div class="[ row ]">
+        <div class="[ col s12 m8 offset-m2 ]">
+            <p>Unifica {{ company.name }} con otro anunciante. Todas las marcas del otro anunciante pasaran a ser marcas de {{ company.name }}.</p>
+        </div>
+        <div class="[ col s12 m4 offset-m2 ]"> 
+            <div class="input-field">
+                <input type="text" id="company-name" ng-model="company.name" ng-readonly="true">
+                <label for="company-name">Anunciante</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ][ mt-20 ]">
+            <select id="new-company" ng-model="incorrectCompany">
+                <option value="" disabled selected>Selecciona anunciante</option>
+                <option ng:repeat="c in companies" value="{{c.id}}" ng-if="c.id !== company.id">{{c.name}}</option>
+            </select>
+        </div>
+        <div class="[ clear ]"></div>
+        <div class="[ col s12 ][ center-align ][ mt-15 ]">
+            <button class="[ btn btn-primary ]" ng-click="unifyCompany(company.id)">Unificar</button>
+        </div>
+    </div>
+</div>

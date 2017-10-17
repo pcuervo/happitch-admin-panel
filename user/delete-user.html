@@ -1,0 +1,30 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Eliminar usuario</h4>
+    <div class="[ row ]">
+        <div class="[ col s12 m8 offset-m2 ]">
+            <p>Una vez eliminado un usuario no hay forma de recuperar su información. Si deseas asignar sus evaluaciones a otro usuario de la misma agencia, lo puedes hacer.</p>
+        </div>
+        <div class="[ col s12 m4 offset-m2 ]"> 
+            <div class="input-field">
+                <input type="text" id="user-email" ng-model="user.email" ng-readonly="true">
+                <label for="user-email">Email</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="agency" ng-model="user.agency_company" ng-readonly="true">
+                <label for="agency">Agencia</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 offset-m2 ]">
+            <label for="new-user">¿A qué usuario deseas asignarle las evaluaciones de los pitches?</label>
+            <select id="new-user" ng-model="newUser">
+                <option value="" disabled selected>No deseo asignar evaluaciones</option>
+                <option ng:repeat="u in users" value="{{u.id}}" ng-if="u.id !== user.id">{{u.email}}</option>
+            </select>
+        </div>
+        <div class="[ col s12 m4 ][ center-align ][ mt-15 ]">
+            <button class="[ btn btn-primary red ]" ng-click="deleteUser(user.id)">Eliminar usuario</button>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,8 @@
                         <th class="[ center-align ]">Nombre</th>
                         <th class="[ center-align ]">Marcas</th>
                         <th class="[ center-align ]">Fecha de creación</th>
-                        <th class="[ center-align ]">Ver detalle</th>
+                        <th class="[ center-align ]">Ver</th>
+                        <th class="[ center-align ]">Unificar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,7 +18,10 @@
                         <td class="[ center-align ]">{{ displayBrands( company.brands ) }}</td>
                         <td class="[ center-align ]">{{ company.created_at | date:'yyyy-MM-dd h:mm:ss a' }}</td>
                         <td class="[ center-align ]">
-                            <a href="#/view-company/{{company.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a></i></a>
+                            <a href="#/view-company/{{company.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a>
+                        </td>
+                        <td class="[ center-align ]">
+                            <a href="#/unify-company/{{company.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">call_merge</i></a>
                         </td>
                     </tr>
                 </tbody>

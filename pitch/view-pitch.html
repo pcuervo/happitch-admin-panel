@@ -1,0 +1,101 @@
+<div class="[ card-panel ]">
+    <div class="[ row ][ no-margin-top ]">
+        <div class="[ col s12 ]"> 
+            <h3 class="[ center-align ]">Pitch: {{ pitch.name }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Datos generales</h4>
+    <div class="[ row ]">
+        <div class="[ col s12 m4 offset-m2 ]"> 
+            <div class="input-field">
+                <input type="text" id="company" ng-model="pitch.company" ng-readonly="true">
+                <label for="company">Anunciante</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="brand" ng-model="pitch.brand.name" ng-readonly="true">
+                <label for="brand">Marca</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="brief-email-contact" ng-model="pitch.brief_email_contact" ng-readonly="true">
+                <label for="brief-email-contact">Email de contacto</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="brief-date" ng-model="pitch.brief_date" ng-readonly="true">
+                <label for="brief-date">Fecha de brief</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ]"> 
+            <div class="input-field">
+                <input type="text" id="pitch-evaluations" ng-model="total_evaluations" ng-readonly="true">
+                <label for="pitch-evaluations">Total de evaluaciones</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Estadísticas</h4>
+        <div class="[ col s6 m4 ][ center-align ]">
+            <img src="assets/_con/images/{{ averageImgSrc }}.png" alt="Pitch type">
+            <h6>Promedio: {{ stats.average }}</h6>
+        </div>
+        <div class="[ col s6 m4 ][ center-align ]">
+            <img src="assets/_con/images/{{ highestImgSrc }}.png" alt="Pitch type">
+            <h6>Mejor calificación: {{ stats.highest }}</h6>
+        </div>
+        <div class="[ col s6 m4 ][ center-align ]">
+            <img src="assets/_con/images/{{ lowestImgSrc }}.png" alt="Pitch type">
+            <h6>Peor calificación: {{ stats.lowest }}</h6>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Recomendaciones</h4>
+        <div class="[ col s12 m6 l4 ][ center-align ]" ng-repeat="reco in stats.recommendations">
+            <img src="assets/_con/icons/{{ getRecoIcon( reco.reco_id ) }}@2x.png" alt="Recomendaciones para agencias">
+            <p>{{ reco.body }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="[ card-panel ]">
+    <div class="[ row ]">
+        <h4 class="[ center-align ][ mb-20 ]">Agencias que han evaluado</h4>
+        <div class="[ col s12 ][ center-align ]">
+            <table datatable="ng" dt-options="dtAgencyOptions" dt-column-defs="dtAgencyColumnDefs" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th class="[ center-align ]">Nombre</th>
+                        <th class="[ center-align ][ hide-on-small ]">Persona de contacto</th>
+                        <th class="[ center-align ][ hide-on-med-and-down ]">Email de contacto</th>
+                        <th class="[ center-align ][ hide-on-small ]">Sitio web</th>
+                        <th class="[ center-align ]">Ver detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="agency in stats.agencies">
+                        <td class="[ center-align ]">{{ agency.name }}</td>
+                        <td class="[ center-align ][ hide-on-small ]">{{ agency.contact_name }}</td>
+                        <td class="[ center-align ][ hide-on-small ]">{{ agency.contact_email }}</td>
+                        <td class="[ center-align ][ hide-on-med-and-down ]">{{ agency.website_url }}</td>
+                        <td class="[ center-align ]">
+                            <a href="#/view-agency/{{agency.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+</div>

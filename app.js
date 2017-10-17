@@ -319,6 +319,23 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
+    .state('/delete-user', {
+        url: "/delete-user/:userId",
+        templateUrl: "user/delete-user.html",
+        controller: "UserController",
+        data: {
+            pageTitle: 'Eliminar usuarios'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
 
     .state('/api-client', {
         url: "/api-client",
@@ -492,6 +509,42 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
+    .state('/unify-company', {
+        url: "/unify-company/:companyId",
+        templateUrl: "company/unify-company.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Unificar anunciantes'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/unify-brand', {
+        url: "/unify-brand/:brandId",
+        templateUrl: "company/unify-brand.html",
+        controller: "CompanyController",
+        data: {
+            pageTitle: 'Unificar marcas'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
     .state('/create-brand', {
         url: "/create-brand",
         templateUrl: "company/create-brand.html",
@@ -580,6 +633,42 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
         } 
     })
 
+    // Pitches
+    .state('/view-pitches', {
+        url: "/view-pitches",
+        templateUrl: "pitch/view-pitches.html",
+        controller: "PitchController",
+        data: {
+            pageTitle: 'Ver pitches'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
+    .state('/view-pitch', {
+        url: "/view-pitch/:pitchId",
+        templateUrl: "pitch/view-pitch.html",
+        controller: "PitchController",
+        data: {
+            pageTitle: 'Ver pitch'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('dataTables')
+                }]);
+            }]
+        } 
+    })
     .state('/merge-pitch-companies', {
         url: "/merge-pitch-companies",
         templateUrl: "pitch/merge-pitch-companies.html",
@@ -638,7 +727,7 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $location, $cookies, $http, AuthenticationService) {
     // Set Environment
-    $rootScope.env = 'stage';
+    $rootScope.env = 'prod';
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'https://amap-dev.herokuapp.com/api/'

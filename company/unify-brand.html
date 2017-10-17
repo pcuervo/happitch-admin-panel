@@ -1,0 +1,24 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Unificar marcas</h4>
+    <div class="[ row ]">
+        <div class="[ col s12 m8 offset-m2 ]">
+            <p>Unifica {{ brand.name }} con otra marca. Todas los pitches de la otra marca pasaran a ser pitches de {{ brand.name }}.</p>
+        </div>
+        <div class="[ col s12 m4 offset-m2 ]"> 
+            <div class="input-field">
+                <input type="text" id="brand-name" ng-model="brand.name" ng-readonly="true">
+                <label for="brand-name">Marca</label>
+            </div>
+        </div>
+        <div class="[ col s12 m4 ][ mt-20 ]">
+            <select id="new-brand" ng-model="incorrectBrand">
+                <option value="" disabled selected>Selecciona marca</option>
+                <option ng:repeat="b in brands" value="{{b.id}}" ng-if="b.id !== brand.id">{{b.name}}</option>
+            </select>
+        </div>
+        <div class="[ clear ]"></div>
+        <div class="[ col s12 ][ center-align ][ mt-15 ]">
+            <button class="[ btn btn-primary ]" ng-click="unifyBrand(brand.id)">Unificar</button>
+        </div>
+    </div>
+</div>

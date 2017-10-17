@@ -11,7 +11,7 @@
                 </div>
             </div>
             <input type="hidden" id="user-type" ng-model="user.user_type" ng-readonly="true">
-            <div class="[ col s12 m3 ]">
+            <div class="[ col s12 m3 ]" ng-show="2 == user.user_type">
                 <div class="[ input-field ]">
                     <input class="[ filled-in ]" type="checkbox" id="checkbox-member-amap" value="1" name="memberAmap" />
                     <label for="checkbox-member-amap">¿Es miembro de la AMAP?</label>

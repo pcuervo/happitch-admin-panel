@@ -1,4 +1,4 @@
-conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserService', 'DashboardService', 'AgencyService', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $rootScope, $scope, UserService, DashboardService, AgencyService, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ) {
+conAngular.controller('DashboardController', [ '$rootScope', '$scope', '$state', 'UserService', 'DashboardService', 'AgencyService', 'CompanyService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'DTDefaultOptions', function( $rootScope, $scope, $state, UserService, DashboardService, AgencyService, CompanyService, DTOptionsBuilder, DTColumnDefBuilder, DTDefaultOptions ) {
 
     (function initController() {
         $scope.role = $rootScope.globals.currentUser.role;
@@ -96,6 +96,17 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
         return icon;
     }
 
+    $scope.declineRequest = function( email ){
+        UserService.rejectUserRequest( email, function ( response ){
+            if(response.errors) {
+                ErrorHelper.display( response.errors );
+                return;
+            }
+            Materialize.toast( response.success, 4000, 'green');
+            $state.go('/dashboard', {}, { reload: true });
+        });
+    }// declineRequest
+
 
     /******************
     * PRIVATE FUNCTIONS
@@ -126,6 +137,9 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
         // Init data
         LoaderHelper.showLoader('Calculando estadísticas...');
 
+        $scope.monthlyPitchesData = [];
+        $scope.monthlyPitchesOpts = {};
+        addMonthlyPitchesTooltip();
         DashboardService.amap( function( stats ){
             $scope.totalAgencies = stats.total_agencies;
             $scope.totalPitches = stats.total_pitches;
@@ -136,6 +150,7 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
             initChartPitchesByType( stats.total_happitch, stats.total_happy, stats.total_ok, stats.total_unhappy );
             initChartClosedVsPending( stats.total_pending, stats.total_closed );
             LoaderHelper.hideLoader();
+            initChartMonthlyPitches( stats.pitches_by_month )
         });
     }
 
@@ -329,5 +344,102 @@ conAngular.controller('DashboardController', [ '$rootScope', '$scope', 'UserServ
             $scope.users = users;
         }); 
     }// fetchCompanyUsers
+
+    function initChartMonthlyPitches( pitchesData ){
+        var monthlyPitchesData = [];
+        var ticks = [];
+        console.log( pitchesData );
+
+        $.each( pitchesData, function(i, val){
+            monthlyPitchesData.push( [i+1, val.num_pitches] );
+            ticks.push( [i+1, val.month_year] );
+        });
+        $scope.monthlyPitchesData = [{
+            data: monthlyPitchesData,
+            label: "Pitches mensuales"
+        }];
+
+        $scope.monthlyPitchesOpts = {
+            series: {
+                lines: {
+                    show: true,
+                    lineWidth: 1,
+                    fill: true, 
+                    fillColor: { colors: [ { opacity: 0.1 }, { opacity: 0.13 } ] }
+                },
+                points: {
+                    show: true, 
+                    lineWidth: 3,
+                    radius: 5
+                },
+                shadowSize: 0,
+                stack: true
+            },
+            grid: {
+                hoverable: true, 
+                clickable: true, 
+                tickColor: "#f9f9f9",
+                borderWidth: 0
+            },
+            legend: {
+                // show: false
+                backgroundOpacity: 0,
+                labelBoxBorderColor: "#fff"
+            },  
+            colors: ["#3f51b5", "#009688", "#2196f3"],
+            xaxis: {
+                ticks: ticks,
+                font: {
+                    family: "Roboto,sans-serif",
+                    color: "#888"
+                }
+            },
+            yaxis: {
+                ticks:7, 
+                tickDecimals: 0,
+                font: {color: "#888"}
+            }
+        };
+    }// initChartMonthlyPitches
+
+    function addMonthlyPitchesTooltip(){
+        $scope.monthlyPitchesOpts['conTooltip'] = function(chart) {
+            console.log( 'hi' );
+            function showTooltip(x, y, contents) {
+                $('<div id="tooltip">' + contents + '</div>').css( {
+                    position: 'absolute',
+                    display: 'none',
+                    top: y - 50,
+                    left: x - 35,
+                    color: "#fff",
+                    padding: '10px 10px',
+                    'border-radius': '5px',
+                    'background-color': 'rgba(0,0,0,0.6)'
+                }).appendTo("body").fadeIn(200);
+            }// showToolTip
+
+            var previousPoint = null;
+            chart.bind("plothover.conApp", function (event, pos, item) {
+                if (item) {
+                    if (previousPoint != item.dataIndex) {
+                        previousPoint = item.dataIndex;
+
+                        $("#tooltip").remove();
+                        var x = item.datapoint[0].toFixed(0),
+                            y = item.datapoint[1].toFixed(0);
+
+                        var month = item.series.xaxis.ticks[item.dataIndex].label;
+
+                        showTooltip(item.pageX, item.pageY,
+                                    'Pitches' + " en " + month + ": " + y);
+                    }
+                }
+                else {
+                    $("#tooltip").remove();
+                    previousPoint = null;
+                }
+            });
+        } 
+    }
 
 }]);

@@ -79,6 +79,31 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
         return icon;
     }
 
+    $scope.unifyCompany = function( companyId ){
+        if( 'undefined' === typeof $scope.incorrectCompany ) {
+            Materialize.toast('Por favor selecciona un anunciante.', 4000, 'red');
+            return;
+        }
+
+        CompanyService.unifyCompany( $scope.auth_token, companyId, $scope.incorrectCompany, function( companyResponse ){
+            Materialize.toast('Se unificaron los anunciantes correctamente. ' + companyResponse.name + ' ahora cuenta con ' + companyResponse.brands.length + ' marcas.' , 6000, 'green');
+            $state.go('/view-companies', {}, { reload: true });
+        });
+    }
+
+    $scope.unifyBrand = function( companyId ){
+        if( 'undefined' === typeof $scope.incorrectBrand ) {
+            Materialize.toast('Por favor selecciona una marca.', 4000, 'red');
+            return;
+        }
+
+        CompanyService.unifyBrand( $scope.auth_token, companyId, $scope.incorrectBrand, function( brandResponse ){
+            var pitchesStr = 'pitches';
+            if( 1 == brandResponse.pitches.length ) pitchesStr = 'pitch'.
+            Materialize.toast('Se unificaron las marcas correctamente. ' + brandResponse.name + ' ahora cuenta con ' + brandResponse.pitches.length + ' ' + pitchesStr + '.' , 6000, 'green');
+            $state.go('/view-brands', {}, { reload: true });
+        });
+    }
 
     /*********************
     * #GENERAL FUNCTIONS
@@ -89,6 +114,7 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
 
         if( path.indexOf( '/view-company/' ) > -1 ){
             getCompany( $stateParams.companyId );
+            getCompanyPitches( $stateParams.companyId );
 
             CompanyService.dashboardSummary( $scope.auth_token, $stateParams.companyId, function( stats ){
                 // $scope.users = stats.users;
@@ -102,6 +128,21 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
                 console.log( stats );
             });
             initBrandsDataTable();
+            initPitchesDataTable();
+            return;
+        }
+
+        if( path.indexOf( '/unify-company/' ) > -1 ){
+            LoaderHelper.showLoader('Obteniendo anunciantes...');
+            fetchCompanies();
+            getCompany( $stateParams.companyId );
+            return;
+        }
+
+        if( path.indexOf( '/unify-brand/' ) > -1 ){
+            LoaderHelper.showLoader('Obteniendo marcas...');
+            fetchBrands();
+            getBrand( $stateParams.brandId );
             return;
         }
 
@@ -111,6 +152,7 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
                 initCompanyDataTable();
                 break;
             case '/view-brands':
+                LoaderHelper.showLoader('Obteniendo marcas...');
                 fetchBrands();
                 //initSkillDataTable();
                 break;
@@ -215,6 +257,13 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
         });
     }// showBrand
 
+    function getBrand( id ){
+        CompanyService.showBrand( id, function ( response ){
+            console.log( response );
+            $scope.brand = response;
+        });
+    }// showBrand
+
     function createBrand( authToken, name, contactName, contactEmail, contactPosition, companyId ){
         CompanyService.createBrand( authToken, name, contactName, contactEmail, contactPosition, companyId, function ( response ){
             $scope.showCompaniesResponse = true;
@@ -227,6 +276,12 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
         });
     }// createBrand
 
+    function getCompanyPitches( id ){
+        CompanyService.getPitches( $scope.authToken, id, function( pitches ){
+            console.log(pitches);
+            $scope.pitches = pitches;
+        }); 
+    }// getCompanyPitches
 
     /*********************
      HELPER FUNCTIONS
@@ -234,15 +289,15 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
 
     function fetchCompanies(){
         CompanyService.getAll( function( response ){
-            console.log( response );
+            LoaderHelper.hideLoader();
             $scope.companies = response.companies;
         }); 
     }// fetchCompanies
 
     function fetchBrands(){
         CompanyService.getBrands( function ( response ){
-            console.log( response );
             $scope.brands = response.brands;
+            LoaderHelper.hideLoader();
         });
     }// fetchBrands
 
@@ -256,6 +311,20 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
                 .withOption('searching', false);
         DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
     }// initBrandsDataTable
+
+    function initPitchesDataTable(){
+        $scope.dtPitchesOptions = DTOptionsBuilder.newOptions()
+                .withPaginationType('full_numbers')
+                .withDisplayLength(25)
+                .withDOM('t')
+                .withOption('responsive', true)
+                .withOption('order', [])
+                .withOption('searching', false);
+        $scope.dtPitchesColumnDefs = [
+                DTColumnDefBuilder.newColumnDef(4).notSortable()
+            ];
+        DTDefaultOptions.setLanguageSource('https://cdn.datatables.net/plug-ins/1.10.9/i18n/Spanish.json');
+    }// initPitchesDataTable
 
     function initChartPitchesByType( happitch, happy, ok, unhappy ){
 

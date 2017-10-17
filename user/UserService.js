@@ -14,6 +14,9 @@ conAngular
         service.getBrandUserRequests    = getBrandUserRequests;
         service.getAll                  = getAll;
         service.getAdminUsers           = getAdminUsers;
+        service.get                     = get;
+        service.deleteUser              = deleteUser;
+        service.getAgencyUsers          = getAgencyUsers;
         return service;
 
 
@@ -177,6 +180,47 @@ conAngular
                     callback( response );
                });
         }// getAdminUsers
+
+        function get( id, callback ){
+            var serviceUrl = $rootScope.apiUrl + 'users/' + id;
+            $http.get(serviceUrl)
+               .success(function ( response ) {
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    callback( response );
+               });
+        }// get
+
+        function deleteUser( authToken, id, reassign, newUser, callback ){
+            var serviceUrl = $rootScope.apiUrl + 'users/destroy';
+            $http.post(serviceUrl, 
+            {
+                auth_token:  authToken,
+                id:          id,
+                reassign:    reassign,
+                new_user_id: newUser
+    
+            })
+           .success(function ( response ) {
+                callback( response );
+           })
+           .error(function ( response ) {
+                callback( response );
+           });
+
+        }// deleteUser
+
+        function getAgencyUsers( agencyId, callback ){
+            var serviceUrl = $rootScope.apiUrl + 'agency/get_users';
+            $http.get(serviceUrl)
+               .success(function ( response ) {
+                    callback( response );
+               })
+               .error(function ( response ) {
+                    callback( response );
+               });
+        }// getAgencyUsers
 
     }]);
 
