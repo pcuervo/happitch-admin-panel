@@ -1,29 +1,28 @@
-<div  ng-show="1 == role">
-	<div class="[ card-panel ][ mt-20 ]">
-		<div class="[ row ]">
-			<div class="[ col s6 m3 ]">
-				<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
-					<span class="[ count ]">{{ totalPitches }}</span>
-					<div class="name">Pitches totales</div>
-				</div>
+<div ng-show="1 == role">
+
+	<div class="[ row ]">
+		<div class="[ col s6 m3 ]">
+			<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
+				<span class="[ count ]">{{ totalPitches }}</span>
+				<div class="name">Pitches totales</div>
 			</div>
-			<div class="[ col s6 m3 ]">
-				<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
-					<span class="[ count ]">{{ totalAgencies }}</span>
-					<div class="name">Agencias totales</div>
-				</div>
+		</div>
+		<div class="[ col s6 m3 ]">
+			<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
+				<span class="[ count ]">{{ totalAgencies }}</span>
+				<div class="name">Agencias totales</div>
 			</div>
-			<div class="[ col s6 m3 ]">
-				<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
-					<span class="[ count ]">{{ totalCompanies }}</span>
-					<div class="name">Anunciantes totales</div>
-				</div>
+		</div>
+		<div class="[ col s6 m3 ]">
+			<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
+				<span class="[ count ]">{{ totalCompanies }}</span>
+				<div class="name">Anunciantes totales</div>
 			</div>
-			<div class="[ col s6 m3 ]">
-				<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
-					<span class="[ count ]">{{ totalBrands }}</span>
-					<div class="name">Marcas totales</div>
-				</div>
+		</div>
+		<div class="[ col s6 m3 ]">
+			<div class="card-panel stats-card blue darken-4 blue-text text-lighten-5">
+				<span class="[ count ]">{{ totalBrands }}</span>
+				<div class="name">Marcas totales</div>
 			</div>
 		</div>
 	</div>
@@ -49,7 +48,9 @@
 				</div>
 			</div>
 	  	</div>
-		<div class="col s12">
+	</div>
+	<div class="row">
+		<div class="col s12 m6">
 			<div class="card">
 				<div class="title">
 					<h5>Histórico de pitches por mes (último año)</h5>
@@ -59,7 +60,7 @@
 				</div>
 			</div>
 		</div>
-	  	<div class="col s6">
+	  	<div class="col s12 m6">
 			<div class="card">
 				<div class="title">
 					<h5>Pitches mejor brifeados (por promedio)</h5>
@@ -85,9 +86,10 @@
 	  	</div>
 	</div>
 	<div class="clear"></div>
+	<br />
 	<div class="[ card-panel ]">
 		<div class="[ row ]">
-	   	 	<div class="[ col s12  ]">
+	   	 	<div class="[ col s12 ]">
 				<h4 class="[ center-align ]">Solicitudes de usuarios "Agencia"</h4>
 				<table datatable="ng" dt-options="dtAgencyUserRequestsOptions" dt-column-defs="dtAgencyUserRequestsColumnDefs" class="row-border hover">
 			        <thead>
@@ -109,14 +111,14 @@
 			                </td>
 			            </tr>
 			        </tbody>
-			    </table>  
+			    </table>
 			</div>
 		</div>
 	</div>
 
 	<div class="[ card-panel ]">
 		<div class="[ row ]">
-	   	 	<div class="[ col s12  ]">
+	   	 	<div class="[ col s12 ]">
 				<h4 class="[ center-align ]">Solicitudes de usuarios "Anunciante"</h4>
 				<table datatable="ng" dt-options="dtBrandUserRequestsOptions" dt-column-defs="dtBrandUserRequestsColumnDefs" class="row-border hover">
 			        <thead>
@@ -138,7 +140,7 @@
 			                </td>
 			            </tr>
 			        </tbody>
-			    </table>  
+			    </table>
 			</div>
 		</div>
 	</div>
@@ -232,7 +234,7 @@
 			                </td>
 			            </tr>
 			        </tbody>
-			    </table>  
+			    </table>
 			</div>
 		</div>
 	</div>
@@ -326,7 +328,7 @@
 			                </td>
 			            </tr>
 			        </tbody>
-			    </table>  
+			    </table>
 			</div>
 		</div>
 	</div>
