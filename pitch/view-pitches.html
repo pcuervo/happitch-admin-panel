@@ -11,7 +11,8 @@
                         <th class="[ center-align ]">Nombre</th>
                         <th class="[ center-align ]">Email de contacto</th>
                         <th class="[ center-align ]">Fecha del brief</th>
-                        <th class="[ center-align ]">Ver detalle</th>
+                        <th class="[ center-align ]">Ver</th>
+                        <th class="[ center-align ]">Unificar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +23,9 @@
                         <td class="[ center-align ]">{{ pitch.brief_date | date:'dd/MM/yyyy' }}</td>
                         <td class="[ center-align ]">
                             <a href="#/view-pitch/{{pitch.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">remove_red_eye</i></a></i></a>
+                        </td>
+                        <td class="[ center-align ]">
+                            <a href="#/unify-pitch/{{pitch.id}}" class="[ btn waves-effect waves-green ]"><i class="[ material-icons ]">call_merge</i></a>
                         </td>
                     </tr>
                 </tbody>

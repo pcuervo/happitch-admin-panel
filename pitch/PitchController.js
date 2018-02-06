@@ -38,7 +38,7 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
         }
         PitchService.merge( $scope.authToken, goodPitchId, badPitchId, function( response ){
             Materialize.toast('Se han unificado los pitches correctamente.', 4000, 'green');
-            $state.go('/merge-pitches-companies', {}, { reload: true });
+            $state.go('/merge-pitch-companies', {}, { reload: true });
         }); 
     }
 
@@ -82,6 +82,13 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
         return icon;
     }
 
+    $scope.deleteEvaluation = function(){
+        PitchService.removeEvaluation( $scope.authToken, $scope.evaluationId, $scope.reason, function( response ){
+            Materialize.toast('Se ha eliminado la evaluación y se le notificó al usuario que la creo.', 4000, 'green');
+            $state.go('/view-pitch', { pitchId: response.pitch_id }, { reload: true });
+        }); 
+    }
+
     /*********************
     * #GENERAL FUNCTIONS
     *********************/
@@ -108,6 +115,11 @@ conAngular.controller('PitchController', ['$scope', '$rootScope', '$location', '
             getPitch( $stateParams.pitchId );
             getStats( $stateParams.pitchId );
             initAgencyDataTable();
+            return;
+        }
+
+        if( path.indexOf( '/delete-evaluation/' ) > -1 ){
+            $scope.evaluationId = $stateParams.evaluationId;
             return;
         }
 

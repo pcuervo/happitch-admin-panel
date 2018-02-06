@@ -686,7 +686,6 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
-
     .state('/merge-pitch-brands', {
         url: "/merge-pitch-brands/:brandId",
         templateUrl: "pitch/merge-pitch-brands.html",
@@ -704,7 +703,6 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
-
     .state('/compare-pitches', {
         url: "/compare-pitches/:pitches",
         templateUrl: "pitch/compare-pitches.html",
@@ -722,12 +720,30 @@ conAngular.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
             }]
         } 
     })
+    .state('/delete-evaluation', {
+        url: "/delete-evaluation/:evaluationId",
+        templateUrl: "pitch/delete-evaluation.html",
+        controller: "PitchController",
+        data: {
+            pageTitle: 'Eliminar evaluación'
+        },
+        resolve: {
+            deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([{
+                    name: 'conAngular',
+                    serie: true, // used for synchronous load chart scripts
+                    insertBefore: '#ngInsertBefore',
+                    files: amapAssets('parsley')
+                }]);
+            }]
+        } 
+    })
 }]);
 
 /* Init global settings and run the app */
 conAngular.run(['$rootScope', '$state', '$location', '$cookies', '$http', 'AuthenticationService', function($rootScope, $state, $location, $cookies, $http, AuthenticationService) {
     // Set Environment
-    $rootScope.env = 'prod';
+    $rootScope.env = 'test';
     // API URL
     var test = 'http://localhost:3000/api/';
     var stage = 'https://amap-dev.herokuapp.com/api/'

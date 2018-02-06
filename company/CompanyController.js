@@ -148,6 +148,7 @@ conAngular.controller('CompanyController', ['$scope', '$rootScope', '$location',
 
         switch( path ){
             case '/view-companies':
+                LoaderHelper.showLoader('Obteniendo anunciantes...');
                 fetchCompanies();
                 initCompanyDataTable();
                 break;

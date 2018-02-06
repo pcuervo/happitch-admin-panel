@@ -1,0 +1,24 @@
+<div class="[ card-panel ]">
+    <h4 class="[ center-align ]">Eliminar evaluación</h4>
+    <div class="[ row ]">
+        <form name="entry_form" class="[ mt-40 ][ left-align ]" ng-submit="deleteEvaluation()" data-parsley-validate>
+            <div class="[ col s12 ]"> 
+                <div class="[ input-field ]">
+                    <textarea id="reason" class="materialize-textarea" name="reason" ng-model="reason" data-parsley-trigger="keyup" data-parsley-maxlength="200" data-parsley-maxlength-message = "Este campo debe contener menos de 200 caracteres."></textarea>
+                    <label for="reason">¿Por qué deseas eliminar la evaluación?</label>
+                </div>
+            </div>
+            <div class="[ clear ]"></div>
+            <div class="[ col s12 ]"> 
+                <div class="[ center-align ]">
+                    <button class="[ waves-effect red ][ btn ]">eliminar</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+  $('[data-parsley-validate]').parsley();
+</script>

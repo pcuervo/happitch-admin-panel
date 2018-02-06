@@ -14,6 +14,7 @@ conAngular.service('PitchService', ['$http', '$rootScope', function($http, $root
         service.archive = archive;
         service.destroyEvaluation = destroyEvaluation;
         service.getStats = getStats;
+        service.removeEvaluation = removeEvaluation;
     return service;
 
     function getAll( callback ){
@@ -223,6 +224,23 @@ conAngular.service('PitchService', ['$http', '$rootScope', function($http, $root
             callback( response );
         });
     }// destroyEvaluation
+
+    function removeEvaluation( authToken, id, reason, callback ){
+        var serviceUrl = $rootScope.apiUrl + 'pitches/remove_evaluation';
+        $http.post(serviceUrl, 
+            {
+                auth_token:     authToken,
+                evaluation_id:  id,
+                reason:         reason
+            })
+        .success(function ( response ) {
+            console.log( response );
+            callback( response );
+        })
+        .error(function ( response ) {
+            callback( response );
+        });
+    }// removeEvaluation
 
     function getStats( id, callback ){
         var serviceUrl = $rootScope.apiUrl + 'pitches/stats/'+id;
